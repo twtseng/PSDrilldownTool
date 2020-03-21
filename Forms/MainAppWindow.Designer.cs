@@ -44,6 +44,14 @@
             this.Column_AutoRun = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Column_Dependencies = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_OldName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage_Settings = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.textBox_QueryScriptFont = new System.Windows.Forms.TextBox();
+            this.textBox_ResultTableFont = new System.Windows.Forms.TextBox();
+            this.textBox_TextResultsFont = new System.Windows.Forms.TextBox();
+            this.label_QueryWindowFont = new System.Windows.Forms.Label();
+            this.label_ResultTableFont = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.tabControl_Settings = new System.Windows.Forms.TabControl();
             this.tabPage_LibScripts = new System.Windows.Forms.TabPage();
             this.dataGridView_LibScripts = new System.Windows.Forms.DataGridView();
@@ -54,6 +62,7 @@
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.splitter1 = new System.Windows.Forms.Splitter();
+            this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.menuStrip_Main.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -62,6 +71,8 @@
             this.tabControl1.SuspendLayout();
             this.tabPage_QueryScripts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_QueryScripts)).BeginInit();
+            this.tabPage_Settings.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.tabControl_Settings.SuspendLayout();
             this.tabPage_LibScripts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_LibScripts)).BeginInit();
@@ -71,7 +82,6 @@
             // 
             // menuStrip_Main
             // 
-            this.menuStrip_Main.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip_Main.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.menuStrip_Main.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
@@ -135,17 +145,18 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControl_Settings);
             this.splitContainer1.Size = new System.Drawing.Size(696, 870);
-            this.splitContainer1.SplitterDistance = 419;
+            this.splitContainer1.SplitterDistance = 418;
             this.splitContainer1.TabIndex = 2;
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage_QueryScripts);
+            this.tabControl1.Controls.Add(this.tabPage_Settings);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(696, 419);
+            this.tabControl1.Size = new System.Drawing.Size(696, 418);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage_QueryScripts
@@ -154,7 +165,7 @@
             this.tabPage_QueryScripts.Location = new System.Drawing.Point(8, 39);
             this.tabPage_QueryScripts.Name = "tabPage_QueryScripts";
             this.tabPage_QueryScripts.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_QueryScripts.Size = new System.Drawing.Size(680, 372);
+            this.tabPage_QueryScripts.Size = new System.Drawing.Size(680, 371);
             this.tabPage_QueryScripts.TabIndex = 0;
             this.tabPage_QueryScripts.Text = "Query Scripts";
             this.tabPage_QueryScripts.UseVisualStyleBackColor = true;
@@ -177,7 +188,7 @@
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dataGridView_QueryScripts.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView_QueryScripts.RowTemplate.Height = 33;
-            this.dataGridView_QueryScripts.Size = new System.Drawing.Size(674, 366);
+            this.dataGridView_QueryScripts.Size = new System.Drawing.Size(674, 365);
             this.dataGridView_QueryScripts.TabIndex = 0;
             this.dataGridView_QueryScripts.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_QueryScripts_CellEndEdit);
             this.dataGridView_QueryScripts.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView_QueryScripts_RowsRemoved);
@@ -214,6 +225,103 @@
             this.Column_OldName.Visible = false;
             this.Column_OldName.Width = 146;
             // 
+            // tabPage_Settings
+            // 
+            this.tabPage_Settings.Controls.Add(this.tableLayoutPanel1);
+            this.tabPage_Settings.Location = new System.Drawing.Point(8, 39);
+            this.tabPage_Settings.Name = "tabPage_Settings";
+            this.tabPage_Settings.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_Settings.Size = new System.Drawing.Size(680, 371);
+            this.tabPage_Settings.TabIndex = 1;
+            this.tabPage_Settings.Text = "Settings";
+            this.tabPage_Settings.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.66667F));
+            this.tableLayoutPanel1.Controls.Add(this.textBox_QueryScriptFont, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.textBox_ResultTableFont, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.textBox_TextResultsFont, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.label_QueryWindowFont, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label_ResultTableFont, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 2);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(674, 365);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // textBox_QueryScriptFont
+            // 
+            this.textBox_QueryScriptFont.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox_QueryScriptFont.Location = new System.Drawing.Point(227, 3);
+            this.textBox_QueryScriptFont.Name = "textBox_QueryScriptFont";
+            this.textBox_QueryScriptFont.ReadOnly = true;
+            this.textBox_QueryScriptFont.Size = new System.Drawing.Size(444, 31);
+            this.textBox_QueryScriptFont.TabIndex = 0;
+            this.textBox_QueryScriptFont.DoubleClick += new System.EventHandler(this.textBox_QueryScriptFont_DoubleClick);
+            // 
+            // textBox_ResultTableFont
+            // 
+            this.textBox_ResultTableFont.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox_ResultTableFont.Location = new System.Drawing.Point(227, 43);
+            this.textBox_ResultTableFont.Name = "textBox_ResultTableFont";
+            this.textBox_ResultTableFont.ReadOnly = true;
+            this.textBox_ResultTableFont.Size = new System.Drawing.Size(444, 31);
+            this.textBox_ResultTableFont.TabIndex = 1;
+            this.textBox_ResultTableFont.DoubleClick += new System.EventHandler(this.textBox_ResultTableFont_DoubleClick);
+            // 
+            // textBox_TextResultsFont
+            // 
+            this.textBox_TextResultsFont.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox_TextResultsFont.Location = new System.Drawing.Point(227, 83);
+            this.textBox_TextResultsFont.Name = "textBox_TextResultsFont";
+            this.textBox_TextResultsFont.ReadOnly = true;
+            this.textBox_TextResultsFont.Size = new System.Drawing.Size(444, 31);
+            this.textBox_TextResultsFont.TabIndex = 2;
+            this.textBox_TextResultsFont.DoubleClick += new System.EventHandler(this.textBox_TextResultsFont_DoubleClick);
+            // 
+            // label_QueryWindowFont
+            // 
+            this.label_QueryWindowFont.AutoSize = true;
+            this.label_QueryWindowFont.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label_QueryWindowFont.Location = new System.Drawing.Point(3, 0);
+            this.label_QueryWindowFont.Name = "label_QueryWindowFont";
+            this.label_QueryWindowFont.Size = new System.Drawing.Size(218, 40);
+            this.label_QueryWindowFont.TabIndex = 4;
+            this.label_QueryWindowFont.Text = "Query Window Font";
+            this.label_QueryWindowFont.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label_ResultTableFont
+            // 
+            this.label_ResultTableFont.AutoSize = true;
+            this.label_ResultTableFont.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label_ResultTableFont.Location = new System.Drawing.Point(3, 40);
+            this.label_ResultTableFont.Name = "label_ResultTableFont";
+            this.label_ResultTableFont.Size = new System.Drawing.Size(218, 40);
+            this.label_ResultTableFont.TabIndex = 5;
+            this.label_ResultTableFont.Text = "Table Results Font";
+            this.label_ResultTableFont.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Location = new System.Drawing.Point(3, 80);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(218, 40);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Text Results Font";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // tabControl_Settings
             // 
             this.tabControl_Settings.Controls.Add(this.tabPage_LibScripts);
@@ -222,7 +330,7 @@
             this.tabControl_Settings.Location = new System.Drawing.Point(0, 0);
             this.tabControl_Settings.Name = "tabControl_Settings";
             this.tabControl_Settings.SelectedIndex = 0;
-            this.tabControl_Settings.Size = new System.Drawing.Size(696, 447);
+            this.tabControl_Settings.Size = new System.Drawing.Size(696, 448);
             this.tabControl_Settings.TabIndex = 1;
             // 
             // tabPage_LibScripts
@@ -231,7 +339,7 @@
             this.tabPage_LibScripts.Location = new System.Drawing.Point(8, 39);
             this.tabPage_LibScripts.Name = "tabPage_LibScripts";
             this.tabPage_LibScripts.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_LibScripts.Size = new System.Drawing.Size(680, 400);
+            this.tabPage_LibScripts.Size = new System.Drawing.Size(680, 401);
             this.tabPage_LibScripts.TabIndex = 0;
             this.tabPage_LibScripts.Text = "Lib scripts";
             this.tabPage_LibScripts.UseVisualStyleBackColor = true;
@@ -249,7 +357,7 @@
             this.dataGridView_LibScripts.Name = "dataGridView_LibScripts";
             this.dataGridView_LibScripts.RowHeadersWidth = 40;
             this.dataGridView_LibScripts.RowTemplate.Height = 33;
-            this.dataGridView_LibScripts.Size = new System.Drawing.Size(674, 394);
+            this.dataGridView_LibScripts.Size = new System.Drawing.Size(674, 395);
             this.dataGridView_LibScripts.TabIndex = 0;
             this.dataGridView_LibScripts.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_LibScripts_CellClick);
             this.dataGridView_LibScripts.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_LibScripts_CellDoubleClick);
@@ -275,7 +383,7 @@
             this.tabPage_Variables.Location = new System.Drawing.Point(8, 39);
             this.tabPage_Variables.Name = "tabPage_Variables";
             this.tabPage_Variables.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_Variables.Size = new System.Drawing.Size(680, 400);
+            this.tabPage_Variables.Size = new System.Drawing.Size(680, 401);
             this.tabPage_Variables.TabIndex = 1;
             this.tabPage_Variables.Text = "Variables";
             this.tabPage_Variables.UseVisualStyleBackColor = true;
@@ -293,7 +401,7 @@
             this.dataGridView_Variables.Name = "dataGridView_Variables";
             this.dataGridView_Variables.RowHeadersWidth = 40;
             this.dataGridView_Variables.RowTemplate.Height = 33;
-            this.dataGridView_Variables.Size = new System.Drawing.Size(674, 394);
+            this.dataGridView_Variables.Size = new System.Drawing.Size(674, 395);
             this.dataGridView_Variables.TabIndex = 1;
             this.dataGridView_Variables.Leave += new System.EventHandler(this.dataGridView_Variables_Leave);
             // 
@@ -342,6 +450,9 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage_QueryScripts.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_QueryScripts)).EndInit();
+            this.tabPage_Settings.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.tabControl_Settings.ResumeLayout(false);
             this.tabPage_LibScripts.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_LibScripts)).EndInit();
@@ -378,6 +489,15 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn Column_AutoRun;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_Dependencies;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_OldName;
+        private System.Windows.Forms.TabPage tabPage_Settings;
+        private System.Windows.Forms.FontDialog fontDialog1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TextBox textBox_QueryScriptFont;
+        private System.Windows.Forms.TextBox textBox_ResultTableFont;
+        private System.Windows.Forms.TextBox textBox_TextResultsFont;
+        private System.Windows.Forms.Label label_QueryWindowFont;
+        private System.Windows.Forms.Label label_ResultTableFont;
+        private System.Windows.Forms.Label label1;
     }
 }
 

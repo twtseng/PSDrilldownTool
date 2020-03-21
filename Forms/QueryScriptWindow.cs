@@ -13,9 +13,11 @@ namespace PSDrilldownTool.Forms
 {
     public partial class QueryScriptWindow : Form
     {
+        #region Private members
         private QueryScript _queryScript;
         private Util.PowershellTask _powershellTask;
         private const int CP_NOCLOSE_BUTTON = 0x200;
+        #endregion
         #region Initialization
         protected override CreateParams CreateParams
         {
@@ -35,18 +37,7 @@ namespace PSDrilldownTool.Forms
             richTextBox_ScriptText.DragEnter += RichTextBox_ScriptText_DragEnter;
         }
 
-        private void RichTextBox_ScriptText_DragEnter(object sender, DragEventArgs e)
-        {
-            string sourceScript = e.Data.GetData("Text").ToString();
-            if (sourceScript.IndexOf("{") >= 0 && sourceScript.IndexOf("{") < sourceScript.IndexOf("}"))
-            {
-                sourceScript = sourceScript.Substring(1, sourceScript.IndexOf("}") - 1);
-                if (AppData.GlobalAppData.GetDependentQueryScriptNames(this.Text).Contains(sourceScript))
-                {
-                    e.Effect = DragDropEffects.None;
-                }
-            }
-        }
+
 
         private void QueryScriptWindow_Load(object sender, EventArgs e)
         {
@@ -224,7 +215,6 @@ namespace PSDrilldownTool.Forms
         }
 
         #endregion
-
         #region Drag and Drop handling
         private void dataGridView_TableResults_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -247,7 +237,33 @@ namespace PSDrilldownTool.Forms
                 dataGridView_TableResults.DoDragDrop(dragData, DragDropEffects.Copy);
             }
         }
+        private void RichTextBox_ScriptText_DragEnter(object sender, DragEventArgs e)
+        {
+            string sourceScript = e.Data.GetData("Text").ToString();
+            if (sourceScript.IndexOf("{") >= 0 && sourceScript.IndexOf("{") < sourceScript.IndexOf("}"))
+            {
+                sourceScript = sourceScript.Substring(1, sourceScript.IndexOf("}") - 1);
+                if (AppData.GlobalAppData.GetDependentQueryScriptNames(this.Text).Contains(sourceScript))
+                {
+                    e.Effect = DragDropEffects.None;
+                }
+            }
+        }
         #endregion
-
+        #region Font editing
+        public void SetQueryScriptFont(Font font)
+        {
+            richTextBox_ScriptText.Font = font;
+            richTextBox_TranslatedScript.Font = font;
+        }
+        public void SetResultTableFont(Font font)
+        {
+            dataGridView_TableResults.Font = font;
+        }
+        public void SetTextResultsFont(Font font)
+        {
+            richTextBox_TextResults.Font = font;
+        }
+        #endregion
     }
 }

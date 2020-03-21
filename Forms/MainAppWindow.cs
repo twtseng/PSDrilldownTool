@@ -122,10 +122,32 @@ namespace PSDrilldownTool.Forms
             // Load the scripts
             foreach (var kvp in AppData.GlobalAppData.QueryScripts.ToArray())
             {
-                // TO DO: Set the 3rd column for "Dependencies"
                 string dependentScripts = string.Join(",", AppData.GlobalAppData.GetDependentQueryScriptNames(kvp.Key));
                 dataGridView_QueryScripts.Rows.Add(kvp.Key, kvp.Value.RunOnParentRowSelect, dependentScripts);
                 AppData.GlobalAppData.AddQueryScript(name: kvp.Key, mainAppWindow: this, scriptToClone: kvp.Value);
+            }
+
+            // Load settings
+            if (AppData.GlobalAppData.Settings.ContainsKey(AppData.FontSetting.QueryScriptFont.ToString()))
+            {
+                FontConverter fontConverter = new FontConverter();
+                Font font = (Font) fontConverter.ConvertFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.QueryScriptFont.ToString()]);
+                AppData.GlobalAppData.SetFont(AppData.FontSetting.QueryScriptFont, font);
+                textBox_QueryScriptFont.Text = font.ToString();
+            }
+            if (AppData.GlobalAppData.Settings.ContainsKey(AppData.FontSetting.ResultTableFont.ToString()))
+            {
+                FontConverter fontConverter = new FontConverter();
+                Font font = (Font)fontConverter.ConvertFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.ResultTableFont.ToString()]);
+                AppData.GlobalAppData.SetFont(AppData.FontSetting.QueryScriptFont, font);
+                textBox_ResultTableFont.Text = font.ToString();
+            }
+            if (AppData.GlobalAppData.Settings.ContainsKey(AppData.FontSetting.TextResultsFont.ToString()))
+            {
+                FontConverter fontConverter = new FontConverter();
+                Font font = (Font)fontConverter.ConvertFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.TextResultsFont.ToString()]);
+                AppData.GlobalAppData.SetFont(AppData.FontSetting.TextResultsFont, font);
+                textBox_TextResultsFont.Text = font.ToString();
             }
         }
         public void UpdateDependentScriptsList()
@@ -291,5 +313,32 @@ namespace PSDrilldownTool.Forms
             }
         }
         #endregion
+
+        private void textBox_QueryScriptFont_DoubleClick(object sender, EventArgs e)
+        {
+            if (fontDialog1.ShowDialog() == DialogResult.OK)
+            {
+                textBox_QueryScriptFont.Text = fontDialog1.Font.ToString();
+                AppData.GlobalAppData.SetFont(AppData.FontSetting.QueryScriptFont, fontDialog1.Font);
+            }
+        }
+
+        private void textBox_ResultTableFont_DoubleClick(object sender, EventArgs e)
+        {
+            if (fontDialog1.ShowDialog() == DialogResult.OK)
+            {
+                textBox_ResultTableFont.Text = fontDialog1.Font.ToString();
+                AppData.GlobalAppData.SetFont(AppData.FontSetting.ResultTableFont, fontDialog1.Font);
+            }
+        }
+
+        private void textBox_TextResultsFont_DoubleClick(object sender, EventArgs e)
+        {
+            if (fontDialog1.ShowDialog() == DialogResult.OK)
+            {
+                textBox_TextResultsFont.Text = fontDialog1.Font.ToString();
+                AppData.GlobalAppData.SetFont(AppData.FontSetting.TextResultsFont, fontDialog1.Font);
+            }
+        }
     }
 }

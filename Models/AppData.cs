@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Drawing;
+using PSDrilldownTool.Forms;
 
 namespace PSDrilldownTool.Models
 {
@@ -124,6 +126,33 @@ namespace PSDrilldownTool.Models
                 }
             }
             return dependentQueryScripts;
+        }
+
+        public enum FontSetting
+        {
+            QueryScriptFont,
+            ResultTableFont,
+            TextResultsFont
+        }
+        public void SetFont(FontSetting fontSetting, Font font)
+        {
+            foreach (QueryScript queryScript in QueryScripts.Values)
+            {
+                switch (fontSetting)
+                {
+                    case FontSetting.QueryScriptFont:
+                        queryScript.QueryScriptWindow.SetQueryScriptFont(font);
+                        break;
+                    case FontSetting.ResultTableFont:
+                        queryScript.QueryScriptWindow.SetResultTableFont(font);
+                        break;
+                    case FontSetting.TextResultsFont:
+                        queryScript.QueryScriptWindow.SetTextResultsFont(font);
+                        break;
+                }
+            }
+            FontConverter fontConverter = new FontConverter();
+            Settings[fontSetting.ToString()] = fontConverter.ConvertToString(font); ;
         }
     }
 }
