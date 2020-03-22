@@ -14,6 +14,7 @@ namespace PSDrilldownTool.Models
         /// Default constructor for json deserialization when loading from a file
         /// </summary>
         public QueryScript() { }
+        public string Name { get; set; }
         public string ScriptText { get; set; }
         public string TranslatedScript { get; set; }
         public bool RunOnParentRowSelect { get; set; }
@@ -37,21 +38,23 @@ namespace PSDrilldownTool.Models
 
         public QueryScript(string name, Forms.MainAppWindow mainAppWindow)
         {
+            this.Name = name;
             _mainAppWindow = mainAppWindow;
             _queryScriptWindow = new Forms.QueryScriptWindow(name: name, queryScript: this);
         }
-        public QueryScript(string name, Forms.MainAppWindow mainAppWindow, QueryScript queryScript) 
-            : this(name: name, mainAppWindow: mainAppWindow)
+        public QueryScript(Forms.MainAppWindow mainAppWindow, QueryScript queryScriptToClone) 
+            : this(name: queryScriptToClone.Name, mainAppWindow: mainAppWindow)
         {
-            this.Duration = queryScript.Duration;
-            this.EndTime = queryScript.EndTime;
-            this.StartTime = queryScript.StartTime;
-            this.ScriptText = queryScript.ScriptText;
-            this.TranslatedScript = queryScript.TranslatedScript;
-            this.RunOnParentRowSelect = queryScript.RunOnParentRowSelect;
-            this.TaskStatus = queryScript.TaskStatus;
-            this.ResultDataTable = queryScript.ResultDataTable;
-            this.ResultText = queryScript.ResultText;
+            this.Name = queryScriptToClone.Name;
+            this.Duration = queryScriptToClone.Duration;
+            this.EndTime = queryScriptToClone.EndTime;
+            this.StartTime = queryScriptToClone.StartTime;
+            this.ScriptText = queryScriptToClone.ScriptText;
+            this.TranslatedScript = queryScriptToClone.TranslatedScript;
+            this.RunOnParentRowSelect = queryScriptToClone.RunOnParentRowSelect;
+            this.TaskStatus = queryScriptToClone.TaskStatus;
+            this.ResultDataTable = queryScriptToClone.ResultDataTable;
+            this.ResultText = queryScriptToClone.ResultText;
         }
         private Forms.MainAppWindow _mainAppWindow;
         [JsonIgnore]

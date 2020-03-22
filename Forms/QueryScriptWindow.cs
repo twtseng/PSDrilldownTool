@@ -190,7 +190,7 @@ namespace PSDrilldownTool.Forms
             string translatedQuery = richTextBox_ScriptText.Text;
 
             // Replace the QueryScript tokens with actual values
-            foreach(QueryScript queryScript in AppData.GlobalAppData.QueryScripts.Values)
+            foreach(QueryScript queryScript in AppData.GlobalAppData.QueryScripts)
             {
                 if (queryScript.QueryScriptWindow != null)
                 {
@@ -209,8 +209,11 @@ namespace PSDrilldownTool.Forms
         {
             foreach(string scriptName in AppData.GlobalAppData.GetDependentQueryScriptNames(this.Text))
             {
-                QueryScript queryScript = AppData.GlobalAppData.QueryScripts[scriptName];
-                queryScript.QueryScriptWindow.UpdateTranslatedQuery();
+                QueryScript queryScript = AppData.GlobalAppData.QueryScripts.Where(x => x.Name == scriptName).FirstOrDefault();
+                if (queryScript != null)
+                {
+                    queryScript.QueryScriptWindow.UpdateTranslatedQuery();
+                }
             }
         }
 

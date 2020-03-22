@@ -30,7 +30,7 @@ namespace PSDrilldownTool.Models
         }
         public AppData()
         {
-            QueryScripts = new Dictionary<string, QueryScript>();
+            QueryScripts = new List<QueryScript>();
             LibraryScripts = new Dictionary<string, string>();
             Variables = new Dictionary<string, object>();
             Settings = new Dictionary<string, string>();
@@ -39,22 +39,32 @@ namespace PSDrilldownTool.Models
         /// The store of all of the QueryScripts.
         /// The key is the store for the "script names".
         /// </summary>
-        public Dictionary<string, QueryScript> QueryScripts { get; set; }
+        public List<QueryScript> QueryScripts { get; set; }
         public Dictionary<string, string> LibraryScripts { get; set; }
         public Dictionary<string, object> Variables { get; set; }
         public Dictionary<string, string> Settings { get; set; }
         
         public void AddQueryScript(string name, Forms.MainAppWindow mainAppWindow)
         {
+            // Exit if script name already exists
+            if (QueryScripts.Exists(x => x.Name == name))
+            {
+                return;
+            }
             Models.QueryScript queryScript = new Models.QueryScript(name: name, mainAppWindow: mainAppWindow);
-            QueryScripts[name] = queryScript;
+            QueryScripts.Add(queryScript);
             queryScript.QueryScriptWindow.Show();
             queryScript.QueryScriptWindow.Focus();
         }
-        public void AddQueryScript(string name, Forms.MainAppWindow mainAppWindow, Models.QueryScript scriptToClone)
+        public void AddQueryScript(Forms.MainAppWindow mainAppWindow, Models.QueryScript scriptToClone)
         {
-            Models.QueryScript queryScript = new Models.QueryScript(name: name, mainAppWindow: mainAppWindow, queryScript: scriptToClone);
-            QueryScripts[name] = queryScript;
+            // Exit if script name already exists
+            if (QueryScripts.Exists(x => x.Name == scriptToClone.Name))
+            {
+                return;
+            }
+            Models.QueryScript queryScript = new Models.QueryScript(mainAppWindow: mainAppWindow, queryScriptToClone: scriptToClone);
+            QueryScripts.Add(queryScript);
             queryScript.QueryScriptWindow.Show();
             queryScript.QueryScriptWindow.Focus();
         }
@@ -63,31 +73,26 @@ namespace PSDrilldownTool.Models
             // Rename the script token in any script that might be using it
             string oldToken = Util.ScriptUtil.ScriptNameToken(oldName);
             string newToken = Util.ScriptUtil.ScriptNameToken(newName);
-            foreach (QueryScript queryScript in QueryScripts.Values)
+            foreach (QueryScript queryScript in QueryScripts)
             {
                 if (!string.IsNullOrWhiteSpace(queryScript.ScriptText))
                 {
                     queryScript.ScriptText = queryScript.ScriptText.Replace(oldToken, newToken);
                 }
+                if (queryScript.Name == oldName)
+                {
+                    queryScript.QueryScriptWindow.SetWindowName(newName);
+                    queryScript.Name = newName;
+                }
             }
-
-            // Rename script's key in the QueryScripts dictionary
-            QueryScript scriptToRename = QueryScripts[oldName];
-            QueryScripts.Remove(oldName);
-            QueryScripts.Add(newName, scriptToRename);
-
-            // Rename the window title
-            scriptToRename.QueryScriptWindow.SetWindowName(newName);
         }
         public void RemoveQueryScript(string name)
         {
-            if (QueryScripts.ContainsKey(name))
+            QueryScript queryScript = QueryScripts.Where(x => x.Name == name).FirstOrDefault();
+            if (queryScript != null)
             {
-                if (QueryScripts[name].QueryScriptWindow != null)
-                {
-                    QueryScripts[name].QueryScriptWindow.Close();
-                }
-                QueryScripts.Remove(name);
+                queryScript.QueryScriptWindow.Close();
+                QueryScripts.Remove(queryScript);
             }
         }
         public string NewDefaultQueryScriptName()
@@ -95,7 +100,7 @@ namespace PSDrilldownTool.Models
             for(int i=0; i < 1000;++i)
             {
                 string scriptName = $"QueryScript_{i}";
-                if (QueryScripts.ContainsKey(scriptName) == false)
+                if (QueryScripts.Where(x => x.Name == scriptName).Count() == 0)
                 {
                     return scriptName;
                 }
@@ -111,12 +116,12 @@ namespace PSDrilldownTool.Models
         public List<string> GetDependentQueryScriptNames(string scriptName)
         {
             List<string> dependentQueryScripts = new List<string>();
-            foreach (var kvp in QueryScripts)
+            foreach (var queryScript in QueryScripts)
             {
-                if (kvp.Value.ScriptText != null && kvp.Value.ScriptText.Contains(AppData.ScriptReplacementToken(scriptName)))
+                if (queryScript.ScriptText != null && queryScript.ScriptText.Contains(AppData.ScriptReplacementToken(scriptName)))
                 {
-                    dependentQueryScripts.Add(kvp.Key);
-                    foreach(string subScriptName in GetDependentQueryScriptNames(kvp.Key))
+                    dependentQueryScripts.Add(queryScript.Name);
+                    foreach(string subScriptName in GetDependentQueryScriptNames(queryScript.Name))
                     {
                         if (!dependentQueryScripts.Contains(subScriptName))
                         {
@@ -136,7 +141,7 @@ namespace PSDrilldownTool.Models
         }
         public void SetFont(FontSetting fontSetting, Font font)
         {
-            foreach (QueryScript queryScript in QueryScripts.Values)
+            foreach (QueryScript queryScript in QueryScripts)
             {
                 switch (fontSetting)
                 {
