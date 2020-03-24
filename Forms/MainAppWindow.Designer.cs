@@ -82,6 +82,7 @@
             // 
             // menuStrip_Main
             // 
+            this.menuStrip_Main.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip_Main.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.menuStrip_Main.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
@@ -193,6 +194,7 @@
             this.dataGridView_QueryScripts.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_QueryScripts_CellEndEdit);
             this.dataGridView_QueryScripts.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView_QueryScripts_RowsRemoved);
             this.dataGridView_QueryScripts.Click += new System.EventHandler(this.dataGridView_QueryScripts_Click);
+            this.dataGridView_QueryScripts.Leave += new System.EventHandler(this.dataGridView_QueryScripts_Leave);
             // 
             // Column_Name
             // 

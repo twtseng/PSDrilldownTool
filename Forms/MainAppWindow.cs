@@ -47,6 +47,7 @@ namespace PSDrilldownTool.Forms
                 else
                 {
                     AppData.GlobalAppData.RenameQueryScript(oldName: oldName, newName: newName);
+                    UpdateDependentScriptsList();
                 }
                 curRow.Cells["Column_OldName"].Value = newName;
             }
@@ -68,7 +69,7 @@ namespace PSDrilldownTool.Forms
         }
         private void dataGridView_QueryScripts_Click(object sender, EventArgs e)
         {
-            if (dataGridView_QueryScripts.CurrentRow.Cells[0].Value != null)
+            if (dataGridView_QueryScripts.CurrentRow != null && dataGridView_QueryScripts.CurrentRow.Cells[0].Value != null)
             {
                 string scriptName = dataGridView_QueryScripts.CurrentRow.Cells["Column_Name"].Value.ToString();
                 Models.QueryScript queryScript = AppData.GlobalAppData.QueryScripts.Where(x => x.Name == scriptName).FirstOrDefault();
@@ -88,9 +89,15 @@ namespace PSDrilldownTool.Forms
 
         private void LoadAppDataAndGuiDataFromJson(string appDataJson)
         {
-
-            AppData.GlobalAppData = JsonConvert.DeserializeObject<Models.AppData>(appDataJson);
-            LoadGuiFromAppData();
+            try
+            {
+                AppData.GlobalAppData = JsonConvert.DeserializeObject<Models.AppData>(appDataJson);
+                LoadGuiFromAppData();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Load file failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void ResetGuiAndCloseQueryScriptWindows()
         {
@@ -122,7 +129,8 @@ namespace PSDrilldownTool.Forms
             foreach (QueryScript queryScript in queryScriptsCopy)
             {
                 string dependentScripts = string.Join(",", AppData.GlobalAppData.GetDependentQueryScriptNames(queryScript.Name));
-                dataGridView_QueryScripts.Rows.Add(queryScript.Name, queryScript.RunOnParentRowSelect, dependentScripts);
+                // Columns are: ScriptName, RunOnParentRowSelect, DependentScripts, OldName (used for renaming the script)
+                dataGridView_QueryScripts.Rows.Add(queryScript.Name, queryScript.RunOnParentRowSelect, dependentScripts, queryScript.Name);
                 AppData.GlobalAppData.AddQueryScript(mainAppWindow: this, scriptToClone: queryScript);
             }
 
@@ -344,5 +352,21 @@ namespace PSDrilldownTool.Forms
             }
         }
         #endregion
+
+        private void dataGridView_QueryScripts_Leave(object sender, EventArgs e)
+        {
+            foreach(DataGridViewRow row in dataGridView_QueryScripts.Rows)
+            {
+                if (row.Cells[0] != null && row.Cells[0].Value != null)
+                {
+                    string scriptName = row.Cells[0].Value.ToString();
+                    var queryScript = AppData.GlobalAppData.QueryScripts.Where(x => x.Name == scriptName).FirstOrDefault();
+                    if (queryScript != null)
+                    {
+                        queryScript.RunOnParentRowSelect = row.Cells[1].Value != null ? (bool)row.Cells[1].Value : false;
+                    }
+                }
+            }
+        }
     }
 }

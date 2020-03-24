@@ -207,12 +207,17 @@ namespace PSDrilldownTool.Forms
         }
         private void dataGridView_TableResults_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            foreach(string scriptName in AppData.GlobalAppData.GetDependentQueryScriptNames(this.Text))
+            // Update dependent script text and run (if RunOnParentRowSelect specified)
+            foreach (string scriptName in AppData.GlobalAppData.GetDependentQueryScriptNames(this.Text, allDecendants: false))
             {
                 QueryScript queryScript = AppData.GlobalAppData.QueryScripts.Where(x => x.Name == scriptName).FirstOrDefault();
                 if (queryScript != null)
                 {
                     queryScript.QueryScriptWindow.UpdateTranslatedQuery();
+                    if (queryScript.RunOnParentRowSelect)
+                    {
+                        queryScript.QueryScriptWindow.StartQuery();
+                    }
                 }
             }
         }

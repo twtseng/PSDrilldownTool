@@ -113,7 +113,7 @@ namespace PSDrilldownTool.Models
         {
             return "{" + scriptName + "}";
         }
-        public List<string> GetDependentQueryScriptNames(string scriptName)
+        public List<string> GetDependentQueryScriptNames(string scriptName, bool allDecendants=true)
         {
             List<string> dependentQueryScripts = new List<string>();
             foreach (var queryScript in QueryScripts)
@@ -121,11 +121,14 @@ namespace PSDrilldownTool.Models
                 if (queryScript.ScriptText != null && queryScript.ScriptText.Contains(AppData.ScriptReplacementToken(scriptName)))
                 {
                     dependentQueryScripts.Add(queryScript.Name);
-                    foreach(string subScriptName in GetDependentQueryScriptNames(queryScript.Name))
+                    if (allDecendants)
                     {
-                        if (!dependentQueryScripts.Contains(subScriptName))
+                        foreach (string subScriptName in GetDependentQueryScriptNames(queryScript.Name))
                         {
-                            dependentQueryScripts.Add(subScriptName);
+                            if (!dependentQueryScripts.Contains(subScriptName))
+                            {
+                                dependentQueryScripts.Add(subScriptName);
+                            }
                         }
                     }
                 }
