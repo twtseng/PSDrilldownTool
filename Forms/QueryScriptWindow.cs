@@ -37,8 +37,6 @@ namespace PSDrilldownTool.Forms
             richTextBox_ScriptText.DragEnter += RichTextBox_ScriptText_DragEnter;
         }
 
-
-
         private void QueryScriptWindow_Load(object sender, EventArgs e)
         {
             UpdateResultControls();
@@ -183,6 +181,15 @@ namespace PSDrilldownTool.Forms
         {
             _queryScript.ScriptText = richTextBox_ScriptText.Text;
             UpdateTranslatedQuery();
+        }
+        private void richTextBox_ScriptText_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Override default richtext paste to only paste the text (we don't want formatting to get pasted)
+            if (e.Control && e.KeyCode == Keys.V)
+            {
+                string textData = (string)Clipboard.GetData("Text");
+                Clipboard.SetText(textData);
+            }
         }
 
         private void UpdateTranslatedQuery()

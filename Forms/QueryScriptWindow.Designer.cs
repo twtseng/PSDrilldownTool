@@ -116,6 +116,7 @@
             this.richTextBox_ScriptText.TabIndex = 1;
             this.richTextBox_ScriptText.Text = "";
             this.richTextBox_ScriptText.TextChanged += new System.EventHandler(this.richTextBox_ScriptText_TextChanged);
+            this.richTextBox_ScriptText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptText_KeyDown);
             // 
             // label_ScriptText
             // 
