@@ -183,7 +183,6 @@
             this.Column_OldName});
             this.dataGridView_QueryScripts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView_QueryScripts.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView_QueryScripts.MultiSelect = false;
             this.dataGridView_QueryScripts.Name = "dataGridView_QueryScripts";
             this.dataGridView_QueryScripts.RowHeadersWidth = 30;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

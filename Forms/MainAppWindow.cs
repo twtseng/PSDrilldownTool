@@ -62,8 +62,11 @@ namespace PSDrilldownTool.Forms
             {
                 if (row.Cells[0].Value != null && row.Cells[0].Value.ToString()==name)
                 {
-                    row.Selected = true;
-                    return;
+                    row.DefaultCellStyle.BackColor = Color.Aqua;
+                }
+                else
+                {
+                    row.DefaultCellStyle.BackColor = Color.White;
                 }
             }
         }

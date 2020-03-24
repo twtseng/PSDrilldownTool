@@ -51,6 +51,7 @@ namespace PSDrilldownTool.Forms
         private void QueryScriptWindow_Activated(object sender, EventArgs e)
         {
             _queryScript.MainAppWindow.SelectQueryScriptGridViewRow(name: this.Text);
+            toolStripLabel1.Text = string.Format("Location: {0} Size: {1}", this.Location.ToString(), this.Size.ToString());
         }
         #endregion
         #region Output/Status update functions
