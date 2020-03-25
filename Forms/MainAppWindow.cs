@@ -406,6 +406,10 @@ namespace PSDrilldownTool.Forms
             int relatedWidth = 0;
             int relatedHeight = 0;
 
+            if (relatedScripts.Count == 0)
+            {
+                return;
+            }
             switch (dock)
             {
                 case DockStyle.Top:
@@ -474,12 +478,20 @@ namespace PSDrilldownTool.Forms
 
         private void toolStripButton_SlaveBottom_Click(object sender, EventArgs e)
         {
-
+            if (this.CurrentlySelectedQueryScript != null)
+            {
+                var masterScripts = AppData.GlobalAppData.GetMasterQueryScripts(this.CurrentlySelectedQueryScript);
+                LayoutQueryScriptWindows(selectedScript: this.CurrentlySelectedQueryScript, dock: DockStyle.Bottom, relatedScripts: masterScripts);
+            }
         }
 
         private void toolStripButton_SlaveRight_Click(object sender, EventArgs e)
         {
-
+            if (this.CurrentlySelectedQueryScript != null)
+            {
+                var masterScripts = AppData.GlobalAppData.GetMasterQueryScripts(this.CurrentlySelectedQueryScript);
+                LayoutQueryScriptWindows(selectedScript: this.CurrentlySelectedQueryScript, dock: DockStyle.Right, relatedScripts: masterScripts);
+            }
         }
 
         private void toolStripButton_Fanned_Click(object sender, EventArgs e)

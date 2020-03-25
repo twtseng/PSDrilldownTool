@@ -94,12 +94,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Scripts\drilldown1.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Scripts\invoke-sqlquery.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Scripts\drilldown.json" />
     <None Include="Scripts\out-datatable.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

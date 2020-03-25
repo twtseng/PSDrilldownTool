@@ -139,7 +139,18 @@ namespace PSDrilldownTool.Models
             }
             return dependentQueryScripts;
         }
-
+        public List<QueryScript> GetMasterQueryScripts(QueryScript script, bool allDecendants = true)
+        {
+            List<QueryScript> masterQueryScripts = new List<QueryScript>();
+            foreach (var queryScript in QueryScripts)
+            {
+                if (script != queryScript && script.ScriptText != null && script.ScriptText.Contains(AppData.ScriptReplacementToken(queryScript.Name)))
+                {
+                    masterQueryScripts.Add(queryScript);
+                }
+            }
+            return masterQueryScripts;
+        }
         public enum FontSetting
         {
             QueryScriptFont,
