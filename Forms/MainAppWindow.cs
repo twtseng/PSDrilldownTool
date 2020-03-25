@@ -146,7 +146,7 @@ namespace PSDrilldownTool.Forms
             AppData.GlobalAppData.QueryScripts.Clear();
             foreach (QueryScript queryScript in queryScriptsCopy)
             {
-                string dependentScripts = string.Join(",", AppData.GlobalAppData.GetDependentQueryScriptNames(queryScript.Name));
+                string dependentScripts = string.Join(",", AppData.GlobalAppData.GetDependentQueryScripts(queryScript).Select(x => x.Name));
                 // Columns are: ScriptName, RunOnParentRowSelect, DependentScripts, OldName (used for renaming the script)
                 dataGridView_QueryScripts.Rows.Add(queryScript.Name, queryScript.RunOnParentRowSelect, dependentScripts, queryScript.Name);
                 AppData.GlobalAppData.AddQueryScript(mainAppWindow: this, scriptToClone: queryScript);
@@ -181,7 +181,9 @@ namespace PSDrilldownTool.Forms
             {
                 if (row.Cells["column_Name"].Value != null)
                 {
-                    string dependentScripts = string.Join(",", AppData.GlobalAppData.GetDependentQueryScriptNames(row.Cells["column_Name"].Value.ToString()));
+                    string scriptName = row.Cells["column_Name"].Value.ToString();
+                    QueryScript queryScript = AppData.GlobalAppData.GetQueryScriptByName(scriptName);
+                    string dependentScripts = string.Join(",", AppData.GlobalAppData.GetDependentQueryScripts(queryScript));
                     row.Cells["column_Dependencies"].Value = dependentScripts;
                 }
             }
@@ -369,7 +371,6 @@ namespace PSDrilldownTool.Forms
             }
         }
         #endregion
-
         #region QueryScriptWindow Layouts
         private Rectangle GetMdiRectangle()
         {
@@ -395,48 +396,96 @@ namespace PSDrilldownTool.Forms
                 return queryScript;
             }
         }
+        private void LayoutQueryScriptWindows(QueryScript selectedScript, DockStyle dock, List<QueryScript> relatedScripts)
+        {
+            Rectangle rect = this.GetMdiRectangle();
+            int selectedWidth=0;
+            int selectedHeight=0;
+            int selectedX = 0;
+            int selectedY = 0;
+            int relatedWidth = 0;
+            int relatedHeight = 0;
+
+            switch (dock)
+            {
+                case DockStyle.Top:
+                    selectedWidth = rect.Width;
+                    selectedHeight = rect.Height / 2;
+                    selectedX = 0;
+                    selectedY = 0;
+                    relatedWidth = rect.Width / relatedScripts.Count; ;
+                    relatedHeight = rect.Height / 2;
+                    break;
+                case DockStyle.Bottom:
+                    selectedWidth = rect.Width;
+                    selectedHeight = rect.Height / 2;
+                    selectedX = 0;
+                    selectedY = selectedHeight;
+                    relatedWidth = rect.Width / relatedScripts.Count; ;
+                    relatedHeight = rect.Height / 2;
+                    break;
+                case DockStyle.Left:
+                    selectedWidth = rect.Width / 2;
+                    selectedHeight = rect.Height;
+                    selectedX = 0;
+                    selectedY = 0;
+                    relatedWidth = rect.Width / 2;
+                    relatedHeight = rect.Height / relatedScripts.Count;
+                    break;
+                case DockStyle.Right:
+                    selectedWidth = rect.Width / 2;
+                    selectedHeight = rect.Height;
+                    selectedX = selectedWidth;
+                    selectedY = 0;
+                    relatedWidth = rect.Width / 2 ;
+                    relatedHeight = rect.Height / relatedScripts.Count;
+                    break;
+            }
+
+            for (int i = 0; i < relatedScripts.Count; ++i)
+            {
+                QueryScript relatedScript = relatedScripts[i];
+                int x = i * relatedWidth * (dock == DockStyle.Top || dock == DockStyle.Bottom ? 1 : 0)
+                    + (dock == DockStyle.Left ? selectedWidth : 0);
+                int y = i * relatedHeight * (dock == DockStyle.Left || dock == DockStyle.Right ? 1 : 0)
+                    + (dock == DockStyle.Top ? selectedHeight : 0);
+                relatedScript.QueryScriptWindow.SetWindowLocation(x,y,relatedWidth,relatedHeight);
+                relatedScript.QueryScriptWindow.Focus();
+            }
+            this.CurrentlySelectedQueryScript.QueryScriptWindow.SetWindowLocation(selectedX, selectedY, selectedWidth, selectedHeight);
+            this.CurrentlySelectedQueryScript.QueryScriptWindow.Focus();
+        }
         private void toolStripButton_MasterTop_Click(object sender, EventArgs e)
         {
             if (this.CurrentlySelectedQueryScript != null)
             {
-                Rectangle rect = this.GetMdiRectangle();
-                this.CurrentlySelectedQueryScript.QueryScriptWindow.SetWindowLocation(0, 0, rect.Width, rect.Height/2);
-                var dependentScripts = AppData.GlobalAppData.GetDependentQueryScriptNames(this.CurrentlySelectedQueryScript.Name, allDecendants: false);
-                for(int i = 0; i < dependentScripts.Count; ++i)
-                {
-                    int width = rect.Width / dependentScripts.Count;
-                    int height = rect.Height / 2;
-                    QueryScript dependentScript = AppData.GlobalAppData.GetQueryScriptByName(dependentScripts[i]);
-                    if (dependentScript != null)
-                    {
-                        dependentScript.QueryScriptWindow.SetWindowLocation(i * width, height, width, height);
-                        dependentScript.QueryScriptWindow.Focus();
-                    }
-                }
+                var dependentScripts = AppData.GlobalAppData.GetDependentQueryScripts(this.CurrentlySelectedQueryScript, allDecendants: false);
+                LayoutQueryScriptWindows(selectedScript: this.CurrentlySelectedQueryScript, dock: DockStyle.Top, relatedScripts: dependentScripts);
             }
         }
         private void toolStripButton_MasterLeft_Click(object sender, EventArgs e)
         {
             if (this.CurrentlySelectedQueryScript != null)
             {
-                Rectangle rect = this.GetMdiRectangle();
-                this.CurrentlySelectedQueryScript.QueryScriptWindow.SetWindowLocation(0, 0, rect.Width/2, rect.Height);
-                var dependentScripts = AppData.GlobalAppData.GetDependentQueryScriptNames(this.CurrentlySelectedQueryScript.Name, allDecendants: false);
-                for (int i = 0; i < dependentScripts.Count; ++i)
-                {
-                    int width = rect.Width / 2;
-                    int height = rect.Height / dependentScripts.Count;
-                    QueryScript dependentScript = AppData.GlobalAppData.GetQueryScriptByName(dependentScripts[i]);
-                    if (dependentScript != null)
-                    {
-                        dependentScript.QueryScriptWindow.SetWindowLocation(width, i * height, width, height);
-                        dependentScript.QueryScriptWindow.Focus();
-                    }
-                }
+                var dependentScripts = AppData.GlobalAppData.GetDependentQueryScripts(this.CurrentlySelectedQueryScript, allDecendants: false);
+                LayoutQueryScriptWindows(selectedScript: this.CurrentlySelectedQueryScript, dock: DockStyle.Left, relatedScripts: dependentScripts);
             }
         }
+
+        private void toolStripButton_SlaveBottom_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripButton_SlaveRight_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripButton_Fanned_Click(object sender, EventArgs e)
+        {
+
+        }
         #endregion
-
-
     }
 }

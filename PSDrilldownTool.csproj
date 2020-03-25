@@ -97,7 +97,7 @@
     <None Include="Scripts\drilldown1.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\invoke-sqlquery..ps1">
+    <None Include="Scripts\invoke-sqlquery.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Scripts\out-datatable.ps1">
@@ -117,6 +117,9 @@
     <Content Include="Resources\Icon_Powershell.ico" />
     <Content Include="Resources\Image_StartScript_small.bmp" />
     <Content Include="Resources\Image_StopScript_small.bmp" />
+    <Content Include="Resources\Layout_Fanned.bmp" />
+    <Content Include="Resources\Layout_SlaveBottom.bmp" />
+    <Content Include="Resources\Layout_SlaveLeft.bmp" />
     <None Include="Resources\Layout_MasterTop.bmp" />
     <None Include="Resources\Layout_MasterLeft.bmp" />
   </ItemGroup>

@@ -103,6 +103,16 @@ namespace PSDrilldownTool.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Layout_Fanned {
+            get {
+                object obj = ResourceManager.GetObject("Layout_Fanned", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Layout_MasterLeft {
             get {
                 object obj = ResourceManager.GetObject("Layout_MasterLeft", resourceCulture);
@@ -116,6 +126,26 @@ namespace PSDrilldownTool.Properties {
         internal static System.Drawing.Bitmap Layout_MasterTop {
             get {
                 object obj = ResourceManager.GetObject("Layout_MasterTop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Layout_SlaveBottom {
+            get {
+                object obj = ResourceManager.GetObject("Layout_SlaveBottom", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Layout_SlaveRight {
+            get {
+                object obj = ResourceManager.GetObject("Layout_SlaveRight", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

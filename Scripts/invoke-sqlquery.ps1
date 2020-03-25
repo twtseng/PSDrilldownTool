@@ -5,7 +5,7 @@ function Invoke-SqlQuery
     [Parameter(Mandatory=$true)]
     [string] $SqlText,
     [Parameter(Mandatory=$false)]
-    [string] $ReturnAsHashKey = ''
+    [int] $CommandTimeout=600
 )
 {
 <#
@@ -15,10 +15,8 @@ function Invoke-SqlQuery
     The ADO connection string
 .PARAMETER SqlQuery
     SQL query text
-.PARAMETER ReturnAsHashKey
-    If specified, returns a DataTableReader in a hashtable
-    Used to workaround to prevent powershell autocast to object[] when I actually want a DataTable
-    The DataTable is used for passing bulk data to sproc with table valued parameter
+.PARAMETER CommandTimeout
+    Command timeout seconds
 #>
     $conn = $null
     try
@@ -27,7 +25,7 @@ function Invoke-SqlQuery
         $conn.Open()
         $comm = $conn.CreateCommand()
         $comm.CommandText = $SqlText
-        $comm.CommandTimeout = 600
+        $comm.CommandTimeout = $CommandTimeout
 
         $table = new-object System.Data.DataTable
         $adapter = new-object System.Data.SqlClient.SqlDataAdapter($comm)
@@ -40,12 +38,5 @@ function Invoke-SqlQuery
             $conn.Close()
         }
     }
-    if ([string]::IsNullOrEmpty($ReturnAsHashKey))
-    {
-        return $table
-    }
-    else
-    {
-        return @{ $ReturnAsHashKey = $table }
-    }
+    return $table
 }

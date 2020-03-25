@@ -46,12 +46,12 @@
             this.Column_Dependencies = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_OldName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButton_MasterLeft = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_MasterTop = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton_SlaveBottom = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton_SlaveRight = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton_Fanned = new System.Windows.Forms.ToolStripButton();
             this.tabPage_Settings = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.textBox_QueryScriptFont = new System.Windows.Forms.TextBox();
@@ -199,13 +199,13 @@
             this.Column_Dependencies,
             this.Column_OldName});
             this.dataGridView_QueryScripts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView_QueryScripts.Location = new System.Drawing.Point(3, 45);
+            this.dataGridView_QueryScripts.Location = new System.Drawing.Point(3, 41);
             this.dataGridView_QueryScripts.Name = "dataGridView_QueryScripts";
             this.dataGridView_QueryScripts.RowHeadersWidth = 30;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dataGridView_QueryScripts.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView_QueryScripts.RowTemplate.Height = 33;
-            this.dataGridView_QueryScripts.Size = new System.Drawing.Size(539, 321);
+            this.dataGridView_QueryScripts.Size = new System.Drawing.Size(539, 325);
             this.dataGridView_QueryScripts.TabIndex = 0;
             this.dataGridView_QueryScripts.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_QueryScripts_CellEndEdit);
             this.dataGridView_QueryScripts.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView_QueryScripts_RowsRemoved);
@@ -246,25 +246,32 @@
             // 
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel1,
             this.toolStripButton_MasterLeft,
             this.toolStripButton_MasterTop,
-            this.toolStripButton3,
-            this.toolStripButton4,
-            this.toolStripButton5,
-            this.toolStripButton6});
+            this.toolStripButton_SlaveBottom,
+            this.toolStripButton_SlaveRight,
+            this.toolStripButton_Fanned});
             this.toolStrip1.Location = new System.Drawing.Point(3, 3);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(539, 42);
+            this.toolStrip1.Size = new System.Drawing.Size(539, 38);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(96, 32);
+            this.toolStripLabel1.Text = "Layouts";
             // 
             // toolStripButton_MasterLeft
             // 
             this.toolStripButton_MasterLeft.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButton_MasterLeft.Image = global::PSDrilldownTool.Properties.Resources.Layout_MasterLeft;
+            this.toolStripButton_MasterLeft.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton_MasterLeft.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton_MasterLeft.Name = "toolStripButton_MasterLeft";
-            this.toolStripButton_MasterLeft.Size = new System.Drawing.Size(46, 36);
+            this.toolStripButton_MasterLeft.Size = new System.Drawing.Size(46, 32);
             this.toolStripButton_MasterLeft.Text = "toolStripButton1";
             this.toolStripButton_MasterLeft.Click += new System.EventHandler(this.toolStripButton_MasterLeft_Click);
             // 
@@ -272,47 +279,45 @@
             // 
             this.toolStripButton_MasterTop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButton_MasterTop.Image = global::PSDrilldownTool.Properties.Resources.Layout_MasterTop;
+            this.toolStripButton_MasterTop.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton_MasterTop.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton_MasterTop.Name = "toolStripButton_MasterTop";
-            this.toolStripButton_MasterTop.Size = new System.Drawing.Size(46, 36);
+            this.toolStripButton_MasterTop.Size = new System.Drawing.Size(46, 32);
             this.toolStripButton_MasterTop.Text = "toolStripButton2";
             this.toolStripButton_MasterTop.Click += new System.EventHandler(this.toolStripButton_MasterTop_Click);
             // 
-            // toolStripButton3
+            // toolStripButton_SlaveBottom
             // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(46, 36);
-            this.toolStripButton3.Text = "toolStripButton3";
+            this.toolStripButton_SlaveBottom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton_SlaveBottom.Image = global::PSDrilldownTool.Properties.Resources.Layout_SlaveBottom;
+            this.toolStripButton_SlaveBottom.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton_SlaveBottom.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_SlaveBottom.Name = "toolStripButton_SlaveBottom";
+            this.toolStripButton_SlaveBottom.Size = new System.Drawing.Size(46, 32);
+            this.toolStripButton_SlaveBottom.Text = "toolStripButton3";
+            this.toolStripButton_SlaveBottom.Click += new System.EventHandler(this.toolStripButton_SlaveBottom_Click);
             // 
-            // toolStripButton4
+            // toolStripButton_SlaveRight
             // 
-            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(46, 36);
-            this.toolStripButton4.Text = "toolStripButton4";
+            this.toolStripButton_SlaveRight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton_SlaveRight.Image = global::PSDrilldownTool.Properties.Resources.Layout_SlaveRight;
+            this.toolStripButton_SlaveRight.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton_SlaveRight.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_SlaveRight.Name = "toolStripButton_SlaveRight";
+            this.toolStripButton_SlaveRight.Size = new System.Drawing.Size(46, 32);
+            this.toolStripButton_SlaveRight.Text = "toolStripButton4";
+            this.toolStripButton_SlaveRight.Click += new System.EventHandler(this.toolStripButton_SlaveRight_Click);
             // 
-            // toolStripButton5
+            // toolStripButton_Fanned
             // 
-            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
-            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(46, 36);
-            this.toolStripButton5.Text = "toolStripButton5";
-            // 
-            // toolStripButton6
-            // 
-            this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton6.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton6.Image")));
-            this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton6.Name = "toolStripButton6";
-            this.toolStripButton6.Size = new System.Drawing.Size(46, 36);
-            this.toolStripButton6.Text = "toolStripButton6";
+            this.toolStripButton_Fanned.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton_Fanned.Image = global::PSDrilldownTool.Properties.Resources.Layout_Fanned;
+            this.toolStripButton_Fanned.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton_Fanned.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_Fanned.Name = "toolStripButton_Fanned";
+            this.toolStripButton_Fanned.Size = new System.Drawing.Size(46, 32);
+            this.toolStripButton_Fanned.Text = "toolStripButton5";
+            this.toolStripButton_Fanned.Click += new System.EventHandler(this.toolStripButton_Fanned_Click);
             // 
             // tabPage_Settings
             // 
@@ -594,10 +599,10 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton_MasterLeft;
         private System.Windows.Forms.ToolStripButton toolStripButton_MasterTop;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
-        private System.Windows.Forms.ToolStripButton toolStripButton4;
-        private System.Windows.Forms.ToolStripButton toolStripButton5;
-        private System.Windows.Forms.ToolStripButton toolStripButton6;
+        private System.Windows.Forms.ToolStripButton toolStripButton_SlaveBottom;
+        private System.Windows.Forms.ToolStripButton toolStripButton_SlaveRight;
+        private System.Windows.Forms.ToolStripButton toolStripButton_Fanned;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
     }
 }
 

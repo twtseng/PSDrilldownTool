@@ -129,14 +129,6 @@ namespace PSDrilldownTool.Forms
                 timer1.Enabled = false;
                 toolStripButton_Start.Enabled = true;
                 toolStripButton_Cancel.Enabled = false;
-                if (_queryScript.ResultDataTable.Rows.Count == 0)
-                {
-                    tabControl_Results.SelectedTab = tabPage_TextResults;
-                }
-                else
-                {
-                    tabControl_Results.SelectedTab = tabPage_TableResults;
-                }
             }
         }
         private void toolStripButton_Cancel_Click(object sender, EventArgs e)
@@ -222,16 +214,12 @@ namespace PSDrilldownTool.Forms
         private void dataGridView_TableResults_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // Update dependent script text and run (if RunOnParentRowSelect specified)
-            foreach (string scriptName in AppData.GlobalAppData.GetDependentQueryScriptNames(this.Text, allDecendants: false))
+            foreach (QueryScript queryScript in AppData.GlobalAppData.GetDependentQueryScripts(_queryScript, allDecendants: false))
             {
-                QueryScript queryScript = AppData.GlobalAppData.QueryScripts.Where(x => x.Name == scriptName).FirstOrDefault();
-                if (queryScript != null)
+                queryScript.QueryScriptWindow.UpdateTranslatedQuery();
+                if (queryScript.RunOnParentRowSelect)
                 {
-                    queryScript.QueryScriptWindow.UpdateTranslatedQuery();
-                    if (queryScript.RunOnParentRowSelect)
-                    {
-                        queryScript.QueryScriptWindow.StartQuery();
-                    }
+                    queryScript.QueryScriptWindow.StartQuery();
                 }
             }
         }
@@ -265,7 +253,7 @@ namespace PSDrilldownTool.Forms
             if (sourceScript.IndexOf("{") >= 0 && sourceScript.IndexOf("{") < sourceScript.IndexOf("}"))
             {
                 sourceScript = sourceScript.Substring(1, sourceScript.IndexOf("}") - 1);
-                if (AppData.GlobalAppData.GetDependentQueryScriptNames(this.Text).Contains(sourceScript))
+                if (AppData.GlobalAppData.GetDependentQueryScripts(_queryScript).Select(x => x.Name).Contains(sourceScript))
                 {
                     e.Effect = DragDropEffects.None;
                 }
