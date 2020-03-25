@@ -82,6 +82,21 @@ namespace PSDrilldownTool.Forms
                 }
             }
         }
+        private void dataGridView_QueryScripts_Leave(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dataGridView_QueryScripts.Rows)
+            {
+                if (row.Cells[0] != null && row.Cells[0].Value != null)
+                {
+                    string scriptName = row.Cells[0].Value.ToString();
+                    var queryScript = AppData.GlobalAppData.QueryScripts.Where(x => x.Name == scriptName).FirstOrDefault();
+                    if (queryScript != null)
+                    {
+                        queryScript.RunOnParentRowSelect = row.Cells[1].Value != null ? (bool)row.Cells[1].Value : false;
+                    }
+                }
+            }
+        }
         #endregion
         #region File Operations
         private void SetFilename(string filename)
@@ -326,7 +341,6 @@ namespace PSDrilldownTool.Forms
             }
         }
         #endregion
-
         #region Font editing
         private void textBox_QueryScriptFont_DoubleClick(object sender, EventArgs e)
         {
@@ -356,20 +370,73 @@ namespace PSDrilldownTool.Forms
         }
         #endregion
 
-        private void dataGridView_QueryScripts_Leave(object sender, EventArgs e)
+        #region QueryScriptWindow Layouts
+        private Rectangle GetMdiRectangle()
         {
-            foreach(DataGridViewRow row in dataGridView_QueryScripts.Rows)
+            Rectangle rectangle = new Rectangle(0, 0,
+                width: (this.ClientRectangle.Width - splitter1.Location.X - 10),
+                height: this.ClientRectangle.Height - 30
+                );
+            return rectangle;
+        }
+
+        public QueryScript CurrentlySelectedQueryScript
+        {
+            get
             {
-                if (row.Cells[0] != null && row.Cells[0].Value != null)
+                QueryScript queryScript = null;
+                if (dataGridView_QueryScripts.CurrentRow != null
+                && dataGridView_QueryScripts.CurrentRow.Cells[0] != null
+                && dataGridView_QueryScripts.CurrentRow.Cells[0].Value != null)
                 {
-                    string scriptName = row.Cells[0].Value.ToString();
-                    var queryScript = AppData.GlobalAppData.QueryScripts.Where(x => x.Name == scriptName).FirstOrDefault();
-                    if (queryScript != null)
+                    string scriptName = dataGridView_QueryScripts.CurrentRow.Cells[0].Value.ToString();
+                    queryScript = AppData.GlobalAppData.GetQueryScriptByName(scriptName: scriptName);
+                }
+                return queryScript;
+            }
+        }
+        private void toolStripButton_MasterTop_Click(object sender, EventArgs e)
+        {
+            if (this.CurrentlySelectedQueryScript != null)
+            {
+                Rectangle rect = this.GetMdiRectangle();
+                this.CurrentlySelectedQueryScript.QueryScriptWindow.SetWindowLocation(0, 0, rect.Width, rect.Height/2);
+                var dependentScripts = AppData.GlobalAppData.GetDependentQueryScriptNames(this.CurrentlySelectedQueryScript.Name, allDecendants: false);
+                for(int i = 0; i < dependentScripts.Count; ++i)
+                {
+                    int width = rect.Width / dependentScripts.Count;
+                    int height = rect.Height / 2;
+                    QueryScript dependentScript = AppData.GlobalAppData.GetQueryScriptByName(dependentScripts[i]);
+                    if (dependentScript != null)
                     {
-                        queryScript.RunOnParentRowSelect = row.Cells[1].Value != null ? (bool)row.Cells[1].Value : false;
+                        dependentScript.QueryScriptWindow.SetWindowLocation(i * width, height, width, height);
+                        dependentScript.QueryScriptWindow.Focus();
                     }
                 }
             }
         }
+        private void toolStripButton_MasterLeft_Click(object sender, EventArgs e)
+        {
+            if (this.CurrentlySelectedQueryScript != null)
+            {
+                Rectangle rect = this.GetMdiRectangle();
+                this.CurrentlySelectedQueryScript.QueryScriptWindow.SetWindowLocation(0, 0, rect.Width/2, rect.Height);
+                var dependentScripts = AppData.GlobalAppData.GetDependentQueryScriptNames(this.CurrentlySelectedQueryScript.Name, allDecendants: false);
+                for (int i = 0; i < dependentScripts.Count; ++i)
+                {
+                    int width = rect.Width / 2;
+                    int height = rect.Height / dependentScripts.Count;
+                    QueryScript dependentScript = AppData.GlobalAppData.GetQueryScriptByName(dependentScripts[i]);
+                    if (dependentScript != null)
+                    {
+                        dependentScript.QueryScriptWindow.SetWindowLocation(width, i * height, width, height);
+                        dependentScript.QueryScriptWindow.Focus();
+                    }
+                }
+            }
+        }
+        #endregion
+
+
     }
 }

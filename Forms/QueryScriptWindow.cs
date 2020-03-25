@@ -47,6 +47,12 @@ namespace PSDrilldownTool.Forms
         {
             this.Text = name;
         }
+
+        public void SetWindowLocation(int x, int y, int width, int height)
+        {
+            this.Location = new Point(x, y);
+            this.Size = new Size(width, height);
+        }
      
         private void QueryScriptWindow_Activated(object sender, EventArgs e)
         {

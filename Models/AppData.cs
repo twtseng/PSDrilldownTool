@@ -44,6 +44,10 @@ namespace PSDrilldownTool.Models
         public Dictionary<string, object> Variables { get; set; }
         public Dictionary<string, string> Settings { get; set; }
         
+        public QueryScript GetQueryScriptByName(string scriptName)
+        {
+            return QueryScripts.Where(x => x.Name == scriptName).FirstOrDefault();
+        }
         public void AddQueryScript(string name, Forms.MainAppWindow mainAppWindow)
         {
             // Exit if script name already exists
