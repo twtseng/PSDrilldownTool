@@ -157,6 +157,11 @@ namespace PSDrilldownTool.Models
             ResultTableFont,
             TextResultsFont
         }
+        public Font FontFromString(string fontString)
+        {
+            FontConverter fontConverter = new FontConverter();
+            return (Font) fontConverter.ConvertFromString(fontString);
+        }
         public void SetFont(FontSetting fontSetting, Font font)
         {
             foreach (QueryScript queryScript in QueryScripts)
@@ -175,7 +180,7 @@ namespace PSDrilldownTool.Models
                 }
             }
             FontConverter fontConverter = new FontConverter();
-            Settings[fontSetting.ToString()] = fontConverter.ConvertToString(font); ;
+            Settings[fontSetting.ToString()] = fontConverter.ConvertToString(font);
         }
     }
 }

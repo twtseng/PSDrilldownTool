@@ -76,7 +76,8 @@ namespace PSDrilldownTool.Forms
         private void UpdateResultControls()
         {
             richTextBox_ScriptText.Text = _queryScript.ScriptText;
-            richTextBox_TranslatedScript.Text = _queryScript.TranslatedScript;
+            UpdateTranslatedQuery();
+            //richTextBox_TranslatedScript.Text = _queryScript.TranslatedScript;
             richTextBox_TextResults.Text = _queryScript.ResultText;
             dataGridView_TableResults.DataSource = _queryScript.ResultDataTable;
             if (_queryScript.ResultDataTable != null)
