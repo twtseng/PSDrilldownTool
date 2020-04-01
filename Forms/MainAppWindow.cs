@@ -492,23 +492,36 @@ namespace PSDrilldownTool.Forms
 
         private void toolStripButton_Fanned_Click(object sender, EventArgs e)
         {
-
+            Rectangle rect = this.GetMdiRectangle();
+            int width =  (int) (rect.Width * .7);
+            int height = (int)(rect.Height * .7);
+            for (int i=0; i < AppData.GlobalAppData.QueryScripts.Count; ++i)
+            {
+                AppData.GlobalAppData.QueryScripts[i].QueryScriptWindow.SetWindowLocation(i*50, i*50, width, height);
+                AppData.GlobalAppData.QueryScripts[i].QueryScriptWindow.Focus();
+            }
         }
-        #endregion
-
+        private void SetQueryWindowSplitterPercent(int percent)
+        {
+            foreach(QueryScript queryScript in AppData.GlobalAppData.QueryScripts)
+            {
+                queryScript.QueryScriptWindow.SetSplitterPercent(percent);
+            }
+        }
         private void toolStripButton_ResultsSplit_Click(object sender, EventArgs e)
         {
-
+            SetQueryWindowSplitterPercent(50);
         }
 
         private void toolStripButton_ResultsMaximized_Click(object sender, EventArgs e)
         {
-
+            SetQueryWindowSplitterPercent(10);
         }
 
         private void toolStripButton_ResultsMinimized_Click(object sender, EventArgs e)
         {
-
+            SetQueryWindowSplitterPercent(90);
         }
+        #endregion
     }
 }

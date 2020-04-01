@@ -39,7 +39,6 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton_Start = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_Cancel = new System.Windows.Forms.ToolStripButton();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel_QueryStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel_Duration = new System.Windows.Forms.ToolStripStatusLabel();
@@ -155,8 +154,7 @@
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton_Start,
-            this.toolStripButton_Cancel,
-            this.toolStripLabel1});
+            this.toolStripButton_Cancel});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1521, 38);
@@ -185,12 +183,6 @@
             this.toolStripButton_Cancel.Text = "Cancel";
             this.toolStripButton_Cancel.ToolTipText = "Cancel";
             this.toolStripButton_Cancel.Click += new System.EventHandler(this.toolStripButton_Cancel_Click);
-            // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(174, 32);
-            this.toolStripLabel1.Text = "toolStripLabel1";
             // 
             // statusStrip1
             // 
@@ -345,7 +337,6 @@
         private System.Windows.Forms.DataGridView dataGridView_TableResults;
         private System.Windows.Forms.RichTextBox richTextBox_TextResults;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_QueryStatus;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_Duration;

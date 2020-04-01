@@ -47,18 +47,30 @@ namespace PSDrilldownTool.Forms
         {
             this.Text = name;
         }
-
+        private void QueryScriptWindow_Activated(object sender, EventArgs e)
+        {
+            _queryScript.MainAppWindow.SelectQueryScriptGridViewRow(name: this.Text);
+        }
+        #endregion
+        #region Layout Control
         public void SetWindowLocation(int x, int y, int width, int height)
         {
             this.Location = new Point(x, y);
             this.Size = new Size(width, height);
         }
-     
-        private void QueryScriptWindow_Activated(object sender, EventArgs e)
+        public void SetSplitterPercent(int percent)
         {
-            _queryScript.MainAppWindow.SelectQueryScriptGridViewRow(name: this.Text);
-            toolStripLabel1.Text = string.Format("Location: {0} Size: {1}", this.Location.ToString(), this.Size.ToString());
+            if (percent < 0)
+            {
+                percent = 0;
+            }
+            else if (percent > 100)
+            {
+                percent = 100;
+            }
+            splitContainer1.SplitterDistance = splitContainer1.Size.Height * percent / 100; 
         }
+        
         #endregion
         #region Output/Status update functions
         private void UpdateResultControls()
