@@ -201,6 +201,8 @@ namespace PSDrilldownTool.Forms
 
         private void UpdateTranslatedQuery()
         {
+            List<string> queryScriptHighlightTokens = new List<string>();
+            List<string> translatedScriptHighlightTokens = new List<string>();
             string translatedQuery = richTextBox_ScriptText.Text;
 
             // Replace the QueryScript tokens with actual values
@@ -211,6 +213,8 @@ namespace PSDrilldownTool.Forms
                     foreach (var kvp in queryScript.QueryScriptWindow.ReplacementTokens)
                     {
                         translatedQuery = translatedQuery.Replace(kvp.Key, kvp.Value);
+                        queryScriptHighlightTokens.Add(kvp.Key);
+                        translatedScriptHighlightTokens.Add(kvp.Value);
                     }
                 }
             }
@@ -218,25 +222,10 @@ namespace PSDrilldownTool.Forms
             _queryScript.TranslatedScript = translatedQuery;
             richTextBox_TranslatedScript.Text = translatedQuery;
             _queryScript.MainAppWindow.UpdateDependentScriptsList();
-        }
-        private void HighlightTokensInRichtext()
-        {
-            List<string> queryScriptHighlightTokens = new List<string>();
-            List<string> translatedScriptHighlightTokens = new List<string>();
-            foreach (QueryScript queryScript in AppData.GlobalAppData.QueryScripts)
-            {
-                if (queryScript.QueryScriptWindow != null)
-                {
-                    foreach (var kvp in queryScript.QueryScriptWindow.ReplacementTokens)
-                    {
-                        queryScriptHighlightTokens.Add(kvp.Key);
-                        translatedScriptHighlightTokens.Add(kvp.Value);
-                    }
-                }
-            }
             Util.ScriptUtil.SetRichtextWithHighlights(richTextBox_ScriptText, queryScriptHighlightTokens);
             Util.ScriptUtil.SetRichtextWithHighlights(richTextBox_TranslatedScript, translatedScriptHighlightTokens);
         }
+ 
         private void dataGridView_TableResults_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // Update dependent script text and run (if RunOnParentRowSelect specified)
@@ -291,6 +280,7 @@ namespace PSDrilldownTool.Forms
         {
             richTextBox_ScriptText.Font = font;
             richTextBox_TranslatedScript.Font = font;
+            UpdateTranslatedQuery();
         }
         public void SetResultTableFont(Font font)
         {
@@ -306,7 +296,6 @@ namespace PSDrilldownTool.Forms
         {
             _queryScript.ScriptText = richTextBox_ScriptText.Text;
             UpdateTranslatedQuery();
-            HighlightTokensInRichtext();
         }
     }
 }
