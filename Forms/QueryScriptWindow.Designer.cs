@@ -90,7 +90,7 @@
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 38);
+            this.splitContainer2.Location = new System.Drawing.Point(0, 25);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -103,8 +103,8 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.richTextBox_TranslatedScript);
             this.splitContainer2.Panel2.Controls.Add(this.label_TranslatedScript);
-            this.splitContainer2.Size = new System.Drawing.Size(1521, 237);
-            this.splitContainer2.SplitterDistance = 53;
+            this.splitContainer2.Size = new System.Drawing.Size(1521, 250);
+            this.splitContainer2.SplitterDistance = 54;
             this.splitContainer2.TabIndex = 1;
             // 
             // richTextBox_ScriptText
@@ -113,11 +113,11 @@
             this.richTextBox_ScriptText.EnableAutoDragDrop = true;
             this.richTextBox_ScriptText.Location = new System.Drawing.Point(0, 25);
             this.richTextBox_ScriptText.Name = "richTextBox_ScriptText";
-            this.richTextBox_ScriptText.Size = new System.Drawing.Size(1521, 28);
+            this.richTextBox_ScriptText.Size = new System.Drawing.Size(1521, 29);
             this.richTextBox_ScriptText.TabIndex = 1;
             this.richTextBox_ScriptText.Text = "";
-            this.richTextBox_ScriptText.TextChanged += new System.EventHandler(this.richTextBox_ScriptText_TextChanged);
             this.richTextBox_ScriptText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptText_KeyDown);
+            this.richTextBox_ScriptText.KeyUp += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptText_KeyUp);
             // 
             // label_ScriptText
             // 
@@ -135,7 +135,7 @@
             this.richTextBox_TranslatedScript.Location = new System.Drawing.Point(0, 25);
             this.richTextBox_TranslatedScript.Name = "richTextBox_TranslatedScript";
             this.richTextBox_TranslatedScript.ReadOnly = true;
-            this.richTextBox_TranslatedScript.Size = new System.Drawing.Size(1521, 155);
+            this.richTextBox_TranslatedScript.Size = new System.Drawing.Size(1521, 167);
             this.richTextBox_TranslatedScript.TabIndex = 2;
             this.richTextBox_TranslatedScript.Text = "";
             // 
@@ -157,7 +157,7 @@
             this.toolStripButton_Cancel});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1521, 38);
+            this.toolStrip1.Size = new System.Drawing.Size(1521, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -168,7 +168,7 @@
             this.toolStripButton_Start.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton_Start.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton_Start.Name = "toolStripButton_Start";
-            this.toolStripButton_Start.Size = new System.Drawing.Size(46, 32);
+            this.toolStripButton_Start.Size = new System.Drawing.Size(46, 19);
             this.toolStripButton_Start.Text = "Start";
             this.toolStripButton_Start.Click += new System.EventHandler(this.toolStripButton_Start_Click);
             // 
@@ -179,7 +179,7 @@
             this.toolStripButton_Cancel.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton_Cancel.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton_Cancel.Name = "toolStripButton_Cancel";
-            this.toolStripButton_Cancel.Size = new System.Drawing.Size(46, 32);
+            this.toolStripButton_Cancel.Size = new System.Drawing.Size(46, 19);
             this.toolStripButton_Cancel.Text = "Cancel";
             this.toolStripButton_Cancel.ToolTipText = "Cancel";
             this.toolStripButton_Cancel.Click += new System.EventHandler(this.toolStripButton_Cancel_Click);

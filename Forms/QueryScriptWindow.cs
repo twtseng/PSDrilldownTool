@@ -188,11 +188,7 @@ namespace PSDrilldownTool.Forms
                 return replacementTokens;
             }
         }
-        private void richTextBox_ScriptText_TextChanged(object sender, EventArgs e)
-        {
-            _queryScript.ScriptText = richTextBox_ScriptText.Text;
-            UpdateTranslatedQuery();
-        }
+
         private void richTextBox_ScriptText_KeyDown(object sender, KeyEventArgs e)
         {
             // Override default richtext paste to only paste the text (we don't want formatting to get pasted)
@@ -208,7 +204,7 @@ namespace PSDrilldownTool.Forms
             string translatedQuery = richTextBox_ScriptText.Text;
 
             // Replace the QueryScript tokens with actual values
-            foreach(QueryScript queryScript in AppData.GlobalAppData.QueryScripts)
+            foreach (QueryScript queryScript in AppData.GlobalAppData.QueryScripts)
             {
                 if (queryScript.QueryScriptWindow != null)
                 {
@@ -222,6 +218,24 @@ namespace PSDrilldownTool.Forms
             _queryScript.TranslatedScript = translatedQuery;
             richTextBox_TranslatedScript.Text = translatedQuery;
             _queryScript.MainAppWindow.UpdateDependentScriptsList();
+        }
+        private void HighlightTokensInRichtext()
+        {
+            List<string> queryScriptHighlightTokens = new List<string>();
+            List<string> translatedScriptHighlightTokens = new List<string>();
+            foreach (QueryScript queryScript in AppData.GlobalAppData.QueryScripts)
+            {
+                if (queryScript.QueryScriptWindow != null)
+                {
+                    foreach (var kvp in queryScript.QueryScriptWindow.ReplacementTokens)
+                    {
+                        queryScriptHighlightTokens.Add(kvp.Key);
+                        translatedScriptHighlightTokens.Add(kvp.Value);
+                    }
+                }
+            }
+            Util.ScriptUtil.SetRichtextWithHighlights(richTextBox_ScriptText, queryScriptHighlightTokens);
+            Util.ScriptUtil.SetRichtextWithHighlights(richTextBox_TranslatedScript, translatedScriptHighlightTokens);
         }
         private void dataGridView_TableResults_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -287,5 +301,12 @@ namespace PSDrilldownTool.Forms
             richTextBox_TextResults.Font = font;
         }
         #endregion
+
+        private void richTextBox_ScriptText_KeyUp(object sender, KeyEventArgs e)
+        {
+            _queryScript.ScriptText = richTextBox_ScriptText.Text;
+            UpdateTranslatedQuery();
+            HighlightTokensInRichtext();
+        }
     }
 }
