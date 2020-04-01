@@ -406,10 +406,6 @@ namespace PSDrilldownTool.Forms
             int relatedWidth = 0;
             int relatedHeight = 0;
 
-            if (relatedScripts.Count == 0)
-            {
-                return;
-            }
             switch (dock)
             {
                 case DockStyle.Top:
@@ -417,7 +413,7 @@ namespace PSDrilldownTool.Forms
                     selectedHeight = rect.Height / 2;
                     selectedX = 0;
                     selectedY = 0;
-                    relatedWidth = rect.Width / relatedScripts.Count; ;
+                    relatedWidth = relatedScripts.Count > 0 ? rect.Width / relatedScripts.Count : 0;
                     relatedHeight = rect.Height / 2;
                     break;
                 case DockStyle.Bottom:
@@ -425,7 +421,7 @@ namespace PSDrilldownTool.Forms
                     selectedHeight = rect.Height / 2;
                     selectedX = 0;
                     selectedY = selectedHeight;
-                    relatedWidth = rect.Width / relatedScripts.Count; ;
+                    relatedWidth = relatedScripts.Count > 0 ? rect.Width / relatedScripts.Count : 0;
                     relatedHeight = rect.Height / 2;
                     break;
                 case DockStyle.Left:
@@ -434,7 +430,7 @@ namespace PSDrilldownTool.Forms
                     selectedX = 0;
                     selectedY = 0;
                     relatedWidth = rect.Width / 2;
-                    relatedHeight = rect.Height / relatedScripts.Count;
+                    relatedHeight = relatedScripts.Count > 0 ? rect.Height / relatedScripts.Count : 0;
                     break;
                 case DockStyle.Right:
                     selectedWidth = rect.Width / 2;
@@ -442,7 +438,7 @@ namespace PSDrilldownTool.Forms
                     selectedX = selectedWidth;
                     selectedY = 0;
                     relatedWidth = rect.Width / 2 ;
-                    relatedHeight = rect.Height / relatedScripts.Count;
+                    relatedHeight = relatedScripts.Count > 0 ? rect.Height / relatedScripts.Count : 0;
                     break;
             }
 
@@ -499,5 +495,20 @@ namespace PSDrilldownTool.Forms
 
         }
         #endregion
+
+        private void toolStripButton_ResultsSplit_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripButton_ResultsMaximized_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripButton_ResultsMinimized_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

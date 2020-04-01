@@ -118,6 +118,9 @@
     <Content Include="Resources\Layout_Fanned.bmp" />
     <Content Include="Resources\Layout_SlaveBottom.bmp" />
     <Content Include="Resources\Layout_SlaveLeft.bmp" />
+    <Content Include="Resources\Results_Half.bmp" />
+    <Content Include="Resources\Results_Maximized.bmp" />
+    <Content Include="Resources\Results_Minimized.bmp" />
     <None Include="Resources\Layout_MasterTop.bmp" />
     <None Include="Resources\Layout_MasterLeft.bmp" />
   </ItemGroup>
