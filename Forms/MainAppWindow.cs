@@ -81,8 +81,17 @@ namespace PSDrilldownTool.Forms
                     queryScript.QueryScriptWindow.BringToFront();
                 }
             }
+            UpdateQueryScriptSettingsFromGridview();
         }
-        private void dataGridView_QueryScripts_Leave(object sender, EventArgs e)
+        private void dataGridView_QueryScripts_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            dataGridView_QueryScripts.CommitEdit(DataGridViewDataErrorContexts.Commit);
+        }
+        private void dataGridView_QueryScripts_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            UpdateQueryScriptSettingsFromGridview();
+        }
+        private void UpdateQueryScriptSettingsFromGridview()
         {
             foreach (DataGridViewRow row in dataGridView_QueryScripts.Rows)
             {
@@ -97,6 +106,7 @@ namespace PSDrilldownTool.Forms
                 }
             }
         }
+
         #endregion
         #region File Operations
         private void SetFilename(string filename)
@@ -183,7 +193,7 @@ namespace PSDrilldownTool.Forms
                 {
                     string scriptName = row.Cells["column_Name"].Value.ToString();
                     QueryScript queryScript = AppData.GlobalAppData.GetQueryScriptByName(scriptName);
-                    string dependentScripts = string.Join(",", AppData.GlobalAppData.GetDependentQueryScripts(queryScript));
+                    string dependentScripts = string.Join(",", AppData.GlobalAppData.GetDependentQueryScripts(queryScript).Select(x => x.Name));
                     row.Cells["column_Dependencies"].Value = dependentScripts;
                 }
             }

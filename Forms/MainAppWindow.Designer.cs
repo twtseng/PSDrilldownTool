@@ -203,10 +203,11 @@
             this.dataGridView_QueryScripts.RowTemplate.Height = 33;
             this.dataGridView_QueryScripts.Size = new System.Drawing.Size(539, 324);
             this.dataGridView_QueryScripts.TabIndex = 0;
+            this.dataGridView_QueryScripts.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_QueryScripts_CellContentClick);
             this.dataGridView_QueryScripts.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_QueryScripts_CellEndEdit);
+            this.dataGridView_QueryScripts.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_QueryScripts_CellValueChanged);
             this.dataGridView_QueryScripts.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView_QueryScripts_RowsRemoved);
             this.dataGridView_QueryScripts.Click += new System.EventHandler(this.dataGridView_QueryScripts_Click);
-            this.dataGridView_QueryScripts.Leave += new System.EventHandler(this.dataGridView_QueryScripts_Leave);
             // 
             // Column_Name
             // 
@@ -515,7 +516,7 @@
             this.tabPage_Variables.Location = new System.Drawing.Point(8, 39);
             this.tabPage_Variables.Name = "tabPage_Variables";
             this.tabPage_Variables.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_Variables.Size = new System.Drawing.Size(545, 403);
+            this.tabPage_Variables.Size = new System.Drawing.Size(545, 404);
             this.tabPage_Variables.TabIndex = 1;
             this.tabPage_Variables.Text = "Variables";
             this.tabPage_Variables.UseVisualStyleBackColor = true;
@@ -533,7 +534,7 @@
             this.dataGridView_Variables.Name = "dataGridView_Variables";
             this.dataGridView_Variables.RowHeadersWidth = 40;
             this.dataGridView_Variables.RowTemplate.Height = 33;
-            this.dataGridView_Variables.Size = new System.Drawing.Size(539, 397);
+            this.dataGridView_Variables.Size = new System.Drawing.Size(539, 398);
             this.dataGridView_Variables.TabIndex = 1;
             this.dataGridView_Variables.Leave += new System.EventHandler(this.dataGridView_Variables_Leave);
             // 

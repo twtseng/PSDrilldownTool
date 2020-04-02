@@ -70,7 +70,20 @@ namespace PSDrilldownTool.Forms
             }
             splitContainer1.SplitterDistance = splitContainer1.Size.Height * percent / 100; 
         }
-        
+        private void toolStripButton_ResultsMaximized_Click(object sender, EventArgs e)
+        {
+            SetSplitterPercent(10);
+        }
+
+        private void toolStripButton_ResultsSplit_Click(object sender, EventArgs e)
+        {
+            SetSplitterPercent(50);
+        }
+
+        private void toolStripButton_ResultsMinimized_Click(object sender, EventArgs e)
+        {
+            SetSplitterPercent(90);
+        }
         #endregion
         #region Output/Status update functions
         private void UpdateResultControls()
@@ -201,12 +214,17 @@ namespace PSDrilldownTool.Forms
                 Clipboard.SetText(textData);
             }
         }
+        private void richTextBox_ScriptText_KeyUp(object sender, KeyEventArgs e)
+        {
+            _queryScript.ScriptText = richTextBox_ScriptText.Text;
+            UpdateTranslatedQuery();
+        }
 
-        private void UpdateTranslatedQuery()
+        public void UpdateTranslatedQuery()
         {
             Dictionary<string, string> queryScriptHighlightTokens = new Dictionary<string, string>();
             Dictionary<string, string> translatedScriptHighlightTokens = new Dictionary<string, string>();
-            string scriptText = richTextBox_ScriptText.Text;
+            string scriptText = _queryScript.ScriptText;
             string translatedQuery = scriptText;
 
             // Replace the QueryScript tokens with actual values
@@ -309,10 +327,8 @@ namespace PSDrilldownTool.Forms
         }
         #endregion
 
-        private void richTextBox_ScriptText_KeyUp(object sender, KeyEventArgs e)
-        {
-            _queryScript.ScriptText = richTextBox_ScriptText.Text;
-            UpdateTranslatedQuery();
-        }
+
+
+        
     }
 }

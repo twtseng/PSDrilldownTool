@@ -38,7 +38,6 @@ namespace PSDrilldownTool.Models
         }
         /// <summary>
         /// The store of all of the QueryScripts.
-        /// The key is the store for the "script names".
         /// </summary>
         public List<QueryScript> QueryScripts { get; set; }
         public Dictionary<string, string> LibraryScripts { get; set; }
@@ -86,16 +85,15 @@ namespace PSDrilldownTool.Models
             // Rename the script token in any script that might be using it
             string oldToken = Util.ScriptUtil.ScriptNameToken(oldName);
             string newToken = Util.ScriptUtil.ScriptNameToken(newName);
+            QueryScript scriptToRename = GetQueryScriptByName(oldName);
+            scriptToRename.Name = newName;
+            scriptToRename.QueryScriptWindow.SetWindowName(newName);
             foreach (QueryScript queryScript in QueryScripts)
             {
                 if (!string.IsNullOrWhiteSpace(queryScript.ScriptText))
                 {
                     queryScript.ScriptText = queryScript.ScriptText.Replace(oldToken, newToken);
-                }
-                if (queryScript.Name == oldName)
-                {
-                    queryScript.QueryScriptWindow.SetWindowName(newName);
-                    queryScript.Name = newName;
+                    queryScript.QueryScriptWindow.UpdateTranslatedQuery();
                 }
             }
         }
@@ -144,7 +142,7 @@ namespace PSDrilldownTool.Models
             }
             return dependentQueryScripts;
         }
-        public List<QueryScript> GetMasterQueryScripts(QueryScript script, bool allDecendants = true)
+        public List<QueryScript> GetMasterQueryScripts(QueryScript script)
         {
             List<QueryScript> masterQueryScripts = new List<QueryScript>();
             foreach (var queryScript in QueryScripts)
