@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Drawing;
 using PSDrilldownTool.Forms;
+using System.Data;
 
 namespace PSDrilldownTool.Models
 {
@@ -43,7 +44,15 @@ namespace PSDrilldownTool.Models
         public Dictionary<string, string> LibraryScripts { get; set; }
         public Dictionary<string, object> Variables { get; set; }
         public Dictionary<string, string> Settings { get; set; }
-        
+        public Dictionary<string, DataTable> GetQueryScriptsTableResultsDictionary()
+        {
+            Dictionary<string, DataTable> tableResults = new Dictionary<string, DataTable>();
+            foreach (QueryScript queryScript in QueryScripts)
+            {
+                tableResults[queryScript.Name] = queryScript.ResultDataTable;
+            }
+            return tableResults;
+        }
         public QueryScript GetQueryScriptByName(string scriptName)
         {
             return QueryScripts.Where(x => x.Name == scriptName).FirstOrDefault();
@@ -113,16 +122,12 @@ namespace PSDrilldownTool.Models
             return System.Guid.NewGuid().ToString();
         }
 
-        static string ScriptReplacementToken(string scriptName)
-        {
-            return "{" + scriptName + "}";
-        }
         public List<QueryScript> GetDependentQueryScripts(QueryScript script, bool allDecendants=true)
         {
             List<QueryScript> dependentQueryScripts = new List<QueryScript>();
             foreach (var queryScript in QueryScripts)
             {
-                if (script != queryScript && queryScript.ScriptText != null && queryScript.ScriptText.Contains(AppData.ScriptReplacementToken(script.Name)))
+                if (script != queryScript && queryScript.ScriptText != null && queryScript.ScriptText.Contains(Util.ScriptUtil.ScriptNameToken(script.Name)))
                 {
                     dependentQueryScripts.Add(queryScript);
                     if (allDecendants)
@@ -144,7 +149,7 @@ namespace PSDrilldownTool.Models
             List<QueryScript> masterQueryScripts = new List<QueryScript>();
             foreach (var queryScript in QueryScripts)
             {
-                if (script != queryScript && script.ScriptText != null && script.ScriptText.Contains(AppData.ScriptReplacementToken(queryScript.Name)))
+                if (script != queryScript && script.ScriptText != null && script.ScriptText.Contains(Util.ScriptUtil.ScriptNameToken(queryScript.Name)))
                 {
                     masterQueryScripts.Add(queryScript);
                 }
@@ -157,7 +162,7 @@ namespace PSDrilldownTool.Models
             ResultTableFont,
             TextResultsFont
         }
-        public Font FontFromString(string fontString)
+        static public Font FontFromString(string fontString)
         {
             FontConverter fontConverter = new FontConverter();
             return (Font) fontConverter.ConvertFromString(fontString);

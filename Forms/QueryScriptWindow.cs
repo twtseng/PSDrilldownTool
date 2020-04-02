@@ -109,11 +109,13 @@ namespace PSDrilldownTool.Forms
         }
         #endregion
         #region Task Processing
+
+        const string tableResultsString = "tableResults";
         public void StartQuery()
         {
             Dictionary<string, object> variables = new Dictionary<string, object>(AppData.GlobalAppData.Variables);
-            variables["AppData"] = AppData.GlobalAppData;
-
+            variables[tableResultsString] = AppData.GlobalAppData.GetQueryScriptsTableResultsDictionary();
+           
             _powershellTask = new Util.PowershellTask(
                 scriptText: richTextBox_TranslatedScript.Text,
                 variables: variables,
@@ -153,15 +155,15 @@ namespace PSDrilldownTool.Forms
         #region Script Editing and Translating
         public string ScriptReplacementToken
         {
-            get { return "{" + this.Text + "}"; }
+            get { return Util.ScriptUtil.ScriptNameToken(scriptName: this.Text); }
         }
         public string TableResultsReplacementToken
         {
-            get { return ScriptReplacementToken + ".TableResults"; }
+            get { return ScriptReplacementToken + $"[{tableResultsString}]"; }
         }
         public string TableResultsReplacementValue
         {
-            get { return "$appData.QueryScripts['" + this.Text + "'].ResultDataTable"; }
+            get { return $"${tableResultsString}['{this.Text}']"; }
         }
         public string ColumnReplacementToken(string columnName)
         {
@@ -202,9 +204,10 @@ namespace PSDrilldownTool.Forms
 
         private void UpdateTranslatedQuery()
         {
-            List<string> queryScriptHighlightTokens = new List<string>();
-            List<string> translatedScriptHighlightTokens = new List<string>();
-            string translatedQuery = richTextBox_ScriptText.Text;
+            Dictionary<string, string> queryScriptHighlightTokens = new Dictionary<string, string>();
+            Dictionary<string, string> translatedScriptHighlightTokens = new Dictionary<string, string>();
+            string scriptText = richTextBox_ScriptText.Text;
+            string translatedQuery = scriptText;
 
             // Replace the QueryScript tokens with actual values
             foreach (QueryScript queryScript in AppData.GlobalAppData.QueryScripts)
@@ -214,17 +217,30 @@ namespace PSDrilldownTool.Forms
                     foreach (var kvp in queryScript.QueryScriptWindow.ReplacementTokens)
                     {
                         translatedQuery = translatedQuery.Replace(kvp.Key, kvp.Value);
-                        queryScriptHighlightTokens.Add(kvp.Key);
-                        translatedScriptHighlightTokens.Add(kvp.Value);
+                        queryScriptHighlightTokens[kvp.Key] = kvp.Key;
+                        translatedScriptHighlightTokens[kvp.Key] = kvp.Value;
                     }
                 }
             }
 
             _queryScript.TranslatedScript = translatedQuery;
-            richTextBox_TranslatedScript.Text = translatedQuery;
             _queryScript.MainAppWindow.UpdateDependentScriptsList();
-            Util.ScriptUtil.SetRichtextWithHighlights(richTextBox_ScriptText, queryScriptHighlightTokens);
-            Util.ScriptUtil.SetRichtextWithHighlights(richTextBox_TranslatedScript, translatedScriptHighlightTokens);
+
+            // Highlight the richTextBox_ScriptText 
+            string queryScriptRichtext = Util.ScriptUtil.GenerateRichtextWithHighlights(scriptText, richTextBox_ScriptText.Font, Color.Blue, Color.Red, queryScriptHighlightTokens);
+            int selectionStart = richTextBox_ScriptText.SelectionStart;
+            richTextBox_ScriptText.Rtf = queryScriptRichtext;
+            richTextBox_ScriptText.SelectionStart = selectionStart;
+            richTextBox_ScriptText.ScrollToCaret();
+            richTextBox_ScriptText.Refresh();
+
+            // Highlight the richTextBox_ScriptText 
+            string translatedScriptRichtext = Util.ScriptUtil.GenerateRichtextWithHighlights(scriptText, richTextBox_TranslatedScript.Font, Color.Blue, Color.Red, translatedScriptHighlightTokens);
+            selectionStart = richTextBox_TranslatedScript.SelectionStart;
+            richTextBox_TranslatedScript.Rtf = translatedScriptRichtext;
+            richTextBox_TranslatedScript.SelectionStart = selectionStart;
+            richTextBox_TranslatedScript.ScrollToCaret();
+            richTextBox_TranslatedScript.Refresh();
         }
  
         private void dataGridView_TableResults_CellClick(object sender, DataGridViewCellEventArgs e)

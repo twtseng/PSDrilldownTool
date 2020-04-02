@@ -346,7 +346,7 @@ namespace PSDrilldownTool.Forms
         #region Font editing
         private void textBox_QueryScriptFont_DoubleClick(object sender, EventArgs e)
         {
-            fontDialog1.Font = AppData.GlobalAppData.FontFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.QueryScriptFont.ToString()]);
+            fontDialog1.Font = AppData.FontFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.QueryScriptFont.ToString()]);
             if (fontDialog1.ShowDialog() == DialogResult.OK)
             {
                 textBox_QueryScriptFont.Text = fontDialog1.Font.ToString();
@@ -356,7 +356,7 @@ namespace PSDrilldownTool.Forms
 
         private void textBox_ResultTableFont_DoubleClick(object sender, EventArgs e)
         {
-            fontDialog1.Font = AppData.GlobalAppData.FontFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.ResultTableFont.ToString()]);
+            fontDialog1.Font = AppData.FontFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.ResultTableFont.ToString()]);
             if (fontDialog1.ShowDialog() == DialogResult.OK)
             {
                 textBox_ResultTableFont.Text = fontDialog1.Font.ToString();
@@ -366,7 +366,7 @@ namespace PSDrilldownTool.Forms
 
         private void textBox_TextResultsFont_DoubleClick(object sender, EventArgs e)
         {
-            fontDialog1.Font = AppData.GlobalAppData.FontFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.TextResultsFont.ToString()]);
+            fontDialog1.Font = AppData.FontFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.TextResultsFont.ToString()]);
             if (fontDialog1.ShowDialog() == DialogResult.OK)
             {
                 textBox_TextResultsFont.Text = fontDialog1.Font.ToString();

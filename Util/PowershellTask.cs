@@ -206,10 +206,6 @@ namespace PSDrilldownTool.Util
                         _runspace.Dispose();
                         RunPsTaskSync();
                     }
-                    //else
-                    //{
-                    //    _taskStatus = Status.FAILED;
-                    //}
                 }
             }
             catch (Exception ex)
