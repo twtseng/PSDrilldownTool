@@ -160,7 +160,10 @@ namespace PSDrilldownTool.Forms
             treeView_DependencyTree.Nodes.Clear();
             foreach (QueryScript queryScript in AppData.GlobalAppData.QueryScripts)
             {
-                AddDependencyTreeNode(queryScript, null);
+                if (AppData.GlobalAppData.GetMasterQueryScripts(queryScript).Count == 0)
+                {
+                    AddDependencyTreeNode(queryScript, null);
+                }
             }
             treeView_DependencyTree.ExpandAll();
         }

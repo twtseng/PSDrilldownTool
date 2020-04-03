@@ -39,6 +39,10 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton_Start = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_Cancel = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton_ResultsMaximized = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton_ResultsSplit = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton_ResultsMinimized = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel_QueryStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel_Duration = new System.Windows.Forms.ToolStripStatusLabel();
@@ -50,10 +54,6 @@
             this.tabPage_TextResults = new System.Windows.Forms.TabPage();
             this.richTextBox_TextResults = new System.Windows.Forms.RichTextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton_ResultsMaximized = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton_ResultsSplit = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton_ResultsMinimized = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -94,7 +94,7 @@
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 200);
+            this.splitContainer2.Location = new System.Drawing.Point(0, 25);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -107,8 +107,8 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.richTextBox_TranslatedScript);
             this.splitContainer2.Panel2.Controls.Add(this.label_TranslatedScript);
-            this.splitContainer2.Size = new System.Drawing.Size(3042, 350);
-            this.splitContainer2.SplitterDistance = 75;
+            this.splitContainer2.Size = new System.Drawing.Size(1521, 250);
+            this.splitContainer2.SplitterDistance = 53;
             this.splitContainer2.TabIndex = 1;
             // 
             // richTextBox_ScriptText
@@ -117,7 +117,7 @@
             this.richTextBox_ScriptText.EnableAutoDragDrop = true;
             this.richTextBox_ScriptText.Location = new System.Drawing.Point(0, 25);
             this.richTextBox_ScriptText.Name = "richTextBox_ScriptText";
-            this.richTextBox_ScriptText.Size = new System.Drawing.Size(3042, 50);
+            this.richTextBox_ScriptText.Size = new System.Drawing.Size(1521, 28);
             this.richTextBox_ScriptText.TabIndex = 1;
             this.richTextBox_ScriptText.Text = "";
             this.richTextBox_ScriptText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptText_KeyDown);
@@ -139,7 +139,7 @@
             this.richTextBox_TranslatedScript.Location = new System.Drawing.Point(0, 25);
             this.richTextBox_TranslatedScript.Name = "richTextBox_TranslatedScript";
             this.richTextBox_TranslatedScript.ReadOnly = true;
-            this.richTextBox_TranslatedScript.Size = new System.Drawing.Size(3042, 246);
+            this.richTextBox_TranslatedScript.Size = new System.Drawing.Size(1521, 168);
             this.richTextBox_TranslatedScript.TabIndex = 2;
             this.richTextBox_TranslatedScript.Text = "";
             // 
@@ -165,7 +165,7 @@
             this.toolStripButton_ResultsMinimized});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(3042, 100);
+            this.toolStrip1.Size = new System.Drawing.Size(1521, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -176,7 +176,7 @@
             this.toolStripButton_Start.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton_Start.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton_Start.Name = "toolStripButton_Start";
-            this.toolStripButton_Start.Size = new System.Drawing.Size(46, 94);
+            this.toolStripButton_Start.Size = new System.Drawing.Size(46, 19);
             this.toolStripButton_Start.Text = "Start";
             this.toolStripButton_Start.Click += new System.EventHandler(this.toolStripButton_Start_Click);
             // 
@@ -188,10 +188,48 @@
             this.toolStripButton_Cancel.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton_Cancel.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton_Cancel.Name = "toolStripButton_Cancel";
-            this.toolStripButton_Cancel.Size = new System.Drawing.Size(46, 94);
+            this.toolStripButton_Cancel.Size = new System.Drawing.Size(46, 19);
             this.toolStripButton_Cancel.Text = "Cancel";
             this.toolStripButton_Cancel.ToolTipText = "Cancel";
             this.toolStripButton_Cancel.Click += new System.EventHandler(this.toolStripButton_Cancel_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton_ResultsMaximized
+            // 
+            this.toolStripButton_ResultsMaximized.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton_ResultsMaximized.Image = global::PSDrilldownTool.Properties.Resources.Results_Maximized;
+            this.toolStripButton_ResultsMaximized.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton_ResultsMaximized.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_ResultsMaximized.Name = "toolStripButton_ResultsMaximized";
+            this.toolStripButton_ResultsMaximized.Size = new System.Drawing.Size(46, 19);
+            this.toolStripButton_ResultsMaximized.Text = "Results Maximized";
+            this.toolStripButton_ResultsMaximized.Click += new System.EventHandler(this.toolStripButton_ResultsMaximized_Click);
+            // 
+            // toolStripButton_ResultsSplit
+            // 
+            this.toolStripButton_ResultsSplit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton_ResultsSplit.Image = global::PSDrilldownTool.Properties.Resources.Results_Half;
+            this.toolStripButton_ResultsSplit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton_ResultsSplit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_ResultsSplit.Name = "toolStripButton_ResultsSplit";
+            this.toolStripButton_ResultsSplit.Size = new System.Drawing.Size(46, 19);
+            this.toolStripButton_ResultsSplit.Text = "Results Split";
+            this.toolStripButton_ResultsSplit.Click += new System.EventHandler(this.toolStripButton_ResultsSplit_Click);
+            // 
+            // toolStripButton_ResultsMinimized
+            // 
+            this.toolStripButton_ResultsMinimized.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton_ResultsMinimized.Image = global::PSDrilldownTool.Properties.Resources.Results_Minimized;
+            this.toolStripButton_ResultsMinimized.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton_ResultsMinimized.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_ResultsMinimized.Name = "toolStripButton_ResultsMinimized";
+            this.toolStripButton_ResultsMinimized.Size = new System.Drawing.Size(46, 19);
+            this.toolStripButton_ResultsMinimized.Text = "Results Minimized";
+            this.toolStripButton_ResultsMinimized.Click += new System.EventHandler(this.toolStripButton_ResultsMinimized_Click);
             // 
             // statusStrip1
             // 
@@ -293,44 +331,6 @@
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 100);
-            // 
-            // toolStripButton_ResultsMaximized
-            // 
-            this.toolStripButton_ResultsMaximized.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton_ResultsMaximized.Image = global::PSDrilldownTool.Properties.Resources.Results_Maximized;
-            this.toolStripButton_ResultsMaximized.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton_ResultsMaximized.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton_ResultsMaximized.Name = "toolStripButton_ResultsMaximized";
-            this.toolStripButton_ResultsMaximized.Size = new System.Drawing.Size(46, 94);
-            this.toolStripButton_ResultsMaximized.Text = "Results Maximized";
-            this.toolStripButton_ResultsMaximized.Click += new System.EventHandler(this.toolStripButton_ResultsMaximized_Click);
-            // 
-            // toolStripButton_ResultsSplit
-            // 
-            this.toolStripButton_ResultsSplit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton_ResultsSplit.Image = global::PSDrilldownTool.Properties.Resources.Results_Half;
-            this.toolStripButton_ResultsSplit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton_ResultsSplit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton_ResultsSplit.Name = "toolStripButton_ResultsSplit";
-            this.toolStripButton_ResultsSplit.Size = new System.Drawing.Size(46, 94);
-            this.toolStripButton_ResultsSplit.Text = "Results Split";
-            this.toolStripButton_ResultsSplit.Click += new System.EventHandler(this.toolStripButton_ResultsSplit_Click);
-            // 
-            // toolStripButton_ResultsMinimized
-            // 
-            this.toolStripButton_ResultsMinimized.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton_ResultsMinimized.Image = global::PSDrilldownTool.Properties.Resources.Results_Minimized;
-            this.toolStripButton_ResultsMinimized.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton_ResultsMinimized.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton_ResultsMinimized.Name = "toolStripButton_ResultsMinimized";
-            this.toolStripButton_ResultsMinimized.Size = new System.Drawing.Size(46, 94);
-            this.toolStripButton_ResultsMinimized.Text = "Results Minimized";
-            this.toolStripButton_ResultsMinimized.Click += new System.EventHandler(this.toolStripButton_ResultsMinimized_Click);
             // 
             // QueryScriptWindow
             // 

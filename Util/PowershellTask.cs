@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Management.Automation.Runspaces;
+using System.Management.Automation;
 using System.Collections;
 using System.Data;
 
@@ -62,6 +63,37 @@ namespace PSDrilldownTool.Util
                 }
             }
         }
+
+        enum DataTableType
+        {
+            None,
+            DataRow,
+            PSCustomObject
+        }
+
+        private DataTableType _dataTableType;
+        private void SetDataTableFromPSCustomObject(PSObject psObject)
+        {
+            _resultDataTable = new DataTable();
+            foreach(var prop in psObject.Properties)
+            {
+                _resultDataTable.Columns.Add(prop.Name, Type.GetType(prop.TypeNameOfValue));
+            }
+            _dataTableType = DataTableType.PSCustomObject;
+        }
+        private void ImportRowFromPSCustomObject(PSObject psObject)
+        {
+            var newRow = _resultDataTable.NewRow();
+            foreach(DataColumn column in _resultDataTable.Columns)
+            {
+                if (psObject.Properties[column.ColumnName] != null)
+                {
+                    newRow[column.ColumnName] = psObject.Properties[column.ColumnName].Value;
+                }
+            }
+            _resultDataTable.Rows.Add(newRow);
+        }
+
         private Status _taskStatus;
         /// <summary>
         /// Current status for the task (from the PowershellTask.Status enumeration) 
@@ -99,6 +131,7 @@ namespace PSDrilldownTool.Util
             _scriptText = scriptText;
             _scriptFiles = scriptFiles;
             _variables = variables;
+            _dataTableType = DataTableType.None;
         }
 
         public bool CreatePsPipeline()
@@ -188,8 +221,24 @@ namespace PSDrilldownTool.Util
                         if (_resultDataTable == null)
                         {
                             _resultDataTable = row.Table.Clone();
+                            _dataTableType = DataTableType.DataRow;
                         }
-                        _resultDataTable.ImportRow(row);
+                        if (_dataTableType == DataTableType.DataRow)
+                        {
+                            _resultDataTable.ImportRow(row);
+                        }
+                    }
+                    else if (r.BaseObject is System.Management.Automation.PSCustomObject)
+                    {
+                        if (_resultDataTable == null)
+                        {
+                            SetDataTableFromPSCustomObject(r);
+                            _dataTableType = DataTableType.PSCustomObject;
+                        }
+                        if (_dataTableType == DataTableType.PSCustomObject)
+                        {
+                            ImportRowFromPSCustomObject(r);
+                        }
                     }
                     else
                     {
