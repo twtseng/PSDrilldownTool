@@ -42,7 +42,6 @@
             this.dataGridView_QueryScripts = new System.Windows.Forms.DataGridView();
             this.Column_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_AutoRun = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Column_Dependencies = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column_OldName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
@@ -56,14 +55,12 @@
             this.toolStripButton_ResultsSplit = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_ResultsMinimized = new System.Windows.Forms.ToolStripButton();
             this.tabPage_Settings = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.textBox_QueryScriptFont = new System.Windows.Forms.TextBox();
-            this.textBox_ResultTableFont = new System.Windows.Forms.TextBox();
-            this.textBox_TextResultsFont = new System.Windows.Forms.TextBox();
-            this.label_QueryWindowFont = new System.Windows.Forms.Label();
-            this.label_ResultTableFont = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.dataGridView_Settings = new System.Windows.Forms.DataGridView();
+            this.Column_SettingName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column_SettingValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl_Settings = new System.Windows.Forms.TabControl();
+            this.tabPage_DependencyTree = new System.Windows.Forms.TabPage();
+            this.treeView_DependencyTree = new System.Windows.Forms.TreeView();
             this.tabPage_LibScripts = new System.Windows.Forms.TabPage();
             this.dataGridView_LibScripts = new System.Windows.Forms.DataGridView();
             this.Column_ScriptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -84,8 +81,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_QueryScripts)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.tabPage_Settings.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Settings)).BeginInit();
             this.tabControl_Settings.SuspendLayout();
+            this.tabPage_DependencyTree.SuspendLayout();
             this.tabPage_LibScripts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_LibScripts)).BeginInit();
             this.tabPage_Variables.SuspendLayout();
@@ -158,7 +156,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControl_Settings);
             this.splitContainer1.Size = new System.Drawing.Size(561, 870);
-            this.splitContainer1.SplitterDistance = 415;
+            this.splitContainer1.SplitterDistance = 414;
             this.splitContainer1.TabIndex = 2;
             // 
             // tabControl1
@@ -169,7 +167,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(561, 415);
+            this.tabControl1.Size = new System.Drawing.Size(561, 414);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage_QueryScripts
@@ -179,7 +177,7 @@
             this.tabPage_QueryScripts.Location = new System.Drawing.Point(8, 39);
             this.tabPage_QueryScripts.Name = "tabPage_QueryScripts";
             this.tabPage_QueryScripts.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_QueryScripts.Size = new System.Drawing.Size(545, 368);
+            this.tabPage_QueryScripts.Size = new System.Drawing.Size(545, 367);
             this.tabPage_QueryScripts.TabIndex = 0;
             this.tabPage_QueryScripts.Text = "Query Scripts";
             this.tabPage_QueryScripts.UseVisualStyleBackColor = true;
@@ -192,16 +190,16 @@
             this.dataGridView_QueryScripts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column_Name,
             this.Column_AutoRun,
-            this.Column_Dependencies,
             this.Column_OldName});
             this.dataGridView_QueryScripts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView_QueryScripts.Location = new System.Drawing.Point(3, 41);
+            this.dataGridView_QueryScripts.MultiSelect = false;
             this.dataGridView_QueryScripts.Name = "dataGridView_QueryScripts";
             this.dataGridView_QueryScripts.RowHeadersWidth = 30;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dataGridView_QueryScripts.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView_QueryScripts.RowTemplate.Height = 33;
-            this.dataGridView_QueryScripts.Size = new System.Drawing.Size(539, 324);
+            this.dataGridView_QueryScripts.Size = new System.Drawing.Size(539, 323);
             this.dataGridView_QueryScripts.TabIndex = 0;
             this.dataGridView_QueryScripts.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_QueryScripts_CellContentClick);
             this.dataGridView_QueryScripts.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_QueryScripts_CellEndEdit);
@@ -222,13 +220,6 @@
             this.Column_AutoRun.MinimumWidth = 10;
             this.Column_AutoRun.Name = "Column_AutoRun";
             this.Column_AutoRun.Width = 107;
-            // 
-            // Column_Dependencies
-            // 
-            this.Column_Dependencies.HeaderText = "Dependencies";
-            this.Column_Dependencies.MinimumWidth = 10;
-            this.Column_Dependencies.Name = "Column_Dependencies";
-            this.Column_Dependencies.Width = 195;
             // 
             // Column_OldName
             // 
@@ -360,111 +351,79 @@
             // 
             // tabPage_Settings
             // 
-            this.tabPage_Settings.Controls.Add(this.tableLayoutPanel1);
+            this.tabPage_Settings.Controls.Add(this.dataGridView_Settings);
             this.tabPage_Settings.Location = new System.Drawing.Point(8, 39);
             this.tabPage_Settings.Name = "tabPage_Settings";
             this.tabPage_Settings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_Settings.Size = new System.Drawing.Size(545, 368);
+            this.tabPage_Settings.Size = new System.Drawing.Size(545, 367);
             this.tabPage_Settings.TabIndex = 1;
             this.tabPage_Settings.Text = "Settings";
             this.tabPage_Settings.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel1
+            // dataGridView_Settings
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.66667F));
-            this.tableLayoutPanel1.Controls.Add(this.textBox_QueryScriptFont, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.textBox_ResultTableFont, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.textBox_TextResultsFont, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label_QueryWindowFont, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label_ResultTableFont, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 2);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 5;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(539, 362);
-            this.tableLayoutPanel1.TabIndex = 0;
+            this.dataGridView_Settings.AllowUserToAddRows = false;
+            this.dataGridView_Settings.AllowUserToDeleteRows = false;
+            this.dataGridView_Settings.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.dataGridView_Settings.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.dataGridView_Settings.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_Settings.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column_SettingName,
+            this.Column_SettingValue});
+            this.dataGridView_Settings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView_Settings.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView_Settings.Name = "dataGridView_Settings";
+            this.dataGridView_Settings.RowHeadersWidth = 5;
+            this.dataGridView_Settings.RowTemplate.Height = 33;
+            this.dataGridView_Settings.Size = new System.Drawing.Size(539, 361);
+            this.dataGridView_Settings.TabIndex = 0;
+            this.dataGridView_Settings.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_Settings_CellDoubleClick);
             // 
-            // textBox_QueryScriptFont
+            // Column_SettingName
             // 
-            this.textBox_QueryScriptFont.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox_QueryScriptFont.Location = new System.Drawing.Point(182, 3);
-            this.textBox_QueryScriptFont.Name = "textBox_QueryScriptFont";
-            this.textBox_QueryScriptFont.ReadOnly = true;
-            this.textBox_QueryScriptFont.Size = new System.Drawing.Size(354, 31);
-            this.textBox_QueryScriptFont.TabIndex = 0;
-            this.textBox_QueryScriptFont.DoubleClick += new System.EventHandler(this.textBox_QueryScriptFont_DoubleClick);
+            this.Column_SettingName.HeaderText = "Setting";
+            this.Column_SettingName.MinimumWidth = 10;
+            this.Column_SettingName.Name = "Column_SettingName";
+            this.Column_SettingName.Width = 124;
             // 
-            // textBox_ResultTableFont
+            // Column_SettingValue
             // 
-            this.textBox_ResultTableFont.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox_ResultTableFont.Location = new System.Drawing.Point(182, 43);
-            this.textBox_ResultTableFont.Name = "textBox_ResultTableFont";
-            this.textBox_ResultTableFont.ReadOnly = true;
-            this.textBox_ResultTableFont.Size = new System.Drawing.Size(354, 31);
-            this.textBox_ResultTableFont.TabIndex = 1;
-            this.textBox_ResultTableFont.DoubleClick += new System.EventHandler(this.textBox_ResultTableFont_DoubleClick);
-            // 
-            // textBox_TextResultsFont
-            // 
-            this.textBox_TextResultsFont.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox_TextResultsFont.Location = new System.Drawing.Point(182, 83);
-            this.textBox_TextResultsFont.Name = "textBox_TextResultsFont";
-            this.textBox_TextResultsFont.ReadOnly = true;
-            this.textBox_TextResultsFont.Size = new System.Drawing.Size(354, 31);
-            this.textBox_TextResultsFont.TabIndex = 2;
-            this.textBox_TextResultsFont.DoubleClick += new System.EventHandler(this.textBox_TextResultsFont_DoubleClick);
-            // 
-            // label_QueryWindowFont
-            // 
-            this.label_QueryWindowFont.AutoSize = true;
-            this.label_QueryWindowFont.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label_QueryWindowFont.Location = new System.Drawing.Point(3, 0);
-            this.label_QueryWindowFont.Name = "label_QueryWindowFont";
-            this.label_QueryWindowFont.Size = new System.Drawing.Size(173, 40);
-            this.label_QueryWindowFont.TabIndex = 4;
-            this.label_QueryWindowFont.Text = "Query Window Font";
-            this.label_QueryWindowFont.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label_ResultTableFont
-            // 
-            this.label_ResultTableFont.AutoSize = true;
-            this.label_ResultTableFont.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label_ResultTableFont.Location = new System.Drawing.Point(3, 40);
-            this.label_ResultTableFont.Name = "label_ResultTableFont";
-            this.label_ResultTableFont.Size = new System.Drawing.Size(173, 40);
-            this.label_ResultTableFont.TabIndex = 5;
-            this.label_ResultTableFont.Text = "Table Results Font";
-            this.label_ResultTableFont.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(3, 80);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(173, 40);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "Text Results Font";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Column_SettingValue.HeaderText = "Value";
+            this.Column_SettingValue.MinimumWidth = 10;
+            this.Column_SettingValue.Name = "Column_SettingValue";
+            this.Column_SettingValue.Width = 112;
             // 
             // tabControl_Settings
             // 
+            this.tabControl_Settings.Controls.Add(this.tabPage_DependencyTree);
             this.tabControl_Settings.Controls.Add(this.tabPage_LibScripts);
             this.tabControl_Settings.Controls.Add(this.tabPage_Variables);
             this.tabControl_Settings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl_Settings.Location = new System.Drawing.Point(0, 0);
             this.tabControl_Settings.Name = "tabControl_Settings";
             this.tabControl_Settings.SelectedIndex = 0;
-            this.tabControl_Settings.Size = new System.Drawing.Size(561, 451);
+            this.tabControl_Settings.Size = new System.Drawing.Size(561, 452);
             this.tabControl_Settings.TabIndex = 1;
+            // 
+            // tabPage_DependencyTree
+            // 
+            this.tabPage_DependencyTree.Controls.Add(this.treeView_DependencyTree);
+            this.tabPage_DependencyTree.Location = new System.Drawing.Point(8, 39);
+            this.tabPage_DependencyTree.Name = "tabPage_DependencyTree";
+            this.tabPage_DependencyTree.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_DependencyTree.Size = new System.Drawing.Size(545, 405);
+            this.tabPage_DependencyTree.TabIndex = 2;
+            this.tabPage_DependencyTree.Text = "DependencyTree";
+            this.tabPage_DependencyTree.UseVisualStyleBackColor = true;
+            // 
+            // treeView_DependencyTree
+            // 
+            this.treeView_DependencyTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView_DependencyTree.Location = new System.Drawing.Point(3, 3);
+            this.treeView_DependencyTree.Name = "treeView_DependencyTree";
+            this.treeView_DependencyTree.Size = new System.Drawing.Size(539, 399);
+            this.treeView_DependencyTree.TabIndex = 0;
+            this.treeView_DependencyTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_DependencyTree_AfterSelect);
             // 
             // tabPage_LibScripts
             // 
@@ -472,7 +431,7 @@
             this.tabPage_LibScripts.Location = new System.Drawing.Point(8, 39);
             this.tabPage_LibScripts.Name = "tabPage_LibScripts";
             this.tabPage_LibScripts.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_LibScripts.Size = new System.Drawing.Size(545, 404);
+            this.tabPage_LibScripts.Size = new System.Drawing.Size(545, 400);
             this.tabPage_LibScripts.TabIndex = 0;
             this.tabPage_LibScripts.Text = "Lib scripts";
             this.tabPage_LibScripts.UseVisualStyleBackColor = true;
@@ -490,7 +449,7 @@
             this.dataGridView_LibScripts.Name = "dataGridView_LibScripts";
             this.dataGridView_LibScripts.RowHeadersWidth = 40;
             this.dataGridView_LibScripts.RowTemplate.Height = 33;
-            this.dataGridView_LibScripts.Size = new System.Drawing.Size(539, 398);
+            this.dataGridView_LibScripts.Size = new System.Drawing.Size(539, 394);
             this.dataGridView_LibScripts.TabIndex = 0;
             this.dataGridView_LibScripts.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_LibScripts_CellClick);
             this.dataGridView_LibScripts.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_LibScripts_CellDoubleClick);
@@ -516,7 +475,7 @@
             this.tabPage_Variables.Location = new System.Drawing.Point(8, 39);
             this.tabPage_Variables.Name = "tabPage_Variables";
             this.tabPage_Variables.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_Variables.Size = new System.Drawing.Size(545, 404);
+            this.tabPage_Variables.Size = new System.Drawing.Size(545, 400);
             this.tabPage_Variables.TabIndex = 1;
             this.tabPage_Variables.Text = "Variables";
             this.tabPage_Variables.UseVisualStyleBackColor = true;
@@ -534,7 +493,7 @@
             this.dataGridView_Variables.Name = "dataGridView_Variables";
             this.dataGridView_Variables.RowHeadersWidth = 40;
             this.dataGridView_Variables.RowTemplate.Height = 33;
-            this.dataGridView_Variables.Size = new System.Drawing.Size(539, 398);
+            this.dataGridView_Variables.Size = new System.Drawing.Size(539, 394);
             this.dataGridView_Variables.TabIndex = 1;
             this.dataGridView_Variables.Leave += new System.EventHandler(this.dataGridView_Variables_Leave);
             // 
@@ -573,7 +532,6 @@
             this.MainMenuStrip = this.menuStrip_Main;
             this.Name = "MainAppWindow";
             this.Text = "Powershell Drilldown Tool";
-            this.Load += new System.EventHandler(this.MainAppWindow_Load);
             this.menuStrip_Main.ResumeLayout(false);
             this.menuStrip_Main.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -587,9 +545,9 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.tabPage_Settings.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Settings)).EndInit();
             this.tabControl_Settings.ResumeLayout(false);
+            this.tabPage_DependencyTree.ResumeLayout(false);
             this.tabPage_LibScripts.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_LibScripts)).EndInit();
             this.tabPage_Variables.ResumeLayout(false);
@@ -621,19 +579,8 @@
         private System.Windows.Forms.DataGridView dataGridView_Variables;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column_Name;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Column_AutoRun;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column_Dependencies;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column_OldName;
         private System.Windows.Forms.TabPage tabPage_Settings;
         private System.Windows.Forms.FontDialog fontDialog1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TextBox textBox_QueryScriptFont;
-        private System.Windows.Forms.TextBox textBox_ResultTableFont;
-        private System.Windows.Forms.TextBox textBox_TextResultsFont;
-        private System.Windows.Forms.Label label_QueryWindowFont;
-        private System.Windows.Forms.Label label_ResultTableFont;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton_MasterLeft;
         private System.Windows.Forms.ToolStripButton toolStripButton_MasterTop;
@@ -645,6 +592,14 @@
         private System.Windows.Forms.ToolStripButton toolStripButton_ResultsSplit;
         private System.Windows.Forms.ToolStripButton toolStripButton_ResultsMaximized;
         private System.Windows.Forms.ToolStripButton toolStripButton_ResultsMinimized;
+        private System.Windows.Forms.TabPage tabPage_DependencyTree;
+        private System.Windows.Forms.TreeView treeView_DependencyTree;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column_Name;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Column_AutoRun;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column_OldName;
+        private System.Windows.Forms.DataGridView dataGridView_Settings;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column_SettingName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column_SettingValue;
     }
 }
 

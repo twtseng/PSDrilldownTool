@@ -19,6 +19,10 @@ namespace PSDrilldownTool.Util
         }
         public static string GenerateRichtextWithHighlights(string scriptText, Font font, Color highlightColor, Color replacementMissingColor, Dictionary<string, string> tokenReplacementKeyValuePair)
         {
+            if (string.IsNullOrEmpty(scriptText))
+            {
+                return string.Empty;
+            }
             // Generate RTF header
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(@"{\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 " + font.FontFamily.Name + @";}}");

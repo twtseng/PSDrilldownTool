@@ -22,12 +22,8 @@ namespace PSDrilldownTool.Forms
             InitializeComponent();
             _filename = string.Empty;
         }
-        private void MainAppWindow_Load(object sender, EventArgs e)
-        {
-
-        }
         #endregion
-        #region QueryScript List Edit Controls
+        #region QueryScript Management
         private void dataGridView_QueryScripts_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -47,7 +43,7 @@ namespace PSDrilldownTool.Forms
                 else
                 {
                     AppData.GlobalAppData.RenameQueryScript(oldName: oldName, newName: newName);
-                    UpdateDependentScriptsList();
+                    UpdateDependencyTree();
                 }
                 curRow.Cells["Column_OldName"].Value = newName;
             }
@@ -56,19 +52,16 @@ namespace PSDrilldownTool.Forms
         {
             LoadAppDataFromGui();
         }
-        public void SelectQueryScriptGridViewRow(string name)
+        public void SelectQueryScript(string name)
         {
             foreach(DataGridViewRow row in dataGridView_QueryScripts.Rows)
             {
                 if (row.Cells[0].Value != null && row.Cells[0].Value.ToString()==name)
                 {
-                    row.DefaultCellStyle.BackColor = Color.Aqua;
-                }
-                else
-                {
-                    row.DefaultCellStyle.BackColor = Color.White;
+                    row.Selected = true;
                 }
             }
+            HighlightScriptNameInDependencyTree(name);
         }
         private void dataGridView_QueryScripts_Click(object sender, EventArgs e)
         {
@@ -106,7 +99,71 @@ namespace PSDrilldownTool.Forms
                 }
             }
         }
+        private void treeView_DependencyTree_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            SelectQueryScript(e.Node.Text);
+        }
+        public delegate void TreeNodeAction(TreeNode treeNode);
+        public void ProcessDependencyTreeNodes(TreeNodeAction treeNodeAction, TreeNode parentNode = null)
+        {
+            if (parentNode == null)
+            {
+                foreach (TreeNode treeNode in treeView_DependencyTree.Nodes)
+                {
+                    ProcessDependencyTreeNodes(treeNodeAction, treeNode);
+                }
+            }
+            else
+            {
+                treeNodeAction(parentNode);
+                foreach (TreeNode treeNode in parentNode.Nodes)
+                {
+                    ProcessDependencyTreeNodes(treeNodeAction, treeNode);
+                }
+            }
+        }
+        public void HighlightScriptNameInDependencyTree(string queryScriptName)
+        {
+            ProcessDependencyTreeNodes(
+                treeNode =>
+                {
+                    if (treeNode.Text == queryScriptName)
+                    {
+                        treeNode.BackColor = Color.Aqua;
+                    }
+                    else
+                    {
+                        treeNode.BackColor = Color.White;
+                    }
 
+                }
+            );
+        }
+        public void AddDependencyTreeNode(QueryScript queryScript, TreeNode parentTreeNode = null)
+        {
+            TreeNode treeNode = new TreeNode(queryScript.Name);
+            if (parentTreeNode == null)
+            {
+                treeView_DependencyTree.Nodes.Add(treeNode);
+            }
+            else
+            {
+                parentTreeNode.Nodes.Add(treeNode);
+            }
+            foreach (QueryScript dependentScript in AppData.GlobalAppData.GetDependentQueryScripts(queryScript))
+            {
+                AddDependencyTreeNode(dependentScript, treeNode);
+            }
+        }
+        public void UpdateDependencyTree()
+        {
+            treeView_DependencyTree.Nodes.Clear();
+            foreach (QueryScript queryScript in AppData.GlobalAppData.QueryScripts)
+            {
+                AddDependencyTreeNode(queryScript, null);
+            }
+            treeView_DependencyTree.ExpandAll();
+        }
         #endregion
         #region File Operations
         private void SetFilename(string filename)
@@ -156,48 +213,36 @@ namespace PSDrilldownTool.Forms
             AppData.GlobalAppData.QueryScripts.Clear();
             foreach (QueryScript queryScript in queryScriptsCopy)
             {
-                string dependentScripts = string.Join(",", AppData.GlobalAppData.GetDependentQueryScripts(queryScript).Select(x => x.Name));
-                // Columns are: ScriptName, RunOnParentRowSelect, DependentScripts, OldName (used for renaming the script)
-                dataGridView_QueryScripts.Rows.Add(queryScript.Name, queryScript.RunOnParentRowSelect, dependentScripts, queryScript.Name);
+                // Columns are: ScriptName, RunOnParentRowSelect, OldName (used for renaming the script)
+                dataGridView_QueryScripts.Rows.Add(queryScript.Name, queryScript.RunOnParentRowSelect, queryScript.Name);
                 AppData.GlobalAppData.AddQueryScript(mainAppWindow: this, scriptToClone: queryScript);
             }
 
             // Load settings
+            dataGridView_Settings.Rows.Clear();
             if (AppData.GlobalAppData.Settings.ContainsKey(AppData.FontSetting.QueryScriptFont.ToString()))
             {
                 FontConverter fontConverter = new FontConverter();
                 Font font = (Font) fontConverter.ConvertFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.QueryScriptFont.ToString()]);
                 AppData.GlobalAppData.SetFont(AppData.FontSetting.QueryScriptFont, font);
-                textBox_QueryScriptFont.Text = font.ToString();
+                dataGridView_Settings.Rows.Add("QueryScriptFont", string.Format("{0} {1}", font.FontFamily.Name, font.Size));
             }
             if (AppData.GlobalAppData.Settings.ContainsKey(AppData.FontSetting.ResultTableFont.ToString()))
             {
                 FontConverter fontConverter = new FontConverter();
                 Font font = (Font)fontConverter.ConvertFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.ResultTableFont.ToString()]);
                 AppData.GlobalAppData.SetFont(AppData.FontSetting.ResultTableFont, font);
-                textBox_ResultTableFont.Text = font.ToString();
+                dataGridView_Settings.Rows.Add("ResultTableFont", string.Format("{0} {1}", font.FontFamily.Name, font.Size));
             }
             if (AppData.GlobalAppData.Settings.ContainsKey(AppData.FontSetting.TextResultsFont.ToString()))
             {
                 FontConverter fontConverter = new FontConverter();
                 Font font = (Font)fontConverter.ConvertFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.TextResultsFont.ToString()]);
                 AppData.GlobalAppData.SetFont(AppData.FontSetting.TextResultsFont, font);
-                textBox_TextResultsFont.Text = font.ToString();
+                dataGridView_Settings.Rows.Add("TextResultsFont", string.Format("{0} {1}", font.FontFamily.Name, font.Size));
             }
         }
-        public void UpdateDependentScriptsList()
-        {
-            foreach(DataGridViewRow row in dataGridView_QueryScripts.Rows)
-            {
-                if (row.Cells["column_Name"].Value != null)
-                {
-                    string scriptName = row.Cells["column_Name"].Value.ToString();
-                    QueryScript queryScript = AppData.GlobalAppData.GetQueryScriptByName(scriptName);
-                    string dependentScripts = string.Join(",", AppData.GlobalAppData.GetDependentQueryScripts(queryScript).Select(x => x.Name));
-                    row.Cells["column_Dependencies"].Value = dependentScripts;
-                }
-            }
-        }
+ 
         private void LoadAppDataFromGui()
         {
             // Load variables
@@ -354,34 +399,43 @@ namespace PSDrilldownTool.Forms
         }
         #endregion
         #region Font editing
-        private void textBox_QueryScriptFont_DoubleClick(object sender, EventArgs e)
+        private void dataGridView_Settings_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            fontDialog1.Font = AppData.FontFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.QueryScriptFont.ToString()]);
-            if (fontDialog1.ShowDialog() == DialogResult.OK)
+            if (dataGridView_Settings.CurrentRow != null && dataGridView_Settings.CurrentRow.Cells[0].Value != null)
             {
-                textBox_QueryScriptFont.Text = fontDialog1.Font.ToString();
-                AppData.GlobalAppData.SetFont(AppData.FontSetting.QueryScriptFont, fontDialog1.Font);
-            }
-        }
-
-        private void textBox_ResultTableFont_DoubleClick(object sender, EventArgs e)
-        {
-            fontDialog1.Font = AppData.FontFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.ResultTableFont.ToString()]);
-            if (fontDialog1.ShowDialog() == DialogResult.OK)
-            {
-                textBox_ResultTableFont.Text = fontDialog1.Font.ToString();
-                AppData.GlobalAppData.SetFont(AppData.FontSetting.ResultTableFont, fontDialog1.Font);
-            }
-        }
-
-        private void textBox_TextResultsFont_DoubleClick(object sender, EventArgs e)
-        {
-            fontDialog1.Font = AppData.FontFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.TextResultsFont.ToString()]);
-            if (fontDialog1.ShowDialog() == DialogResult.OK)
-            {
-                textBox_TextResultsFont.Text = fontDialog1.Font.ToString();
-                AppData.GlobalAppData.SetFont(AppData.FontSetting.TextResultsFont, fontDialog1.Font);
-            }
+                string selectedSetting = dataGridView_Settings.CurrentRow.Cells[0].Value.ToString();
+                string resultString = string.Empty;
+                switch (selectedSetting)
+                {
+                    case "TextResultsFont":
+                        fontDialog1.Font = AppData.FontFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.TextResultsFont.ToString()]);
+                        if (fontDialog1.ShowDialog() == DialogResult.OK)
+                        {
+                            resultString = string.Format("{0} {1}", fontDialog1.Font.FontFamily.Name, fontDialog1.Font.Size);
+                            dataGridView_Settings.CurrentRow.Cells[1].Value = resultString;
+                            AppData.GlobalAppData.SetFont(AppData.FontSetting.TextResultsFont, fontDialog1.Font);
+                        }
+                        break;
+                    case "QueryScriptFont":
+                        fontDialog1.Font = AppData.FontFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.QueryScriptFont.ToString()]);
+                        if (fontDialog1.ShowDialog() == DialogResult.OK)
+                        {
+                            resultString = string.Format("{0} {1}", fontDialog1.Font.FontFamily.Name, fontDialog1.Font.Size);
+                            dataGridView_Settings.CurrentRow.Cells[1].Value = resultString;
+                            AppData.GlobalAppData.SetFont(AppData.FontSetting.QueryScriptFont, fontDialog1.Font);
+                        }
+                        break;
+                    case "ResultTableFont":
+                        fontDialog1.Font = AppData.FontFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.ResultTableFont.ToString()]);
+                        if (fontDialog1.ShowDialog() == DialogResult.OK)
+                        {
+                            resultString = string.Format("{0} {1}", fontDialog1.Font.FontFamily.Name, fontDialog1.Font.Size);
+                            dataGridView_Settings.CurrentRow.Cells[1].Value = resultString;
+                            AppData.GlobalAppData.SetFont(AppData.FontSetting.ResultTableFont, fontDialog1.Font);
+                        }
+                        break;
+                }
+            }            
         }
         #endregion
         #region QueryScriptWindow Layouts
@@ -535,6 +589,8 @@ namespace PSDrilldownTool.Forms
         {
             SetQueryWindowSplitterPercent(90);
         }
+
         #endregion
+
     }
 }

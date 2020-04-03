@@ -49,7 +49,7 @@ namespace PSDrilldownTool.Forms
         }
         private void QueryScriptWindow_Activated(object sender, EventArgs e)
         {
-            _queryScript.MainAppWindow.SelectQueryScriptGridViewRow(name: this.Text);
+            _queryScript.MainAppWindow.SelectQueryScript(name: this.Text);
         }
         #endregion
         #region Layout Control
@@ -225,7 +225,7 @@ namespace PSDrilldownTool.Forms
             Dictionary<string, string> queryScriptHighlightTokens = new Dictionary<string, string>();
             Dictionary<string, string> translatedScriptHighlightTokens = new Dictionary<string, string>();
             string scriptText = _queryScript.ScriptText;
-            string translatedQuery = scriptText;
+            string translatedQuery = string.IsNullOrEmpty(scriptText) ? string.Empty : scriptText;
 
             // Replace the QueryScript tokens with actual values
             foreach (QueryScript queryScript in AppData.GlobalAppData.QueryScripts)
@@ -242,7 +242,7 @@ namespace PSDrilldownTool.Forms
             }
 
             _queryScript.TranslatedScript = translatedQuery;
-            _queryScript.MainAppWindow.UpdateDependentScriptsList();
+            _queryScript.MainAppWindow.UpdateDependencyTree();
 
             // Highlight the richTextBox_ScriptText 
             string queryScriptRichtext = Util.ScriptUtil.GenerateRichtextWithHighlights(scriptText, richTextBox_ScriptText.Font, Color.Blue, Color.Red, queryScriptHighlightTokens);
@@ -280,6 +280,10 @@ namespace PSDrilldownTool.Forms
         {
             if (Form.ModifierKeys == Keys.Control)
             {
+                if (e.ColumnIndex < 0)
+                {
+                    return;
+                }
                 // Copy columnName to dragdrop
                 string columnName = dataGridView_TableResults.Columns[e.ColumnIndex].HeaderText;
                 string scriptName = this.Text;
