@@ -163,7 +163,15 @@ namespace PSDrilldownTool.Models
         static public Font FontFromString(string fontString)
         {
             FontConverter fontConverter = new FontConverter();
-            return (Font) fontConverter.ConvertFromString(fontString);
+            try
+            {
+                return (Font)fontConverter.ConvertFromString(fontString);
+            }
+            catch
+            {
+                // Return a default font if this fails
+                return new Font(family: FontFamily.GenericSansSerif, emSize: 10);
+            }
         }
         public void SetFont(FontSetting fontSetting, Font font)
         {

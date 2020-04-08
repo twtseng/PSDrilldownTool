@@ -39,6 +39,9 @@ namespace PSDrilldownTool.Forms
 
         private void QueryScriptWindow_Load(object sender, EventArgs e)
         {
+            SetQueryScriptFont(AppData.FontFromString(AppData.GlobalAppData.Settings["QueryScriptFont"]));
+            SetTextResultsFont(AppData.FontFromString(AppData.GlobalAppData.Settings["TextResultsFont"]));
+            SetResultTableFont(AppData.FontFromString(AppData.GlobalAppData.Settings["ResultTableFont"]));
             UpdateResultControls();
             UpdateTaskStatusControls();
         }
@@ -222,33 +225,39 @@ namespace PSDrilldownTool.Forms
 
         public void HighlightScriptText()
         {
-            Dictionary<string, string> queryScriptHighlightTokens = new Dictionary<string, string>();
-            string scriptText = richTextBox_ScriptText.Text;
-
-            // Replace the QueryScript tokens with actual values
-            foreach (QueryScript queryScript in AppData.GlobalAppData.QueryScripts)
+            try
             {
-                if (queryScript.QueryScriptWindow != null)
+                Dictionary<string, string> queryScriptHighlightTokens = new Dictionary<string, string>();
+                string scriptText = richTextBox_ScriptText.Text;
+
+                // Replace the QueryScript tokens with actual values
+                foreach (QueryScript queryScript in AppData.GlobalAppData.QueryScripts)
                 {
-                    foreach (var kvp in queryScript.QueryScriptWindow.ReplacementTokens)
+                    if (queryScript.QueryScriptWindow != null)
                     {
-                        queryScriptHighlightTokens[kvp.Key] = kvp.Key;
+                        foreach (var kvp in queryScript.QueryScriptWindow.ReplacementTokens)
+                        {
+                            queryScriptHighlightTokens[kvp.Key] = kvp.Key;
+                        }
                     }
                 }
-            }
 
-            // Highlight the richTextBox_ScriptText 
-            int selectionStart = richTextBox_ScriptText.SelectionStart;
-            int numNewlines = 0;
-            if (scriptText.Substring(0, selectionStart).Contains('\n'))
-            {
-                numNewlines = scriptText.Substring(0, selectionStart).Split('\n').Length - 1;
+                // Highlight the richTextBox_ScriptText 
+                int selectionStart = richTextBox_ScriptText.SelectionStart;
+                int numNewlines = 0;
+                if (scriptText.Substring(0, selectionStart).Contains('\n'))
+                {
+                    numNewlines = scriptText.Substring(0, selectionStart).Split('\n').Length - 1;
+                }
+                string queryScriptRichtext = Util.ScriptUtil.GenerateRichtextWithHighlights(scriptText, richTextBox_ScriptText.Font, Color.Blue, Color.Red, queryScriptHighlightTokens);
+                richTextBox_ScriptText.Rtf = queryScriptRichtext;
+                richTextBox_ScriptText.SelectionStart = selectionStart + numNewlines;
+                richTextBox_ScriptText.ScrollToCaret();
+                richTextBox_TranslatedScript.Refresh();
             }
-            string queryScriptRichtext = Util.ScriptUtil.GenerateRichtextWithHighlights(scriptText, richTextBox_ScriptText.Font, Color.Blue, Color.Red, queryScriptHighlightTokens);
-            richTextBox_ScriptText.Rtf = queryScriptRichtext;
-            richTextBox_ScriptText.SelectionStart = selectionStart + numNewlines;
-            richTextBox_ScriptText.ScrollToCaret();
-            richTextBox_TranslatedScript.Refresh();
+            catch
+            {
+            }
         }
 
         public void UpdateTranslatedQuery()

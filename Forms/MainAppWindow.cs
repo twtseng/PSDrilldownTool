@@ -22,6 +22,14 @@ namespace PSDrilldownTool.Forms
             InitializeComponent();
             _filename = string.Empty;
         }
+        private void MainAppWindow_Load(object sender, EventArgs e)
+        {
+            LoadDefaultSettings();
+        }
+        private void MainAppWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveCurrentSettingsToDefault();
+        }
         #endregion
         #region QueryScript Management
         private void dataGridView_QueryScripts_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -245,7 +253,30 @@ namespace PSDrilldownTool.Forms
                 dataGridView_Settings.Rows.Add("TextResultsFont", string.Format("{0} {1}", font.FontFamily.Name, font.Size));
             }
         }
- 
+        private void LoadDefaultSettings()
+        {
+            dataGridView_Settings.Rows.Clear();
+
+            Font font = Properties.Settings.Default.QueryScriptFont;
+            AppData.GlobalAppData.SetFont(AppData.FontSetting.QueryScriptFont, font);
+            dataGridView_Settings.Rows.Add("QueryScriptFont", string.Format("{0} {1}", font.FontFamily.Name, font.Size));
+
+            font = Properties.Settings.Default.ResultTableFont;
+            AppData.GlobalAppData.SetFont(AppData.FontSetting.ResultTableFont, font);
+            dataGridView_Settings.Rows.Add("ResultTableFont", string.Format("{0} {1}", font.FontFamily.Name, font.Size));
+
+            font = Properties.Settings.Default.TextResultsFont;
+            AppData.GlobalAppData.SetFont(AppData.FontSetting.TextResultsFont, font);
+            dataGridView_Settings.Rows.Add("TextResultsFont", string.Format("{0} {1}", font.FontFamily.Name, font.Size));
+        }
+
+        private void SaveCurrentSettingsToDefault()
+        {
+            Properties.Settings.Default.QueryScriptFont = AppData.FontFromString(AppData.GlobalAppData.Settings["QueryScriptFont"]);
+            Properties.Settings.Default.ResultTableFont = AppData.FontFromString(AppData.GlobalAppData.Settings["ResultTableFont"]);
+            Properties.Settings.Default.TextResultsFont = AppData.FontFromString(AppData.GlobalAppData.Settings["TextResultsFont"]);
+            Properties.Settings.Default.Save();
+        }
         private void LoadAppDataFromGui()
         {
             // Load variables
@@ -593,7 +624,9 @@ namespace PSDrilldownTool.Forms
             SetQueryWindowSplitterPercent(90);
         }
 
+
         #endregion
+
 
     }
 }

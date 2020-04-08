@@ -88,7 +88,14 @@ namespace PSDrilldownTool.Util
             {
                 if (psObject.Properties[column.ColumnName] != null)
                 {
-                    newRow[column.ColumnName] = psObject.Properties[column.ColumnName].Value;
+                    if (psObject.Properties[column.ColumnName].Value != null)
+                    {
+                        newRow[column.ColumnName] = psObject.Properties[column.ColumnName].Value;
+                    }
+                    else
+                    {
+                        newRow[column.ColumnName] = System.DBNull.Value;
+                    }
                 }
             }
             _resultDataTable.Rows.Add(newRow);

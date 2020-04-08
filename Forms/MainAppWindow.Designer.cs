@@ -431,7 +431,7 @@
             this.tabPage_LibScripts.Location = new System.Drawing.Point(8, 39);
             this.tabPage_LibScripts.Name = "tabPage_LibScripts";
             this.tabPage_LibScripts.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_LibScripts.Size = new System.Drawing.Size(545, 400);
+            this.tabPage_LibScripts.Size = new System.Drawing.Size(545, 405);
             this.tabPage_LibScripts.TabIndex = 0;
             this.tabPage_LibScripts.Text = "Lib scripts";
             this.tabPage_LibScripts.UseVisualStyleBackColor = true;
@@ -449,7 +449,7 @@
             this.dataGridView_LibScripts.Name = "dataGridView_LibScripts";
             this.dataGridView_LibScripts.RowHeadersWidth = 40;
             this.dataGridView_LibScripts.RowTemplate.Height = 33;
-            this.dataGridView_LibScripts.Size = new System.Drawing.Size(539, 394);
+            this.dataGridView_LibScripts.Size = new System.Drawing.Size(539, 399);
             this.dataGridView_LibScripts.TabIndex = 0;
             this.dataGridView_LibScripts.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_LibScripts_CellClick);
             this.dataGridView_LibScripts.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_LibScripts_CellDoubleClick);
@@ -475,7 +475,7 @@
             this.tabPage_Variables.Location = new System.Drawing.Point(8, 39);
             this.tabPage_Variables.Name = "tabPage_Variables";
             this.tabPage_Variables.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_Variables.Size = new System.Drawing.Size(545, 400);
+            this.tabPage_Variables.Size = new System.Drawing.Size(545, 405);
             this.tabPage_Variables.TabIndex = 1;
             this.tabPage_Variables.Text = "Variables";
             this.tabPage_Variables.UseVisualStyleBackColor = true;
@@ -493,7 +493,7 @@
             this.dataGridView_Variables.Name = "dataGridView_Variables";
             this.dataGridView_Variables.RowHeadersWidth = 40;
             this.dataGridView_Variables.RowTemplate.Height = 33;
-            this.dataGridView_Variables.Size = new System.Drawing.Size(539, 394);
+            this.dataGridView_Variables.Size = new System.Drawing.Size(539, 399);
             this.dataGridView_Variables.TabIndex = 1;
             this.dataGridView_Variables.Leave += new System.EventHandler(this.dataGridView_Variables_Leave);
             // 
@@ -532,6 +532,8 @@
             this.MainMenuStrip = this.menuStrip_Main;
             this.Name = "MainAppWindow";
             this.Text = "Powershell Drilldown Tool";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainAppWindow_FormClosing);
+            this.Load += new System.EventHandler(this.MainAppWindow_Load);
             this.menuStrip_Main.ResumeLayout(false);
             this.menuStrip_Main.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);

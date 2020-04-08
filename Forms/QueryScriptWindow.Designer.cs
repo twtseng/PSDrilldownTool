@@ -294,6 +294,8 @@
             // 
             // dataGridView_TableResults
             // 
+            this.dataGridView_TableResults.AllowUserToAddRows = false;
+            this.dataGridView_TableResults.AllowUserToDeleteRows = false;
             this.dataGridView_TableResults.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dataGridView_TableResults.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dataGridView_TableResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;

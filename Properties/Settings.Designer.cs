@@ -22,5 +22,41 @@ namespace PSDrilldownTool.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Consolas, 12pt")]
+        public global::System.Drawing.Font QueryScriptFont {
+            get {
+                return ((global::System.Drawing.Font)(this["QueryScriptFont"]));
+            }
+            set {
+                this["QueryScriptFont"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Courier New, 12pt")]
+        public global::System.Drawing.Font ResultTableFont {
+            get {
+                return ((global::System.Drawing.Font)(this["ResultTableFont"]));
+            }
+            set {
+                this["ResultTableFont"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Consolas, 12pt")]
+        public global::System.Drawing.Font TextResultsFont {
+            get {
+                return ((global::System.Drawing.Font)(this["TextResultsFont"]));
+            }
+            set {
+                this["TextResultsFont"] = value;
+            }
+        }
     }
 }
