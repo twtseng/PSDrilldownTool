@@ -365,8 +365,7 @@ namespace PSDrilldownTool.Forms
             }
             else
             {
-                string appDataJson = JsonConvert.SerializeObject(AppData.GlobalAppData);
-                System.IO.File.WriteAllText(_filename, appDataJson);
+                AppData.GlobalAppData.SaveToFile(filename: _filename);
             }
         }
 
@@ -378,8 +377,7 @@ namespace PSDrilldownTool.Forms
             {
                 LoadAppDataFromGui();
                 SetFilename(Util.FileUtil.GetRelativePath(saveFileDialog.FileName));
-                string appDataJson = JsonConvert.SerializeObject(AppData.GlobalAppData);
-                System.IO.File.WriteAllText(_filename, appDataJson);
+                AppData.GlobalAppData.SaveToFile(filename: _filename);
             }
         }
         #endregion
@@ -602,6 +600,19 @@ namespace PSDrilldownTool.Forms
                 AppData.GlobalAppData.QueryScripts[i].QueryScriptWindow.Focus();
             }
         }
+        private void toolStripButton_Tiled_Click(object sender, EventArgs e)
+        {
+            Rectangle rect = this.GetMdiRectangle();
+            int numCols = (int) Math.Ceiling(Math.Sqrt(AppData.GlobalAppData.QueryScripts.Count));
+            int numRows = (int)Math.Ceiling((double) AppData.GlobalAppData.QueryScripts.Count / numCols);
+            int width = (int)(rect.Width / numCols);
+            int height = (int)(rect.Height / numRows);
+            for (int i = 0; i < AppData.GlobalAppData.QueryScripts.Count; ++i)
+            {
+                AppData.GlobalAppData.QueryScripts[i].QueryScriptWindow.SetWindowLocation((i % numCols) * width, (i / numCols) * height, width, height);
+                AppData.GlobalAppData.QueryScripts[i].QueryScriptWindow.Focus();
+            }
+        }
         private void SetQueryWindowSplitterPercent(int percent)
         {
             foreach(QueryScript queryScript in AppData.GlobalAppData.QueryScripts)
@@ -623,6 +634,7 @@ namespace PSDrilldownTool.Forms
         {
             SetQueryWindowSplitterPercent(90);
         }
+
 
 
         #endregion

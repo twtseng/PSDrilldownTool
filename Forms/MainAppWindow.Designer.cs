@@ -50,6 +50,7 @@
             this.toolStripButton_SlaveBottom = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_SlaveRight = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_Fanned = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton_Tiled = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton_ResultsMaximized = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_ResultsSplit = new System.Windows.Forms.ToolStripButton();
@@ -155,7 +156,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControl_Settings);
-            this.splitContainer1.Size = new System.Drawing.Size(561, 870);
+            this.splitContainer1.Size = new System.Drawing.Size(625, 870);
             this.splitContainer1.SplitterDistance = 414;
             this.splitContainer1.TabIndex = 2;
             // 
@@ -167,7 +168,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(561, 414);
+            this.tabControl1.Size = new System.Drawing.Size(625, 414);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage_QueryScripts
@@ -177,7 +178,7 @@
             this.tabPage_QueryScripts.Location = new System.Drawing.Point(8, 39);
             this.tabPage_QueryScripts.Name = "tabPage_QueryScripts";
             this.tabPage_QueryScripts.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_QueryScripts.Size = new System.Drawing.Size(545, 367);
+            this.tabPage_QueryScripts.Size = new System.Drawing.Size(609, 367);
             this.tabPage_QueryScripts.TabIndex = 0;
             this.tabPage_QueryScripts.Text = "Query Scripts";
             this.tabPage_QueryScripts.UseVisualStyleBackColor = true;
@@ -192,14 +193,14 @@
             this.Column_AutoRun,
             this.Column_OldName});
             this.dataGridView_QueryScripts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView_QueryScripts.Location = new System.Drawing.Point(3, 41);
+            this.dataGridView_QueryScripts.Location = new System.Drawing.Point(3, 53);
             this.dataGridView_QueryScripts.MultiSelect = false;
             this.dataGridView_QueryScripts.Name = "dataGridView_QueryScripts";
             this.dataGridView_QueryScripts.RowHeadersWidth = 30;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dataGridView_QueryScripts.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView_QueryScripts.RowTemplate.Height = 33;
-            this.dataGridView_QueryScripts.Size = new System.Drawing.Size(539, 323);
+            this.dataGridView_QueryScripts.Size = new System.Drawing.Size(603, 311);
             this.dataGridView_QueryScripts.TabIndex = 0;
             this.dataGridView_QueryScripts.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_QueryScripts_CellContentClick);
             this.dataGridView_QueryScripts.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_QueryScripts_CellEndEdit);
@@ -240,20 +241,21 @@
             this.toolStripButton_SlaveBottom,
             this.toolStripButton_SlaveRight,
             this.toolStripButton_Fanned,
+            this.toolStripButton_Tiled,
             this.toolStripSeparator1,
             this.toolStripButton_ResultsMaximized,
             this.toolStripButton_ResultsSplit,
             this.toolStripButton_ResultsMinimized});
             this.toolStrip1.Location = new System.Drawing.Point(3, 3);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(539, 38);
+            this.toolStrip1.Size = new System.Drawing.Size(603, 50);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(96, 32);
+            this.toolStripLabel1.Size = new System.Drawing.Size(96, 44);
             this.toolStripLabel1.Text = "Layouts";
             // 
             // toolStripButton_MasterLeft
@@ -263,7 +265,7 @@
             this.toolStripButton_MasterLeft.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton_MasterLeft.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton_MasterLeft.Name = "toolStripButton_MasterLeft";
-            this.toolStripButton_MasterLeft.Size = new System.Drawing.Size(46, 32);
+            this.toolStripButton_MasterLeft.Size = new System.Drawing.Size(46, 44);
             this.toolStripButton_MasterLeft.Text = "Master left";
             this.toolStripButton_MasterLeft.Click += new System.EventHandler(this.toolStripButton_MasterLeft_Click);
             // 
@@ -274,7 +276,7 @@
             this.toolStripButton_MasterTop.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton_MasterTop.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton_MasterTop.Name = "toolStripButton_MasterTop";
-            this.toolStripButton_MasterTop.Size = new System.Drawing.Size(46, 32);
+            this.toolStripButton_MasterTop.Size = new System.Drawing.Size(46, 44);
             this.toolStripButton_MasterTop.Text = "Master top";
             this.toolStripButton_MasterTop.Click += new System.EventHandler(this.toolStripButton_MasterTop_Click);
             // 
@@ -285,7 +287,7 @@
             this.toolStripButton_SlaveBottom.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton_SlaveBottom.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton_SlaveBottom.Name = "toolStripButton_SlaveBottom";
-            this.toolStripButton_SlaveBottom.Size = new System.Drawing.Size(46, 32);
+            this.toolStripButton_SlaveBottom.Size = new System.Drawing.Size(46, 44);
             this.toolStripButton_SlaveBottom.Text = "Slave bottom";
             this.toolStripButton_SlaveBottom.Click += new System.EventHandler(this.toolStripButton_SlaveBottom_Click);
             // 
@@ -296,7 +298,7 @@
             this.toolStripButton_SlaveRight.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton_SlaveRight.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton_SlaveRight.Name = "toolStripButton_SlaveRight";
-            this.toolStripButton_SlaveRight.Size = new System.Drawing.Size(46, 32);
+            this.toolStripButton_SlaveRight.Size = new System.Drawing.Size(46, 44);
             this.toolStripButton_SlaveRight.Text = "Slave right";
             this.toolStripButton_SlaveRight.Click += new System.EventHandler(this.toolStripButton_SlaveRight_Click);
             // 
@@ -307,14 +309,25 @@
             this.toolStripButton_Fanned.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton_Fanned.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton_Fanned.Name = "toolStripButton_Fanned";
-            this.toolStripButton_Fanned.Size = new System.Drawing.Size(46, 32);
+            this.toolStripButton_Fanned.Size = new System.Drawing.Size(46, 44);
             this.toolStripButton_Fanned.Text = "Fanned";
             this.toolStripButton_Fanned.Click += new System.EventHandler(this.toolStripButton_Fanned_Click);
+            // 
+            // toolStripButton_Tiled
+            // 
+            this.toolStripButton_Tiled.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton_Tiled.Image = global::PSDrilldownTool.Properties.Resources.Layout_Tiled;
+            this.toolStripButton_Tiled.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton_Tiled.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_Tiled.Name = "toolStripButton_Tiled";
+            this.toolStripButton_Tiled.Size = new System.Drawing.Size(46, 44);
+            this.toolStripButton_Tiled.Text = "Tiled";
+            this.toolStripButton_Tiled.Click += new System.EventHandler(this.toolStripButton_Tiled_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 38);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 50);
             // 
             // toolStripButton_ResultsMaximized
             // 
@@ -323,7 +336,7 @@
             this.toolStripButton_ResultsMaximized.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton_ResultsMaximized.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton_ResultsMaximized.Name = "toolStripButton_ResultsMaximized";
-            this.toolStripButton_ResultsMaximized.Size = new System.Drawing.Size(46, 32);
+            this.toolStripButton_ResultsMaximized.Size = new System.Drawing.Size(46, 44);
             this.toolStripButton_ResultsMaximized.Text = "Results maximized";
             this.toolStripButton_ResultsMaximized.Click += new System.EventHandler(this.toolStripButton_ResultsMaximized_Click);
             // 
@@ -334,7 +347,7 @@
             this.toolStripButton_ResultsSplit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton_ResultsSplit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton_ResultsSplit.Name = "toolStripButton_ResultsSplit";
-            this.toolStripButton_ResultsSplit.Size = new System.Drawing.Size(46, 32);
+            this.toolStripButton_ResultsSplit.Size = new System.Drawing.Size(46, 44);
             this.toolStripButton_ResultsSplit.Text = "Split query and results";
             this.toolStripButton_ResultsSplit.Click += new System.EventHandler(this.toolStripButton_ResultsSplit_Click);
             // 
@@ -345,7 +358,7 @@
             this.toolStripButton_ResultsMinimized.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton_ResultsMinimized.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton_ResultsMinimized.Name = "toolStripButton_ResultsMinimized";
-            this.toolStripButton_ResultsMinimized.Size = new System.Drawing.Size(46, 32);
+            this.toolStripButton_ResultsMinimized.Size = new System.Drawing.Size(46, 44);
             this.toolStripButton_ResultsMinimized.Text = "Results minimized";
             this.toolStripButton_ResultsMinimized.Click += new System.EventHandler(this.toolStripButton_ResultsMinimized_Click);
             // 
@@ -355,7 +368,7 @@
             this.tabPage_Settings.Location = new System.Drawing.Point(8, 39);
             this.tabPage_Settings.Name = "tabPage_Settings";
             this.tabPage_Settings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_Settings.Size = new System.Drawing.Size(545, 367);
+            this.tabPage_Settings.Size = new System.Drawing.Size(609, 367);
             this.tabPage_Settings.TabIndex = 1;
             this.tabPage_Settings.Text = "Settings";
             this.tabPage_Settings.UseVisualStyleBackColor = true;
@@ -375,7 +388,7 @@
             this.dataGridView_Settings.Name = "dataGridView_Settings";
             this.dataGridView_Settings.RowHeadersWidth = 5;
             this.dataGridView_Settings.RowTemplate.Height = 33;
-            this.dataGridView_Settings.Size = new System.Drawing.Size(539, 361);
+            this.dataGridView_Settings.Size = new System.Drawing.Size(603, 361);
             this.dataGridView_Settings.TabIndex = 0;
             this.dataGridView_Settings.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_Settings_CellDoubleClick);
             // 
@@ -402,7 +415,7 @@
             this.tabControl_Settings.Location = new System.Drawing.Point(0, 0);
             this.tabControl_Settings.Name = "tabControl_Settings";
             this.tabControl_Settings.SelectedIndex = 0;
-            this.tabControl_Settings.Size = new System.Drawing.Size(561, 452);
+            this.tabControl_Settings.Size = new System.Drawing.Size(625, 452);
             this.tabControl_Settings.TabIndex = 1;
             // 
             // tabPage_DependencyTree
@@ -411,7 +424,7 @@
             this.tabPage_DependencyTree.Location = new System.Drawing.Point(8, 39);
             this.tabPage_DependencyTree.Name = "tabPage_DependencyTree";
             this.tabPage_DependencyTree.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_DependencyTree.Size = new System.Drawing.Size(545, 405);
+            this.tabPage_DependencyTree.Size = new System.Drawing.Size(609, 405);
             this.tabPage_DependencyTree.TabIndex = 2;
             this.tabPage_DependencyTree.Text = "DependencyTree";
             this.tabPage_DependencyTree.UseVisualStyleBackColor = true;
@@ -421,7 +434,7 @@
             this.treeView_DependencyTree.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView_DependencyTree.Location = new System.Drawing.Point(3, 3);
             this.treeView_DependencyTree.Name = "treeView_DependencyTree";
-            this.treeView_DependencyTree.Size = new System.Drawing.Size(539, 399);
+            this.treeView_DependencyTree.Size = new System.Drawing.Size(603, 399);
             this.treeView_DependencyTree.TabIndex = 0;
             this.treeView_DependencyTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView_DependencyTree_AfterSelect);
             // 
@@ -431,7 +444,7 @@
             this.tabPage_LibScripts.Location = new System.Drawing.Point(8, 39);
             this.tabPage_LibScripts.Name = "tabPage_LibScripts";
             this.tabPage_LibScripts.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_LibScripts.Size = new System.Drawing.Size(545, 405);
+            this.tabPage_LibScripts.Size = new System.Drawing.Size(609, 405);
             this.tabPage_LibScripts.TabIndex = 0;
             this.tabPage_LibScripts.Text = "Lib scripts";
             this.tabPage_LibScripts.UseVisualStyleBackColor = true;
@@ -449,7 +462,7 @@
             this.dataGridView_LibScripts.Name = "dataGridView_LibScripts";
             this.dataGridView_LibScripts.RowHeadersWidth = 40;
             this.dataGridView_LibScripts.RowTemplate.Height = 33;
-            this.dataGridView_LibScripts.Size = new System.Drawing.Size(539, 399);
+            this.dataGridView_LibScripts.Size = new System.Drawing.Size(603, 399);
             this.dataGridView_LibScripts.TabIndex = 0;
             this.dataGridView_LibScripts.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_LibScripts_CellClick);
             this.dataGridView_LibScripts.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_LibScripts_CellDoubleClick);
@@ -475,7 +488,7 @@
             this.tabPage_Variables.Location = new System.Drawing.Point(8, 39);
             this.tabPage_Variables.Name = "tabPage_Variables";
             this.tabPage_Variables.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_Variables.Size = new System.Drawing.Size(545, 405);
+            this.tabPage_Variables.Size = new System.Drawing.Size(609, 405);
             this.tabPage_Variables.TabIndex = 1;
             this.tabPage_Variables.Text = "Variables";
             this.tabPage_Variables.UseVisualStyleBackColor = true;
@@ -493,7 +506,7 @@
             this.dataGridView_Variables.Name = "dataGridView_Variables";
             this.dataGridView_Variables.RowHeadersWidth = 40;
             this.dataGridView_Variables.RowTemplate.Height = 33;
-            this.dataGridView_Variables.Size = new System.Drawing.Size(539, 399);
+            this.dataGridView_Variables.Size = new System.Drawing.Size(603, 399);
             this.dataGridView_Variables.TabIndex = 1;
             this.dataGridView_Variables.Leave += new System.EventHandler(this.dataGridView_Variables_Leave);
             // 
@@ -513,7 +526,7 @@
             // 
             // splitter1
             // 
-            this.splitter1.Location = new System.Drawing.Point(561, 40);
+            this.splitter1.Location = new System.Drawing.Point(625, 40);
             this.splitter1.Name = "splitter1";
             this.splitter1.Size = new System.Drawing.Size(10, 870);
             this.splitter1.TabIndex = 3;
@@ -602,6 +615,7 @@
         private System.Windows.Forms.DataGridView dataGridView_Settings;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_SettingName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column_SettingValue;
+        private System.Windows.Forms.ToolStripButton toolStripButton_Tiled;
     }
 }
 

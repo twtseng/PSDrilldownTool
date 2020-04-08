@@ -193,5 +193,14 @@ namespace PSDrilldownTool.Models
             FontConverter fontConverter = new FontConverter();
             Settings[fontSetting.ToString()] = fontConverter.ConvertToString(font);
         }
+
+        public void SaveToFile(string filename)
+        {
+            string appDataJson = JsonConvert.SerializeObject(this);
+
+            // Workaround for dataTable null returned by SQL query
+            appDataJson = appDataJson.Replace(@"{""IsNull"":true}", @"""""").Replace(@"{""IsNull"":false}", @"""""");
+            System.IO.File.WriteAllText(filename, appDataJson);
+        }
     }
 }

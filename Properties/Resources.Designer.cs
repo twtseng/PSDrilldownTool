@@ -153,6 +153,16 @@ namespace PSDrilldownTool.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Layout_Tiled {
+            get {
+                object obj = ResourceManager.GetObject("Layout_Tiled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Results_Half {
             get {
                 object obj = ResourceManager.GetObject("Results_Half", resourceCulture);

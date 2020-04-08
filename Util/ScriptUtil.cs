@@ -31,7 +31,7 @@ namespace PSDrilldownTool.Util
             sb.AppendLine(@"\pard\f0\fs" + (int)font.SizeInPoints * 2 + @"\lang1033 ");
 
             // 1) Escape richtext from the scriptText
-            string escapedScriptText = scriptText.Replace(@"\", @"\\").Replace(@"{", @"\{").Replace(@"}", @"\}").Replace("\n", " \\par\n");
+            string escapedScriptText = scriptText.Replace(@"\", @"\\").Replace(@"{", @"\{").Replace(@"}", @"\}").Replace("\n", "\\par\n");
 
             // 2) Replace tokens with values
             // If tokenReplacementKeyValuePair value is not empty, we will print the value in highlightColor

@@ -43,16 +43,16 @@
             this.toolStripButton_ResultsMaximized = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_ResultsSplit = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_ResultsMinimized = new System.Windows.Forms.ToolStripButton();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel_QueryStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel_Duration = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel_TimeExecuted = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel_RowCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl_Results = new System.Windows.Forms.TabControl();
             this.tabPage_TableResults = new System.Windows.Forms.TabPage();
             this.dataGridView_TableResults = new System.Windows.Forms.DataGridView();
             this.tabPage_TextResults = new System.Windows.Forms.TabPage();
             this.richTextBox_TextResults = new System.Windows.Forms.RichTextBox();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel_QueryStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel_Duration = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel_TimeExecuted = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel_RowCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -63,11 +63,11 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             this.tabControl_Results.SuspendLayout();
             this.tabPage_TableResults.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_TableResults)).BeginInit();
             this.tabPage_TextResults.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -85,8 +85,8 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.statusStrip1);
             this.splitContainer1.Panel2.Controls.Add(this.tabControl_Results);
+            this.splitContainer1.Panel2.Controls.Add(this.statusStrip1);
             this.splitContainer1.Size = new System.Drawing.Size(1521, 1122);
             this.splitContainer1.SplitterDistance = 275;
             this.splitContainer1.TabIndex = 0;
@@ -120,6 +120,7 @@
             this.richTextBox_ScriptText.Size = new System.Drawing.Size(1521, 28);
             this.richTextBox_ScriptText.TabIndex = 1;
             this.richTextBox_ScriptText.Text = "";
+            this.richTextBox_ScriptText.WordWrap = false;
             this.richTextBox_ScriptText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptText_KeyDown);
             this.richTextBox_ScriptText.KeyUp += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptText_KeyUp);
             // 
@@ -142,6 +143,7 @@
             this.richTextBox_TranslatedScript.Size = new System.Drawing.Size(1521, 168);
             this.richTextBox_TranslatedScript.TabIndex = 2;
             this.richTextBox_TranslatedScript.Text = "";
+            this.richTextBox_TranslatedScript.WordWrap = false;
             // 
             // label_TranslatedScript
             // 
@@ -231,6 +233,67 @@
             this.toolStripButton_ResultsMinimized.Text = "Results Minimized";
             this.toolStripButton_ResultsMinimized.Click += new System.EventHandler(this.toolStripButton_ResultsMinimized_Click);
             // 
+            // tabControl_Results
+            // 
+            this.tabControl_Results.Controls.Add(this.tabPage_TableResults);
+            this.tabControl_Results.Controls.Add(this.tabPage_TextResults);
+            this.tabControl_Results.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl_Results.Location = new System.Drawing.Point(0, 0);
+            this.tabControl_Results.Name = "tabControl_Results";
+            this.tabControl_Results.SelectedIndex = 0;
+            this.tabControl_Results.Size = new System.Drawing.Size(1521, 801);
+            this.tabControl_Results.TabIndex = 0;
+            this.tabControl_Results.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabControl_Results_MouseDown);
+            // 
+            // tabPage_TableResults
+            // 
+            this.tabPage_TableResults.Controls.Add(this.dataGridView_TableResults);
+            this.tabPage_TableResults.Location = new System.Drawing.Point(8, 39);
+            this.tabPage_TableResults.Name = "tabPage_TableResults";
+            this.tabPage_TableResults.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_TableResults.Size = new System.Drawing.Size(1505, 754);
+            this.tabPage_TableResults.TabIndex = 0;
+            this.tabPage_TableResults.Text = "Table Results";
+            this.tabPage_TableResults.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView_TableResults
+            // 
+            this.dataGridView_TableResults.AllowUserToAddRows = false;
+            this.dataGridView_TableResults.AllowUserToDeleteRows = false;
+            this.dataGridView_TableResults.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.dataGridView_TableResults.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.dataGridView_TableResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_TableResults.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView_TableResults.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView_TableResults.Name = "dataGridView_TableResults";
+            this.dataGridView_TableResults.RowHeadersWidth = 40;
+            this.dataGridView_TableResults.RowTemplate.Height = 33;
+            this.dataGridView_TableResults.Size = new System.Drawing.Size(1499, 748);
+            this.dataGridView_TableResults.TabIndex = 1;
+            this.dataGridView_TableResults.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_TableResults_CellClick);
+            this.dataGridView_TableResults.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView_TableResults_CellMouseDown);
+            // 
+            // tabPage_TextResults
+            // 
+            this.tabPage_TextResults.Controls.Add(this.richTextBox_TextResults);
+            this.tabPage_TextResults.Location = new System.Drawing.Point(8, 39);
+            this.tabPage_TextResults.Name = "tabPage_TextResults";
+            this.tabPage_TextResults.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_TextResults.Size = new System.Drawing.Size(1505, 754);
+            this.tabPage_TextResults.TabIndex = 1;
+            this.tabPage_TextResults.Text = "Text Results";
+            this.tabPage_TextResults.UseVisualStyleBackColor = true;
+            // 
+            // richTextBox_TextResults
+            // 
+            this.richTextBox_TextResults.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBox_TextResults.Location = new System.Drawing.Point(3, 3);
+            this.richTextBox_TextResults.Name = "richTextBox_TextResults";
+            this.richTextBox_TextResults.ReadOnly = true;
+            this.richTextBox_TextResults.Size = new System.Drawing.Size(1499, 748);
+            this.richTextBox_TextResults.TabIndex = 3;
+            this.richTextBox_TextResults.Text = "";
+            // 
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
@@ -269,67 +332,6 @@
             this.toolStripStatusLabel_RowCount.Size = new System.Drawing.Size(124, 32);
             this.toolStripStatusLabel_RowCount.Text = "RowCount";
             // 
-            // tabControl_Results
-            // 
-            this.tabControl_Results.Controls.Add(this.tabPage_TableResults);
-            this.tabControl_Results.Controls.Add(this.tabPage_TextResults);
-            this.tabControl_Results.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl_Results.Location = new System.Drawing.Point(0, 0);
-            this.tabControl_Results.Name = "tabControl_Results";
-            this.tabControl_Results.SelectedIndex = 0;
-            this.tabControl_Results.Size = new System.Drawing.Size(1521, 843);
-            this.tabControl_Results.TabIndex = 0;
-            this.tabControl_Results.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabControl_Results_MouseDown);
-            // 
-            // tabPage_TableResults
-            // 
-            this.tabPage_TableResults.Controls.Add(this.dataGridView_TableResults);
-            this.tabPage_TableResults.Location = new System.Drawing.Point(8, 39);
-            this.tabPage_TableResults.Name = "tabPage_TableResults";
-            this.tabPage_TableResults.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_TableResults.Size = new System.Drawing.Size(1505, 796);
-            this.tabPage_TableResults.TabIndex = 0;
-            this.tabPage_TableResults.Text = "Table Results";
-            this.tabPage_TableResults.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView_TableResults
-            // 
-            this.dataGridView_TableResults.AllowUserToAddRows = false;
-            this.dataGridView_TableResults.AllowUserToDeleteRows = false;
-            this.dataGridView_TableResults.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.dataGridView_TableResults.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
-            this.dataGridView_TableResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_TableResults.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView_TableResults.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView_TableResults.Name = "dataGridView_TableResults";
-            this.dataGridView_TableResults.RowHeadersWidth = 40;
-            this.dataGridView_TableResults.RowTemplate.Height = 33;
-            this.dataGridView_TableResults.Size = new System.Drawing.Size(1499, 790);
-            this.dataGridView_TableResults.TabIndex = 1;
-            this.dataGridView_TableResults.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_TableResults_CellClick);
-            this.dataGridView_TableResults.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView_TableResults_CellMouseDown);
-            // 
-            // tabPage_TextResults
-            // 
-            this.tabPage_TextResults.Controls.Add(this.richTextBox_TextResults);
-            this.tabPage_TextResults.Location = new System.Drawing.Point(8, 39);
-            this.tabPage_TextResults.Name = "tabPage_TextResults";
-            this.tabPage_TextResults.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_TextResults.Size = new System.Drawing.Size(1505, 796);
-            this.tabPage_TextResults.TabIndex = 1;
-            this.tabPage_TextResults.Text = "Text Results";
-            this.tabPage_TextResults.UseVisualStyleBackColor = true;
-            // 
-            // richTextBox_TextResults
-            // 
-            this.richTextBox_TextResults.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox_TextResults.Location = new System.Drawing.Point(3, 3);
-            this.richTextBox_TextResults.Name = "richTextBox_TextResults";
-            this.richTextBox_TextResults.ReadOnly = true;
-            this.richTextBox_TextResults.Size = new System.Drawing.Size(1499, 790);
-            this.richTextBox_TextResults.TabIndex = 3;
-            this.richTextBox_TextResults.Text = "";
-            // 
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
@@ -359,12 +361,12 @@
             this.splitContainer2.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.tabControl_Results.ResumeLayout(false);
             this.tabPage_TableResults.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_TableResults)).EndInit();
             this.tabPage_TextResults.ResumeLayout(false);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }
