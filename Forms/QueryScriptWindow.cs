@@ -95,7 +95,10 @@ namespace PSDrilldownTool.Forms
             UpdateTranslatedQuery();
             //richTextBox_TranslatedScript.Text = _queryScript.TranslatedScript;
             richTextBox_TextResults.Text = _queryScript.ResultText;
-            dataGridView_TableResults.DataSource = _queryScript.ResultDataTable;
+            if (_queryScript.TaskStatus == Util.PowershellTask.Status.COMPLETED && dataGridView_TableResults.DataSource == null)
+            {
+                dataGridView_TableResults.DataSource = _queryScript.ResultDataTable;
+            }
             if (_queryScript.ResultDataTable != null)
             {
                 toolStripStatusLabel_RowCount.Text = _queryScript.ResultDataTable.Rows.Count.ToString() + " rows";
