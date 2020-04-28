@@ -95,6 +95,8 @@ namespace PSDrilldownTool.Forms
             UpdateTranslatedQuery();
             //richTextBox_TranslatedScript.Text = _queryScript.TranslatedScript;
             richTextBox_TextResults.Text = _queryScript.ResultText;
+            richTextBox_TextResults.SelectionStart = richTextBox_TextResults.Text.Length;
+            richTextBox_TextResults.ScrollToCaret();
             if (_queryScript.TaskStatus == Util.PowershellTask.Status.COMPLETED && dataGridView_TableResults.DataSource == null)
             {
                 dataGridView_TableResults.DataSource = _queryScript.ResultDataTable;
@@ -158,7 +160,7 @@ namespace PSDrilldownTool.Forms
             _queryScript.LoadResultsFromPowershellTask(_powershellTask);
             UpdateTaskStatusControls();
             UpdateResultControls();
-            if (_powershellTask.TaskCompleted)
+            if (!toolStripStatusLabel_QueryStatus.Text.Contains("RUNNING") && _powershellTask.TaskCompleted)
             {
                 timer1.Enabled = false;
                 toolStripButton_Start.Enabled = true;
