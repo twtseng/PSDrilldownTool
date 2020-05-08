@@ -272,9 +272,9 @@ namespace PSDrilldownTool.Forms
 
         private void SaveCurrentSettingsToDefault()
         {
-            Properties.Settings.Default.QueryScriptFont = AppData.FontFromString(AppData.GlobalAppData.Settings["QueryScriptFont"]);
-            Properties.Settings.Default.ResultTableFont = AppData.FontFromString(AppData.GlobalAppData.Settings["ResultTableFont"]);
-            Properties.Settings.Default.TextResultsFont = AppData.FontFromString(AppData.GlobalAppData.Settings["TextResultsFont"]);
+            Properties.Settings.Default.QueryScriptFont = AppData.FontFromString(AppData.GlobalAppData.Settings[AppData.QueryScriptFont]);
+            Properties.Settings.Default.ResultTableFont = AppData.FontFromString(AppData.GlobalAppData.Settings[AppData.ResultTableFont]);
+            Properties.Settings.Default.TextResultsFont = AppData.FontFromString(AppData.GlobalAppData.Settings[AppData.TextResultsFont]);
             Properties.Settings.Default.Save();
         }
         private void LoadAppDataFromGui()

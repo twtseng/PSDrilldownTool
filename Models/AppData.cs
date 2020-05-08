@@ -13,6 +13,10 @@ namespace PSDrilldownTool.Models
 
     public class AppData
     {
+        public const string QueryScriptFont = "QueryScriptFont";
+        public const string TextResultsFont = "TextResultsFont";
+        public const string ResultTableFont = "ResultTableFont";
+
         private static AppData _globalAppData;
         public static AppData GlobalAppData
         {

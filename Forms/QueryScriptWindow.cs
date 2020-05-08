@@ -39,9 +39,18 @@ namespace PSDrilldownTool.Forms
 
         private void QueryScriptWindow_Load(object sender, EventArgs e)
         {
-            SetQueryScriptFont(AppData.FontFromString(AppData.GlobalAppData.Settings["QueryScriptFont"]));
-            SetTextResultsFont(AppData.FontFromString(AppData.GlobalAppData.Settings["TextResultsFont"]));
-            SetResultTableFont(AppData.FontFromString(AppData.GlobalAppData.Settings["ResultTableFont"]));
+            if (AppData.GlobalAppData.Settings.ContainsKey(AppData.QueryScriptFont))
+            {
+                SetQueryScriptFont(AppData.FontFromString(AppData.GlobalAppData.Settings[AppData.QueryScriptFont]));
+            }
+            if (AppData.GlobalAppData.Settings.ContainsKey(AppData.TextResultsFont))
+            {
+                SetTextResultsFont(AppData.FontFromString(AppData.GlobalAppData.Settings[AppData.TextResultsFont]));
+            }
+            if (AppData.GlobalAppData.Settings.ContainsKey(AppData.ResultTableFont))
+            {
+                SetResultTableFont(AppData.FontFromString(AppData.GlobalAppData.Settings[AppData.ResultTableFont]));
+            }
             UpdateResultControls();
             UpdateTaskStatusControls();
         }
