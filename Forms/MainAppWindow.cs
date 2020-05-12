@@ -24,7 +24,7 @@ namespace PSDrilldownTool.Forms
         }
         private void MainAppWindow_Load(object sender, EventArgs e)
         {
-            LoadDefaultSettings();
+            LoadSettings();
         }
         private void MainAppWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -200,6 +200,7 @@ namespace PSDrilldownTool.Forms
             dataGridView_Variables.Rows.Clear();
             dataGridView_LibScripts.Rows.Clear();
             dataGridView_QueryScripts.Rows.Clear();
+            treeView_DependencyTree.Nodes.Clear();
             foreach(QueryScript queryScript in AppData.GlobalAppData.QueryScripts)
             {
                 AppData.GlobalAppData.RemoveQueryScript(queryScript.Name);
@@ -229,52 +230,61 @@ namespace PSDrilldownTool.Forms
                 AppData.GlobalAppData.AddQueryScript(mainAppWindow: this, scriptToClone: queryScript);
             }
 
-            // Load settings
-            dataGridView_Settings.Rows.Clear();
-            if (AppData.GlobalAppData.Settings.ContainsKey(AppData.FontSetting.QueryScriptFont.ToString()))
-            {
-                FontConverter fontConverter = new FontConverter();
-                Font font = (Font) fontConverter.ConvertFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.QueryScriptFont.ToString()]);
-                AppData.GlobalAppData.SetFont(AppData.FontSetting.QueryScriptFont, font);
-                dataGridView_Settings.Rows.Add("QueryScriptFont", string.Format("{0} {1}", font.FontFamily.Name, font.Size));
-            }
-            if (AppData.GlobalAppData.Settings.ContainsKey(AppData.FontSetting.ResultTableFont.ToString()))
-            {
-                FontConverter fontConverter = new FontConverter();
-                Font font = (Font)fontConverter.ConvertFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.ResultTableFont.ToString()]);
-                AppData.GlobalAppData.SetFont(AppData.FontSetting.ResultTableFont, font);
-                dataGridView_Settings.Rows.Add("ResultTableFont", string.Format("{0} {1}", font.FontFamily.Name, font.Size));
-            }
-            if (AppData.GlobalAppData.Settings.ContainsKey(AppData.FontSetting.TextResultsFont.ToString()))
-            {
-                FontConverter fontConverter = new FontConverter();
-                Font font = (Font)fontConverter.ConvertFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.TextResultsFont.ToString()]);
-                AppData.GlobalAppData.SetFont(AppData.FontSetting.TextResultsFont, font);
-                dataGridView_Settings.Rows.Add("TextResultsFont", string.Format("{0} {1}", font.FontFamily.Name, font.Size));
-            }
+            LoadSettings();
         }
-        private void LoadDefaultSettings()
+        private void LoadSettings()
         {
             dataGridView_Settings.Rows.Clear();
 
-            Font font = Properties.Settings.Default.QueryScriptFont;
+            Font font;
+            FontConverter fontConverter = new FontConverter();
+
+            if (AppData.GlobalAppData.Settings.ContainsKey(AppData.FontSetting.QueryScriptFont.ToString()))
+            {
+                font = (Font)fontConverter.ConvertFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.QueryScriptFont.ToString()]);
+            }
+            else
+            {
+                font = Properties.Settings.Default.QueryScriptFont;
+            }
             AppData.GlobalAppData.SetFont(AppData.FontSetting.QueryScriptFont, font);
-            dataGridView_Settings.Rows.Add("QueryScriptFont", string.Format("{0} {1}", font.FontFamily.Name, font.Size));
-
-            font = Properties.Settings.Default.ResultTableFont;
+            dataGridView_Settings.Rows.Add(AppData.FontSetting.QueryScriptFont.ToString(), string.Format("{0} {1}", font.FontFamily.Name, font.Size));
+            if (AppData.GlobalAppData.Settings.ContainsKey(AppData.FontSetting.ResultTableFont.ToString()))
+            {
+                font = (Font)fontConverter.ConvertFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.ResultTableFont.ToString()]);
+            }
+            else
+            {
+                font = Properties.Settings.Default.ResultTableFont;
+            }
             AppData.GlobalAppData.SetFont(AppData.FontSetting.ResultTableFont, font);
-            dataGridView_Settings.Rows.Add("ResultTableFont", string.Format("{0} {1}", font.FontFamily.Name, font.Size));
-
-            font = Properties.Settings.Default.TextResultsFont;
+            dataGridView_Settings.Rows.Add(AppData.FontSetting.ResultTableFont.ToString(), string.Format("{0} {1}", font.FontFamily.Name, font.Size));
+            if (AppData.GlobalAppData.Settings.ContainsKey(AppData.FontSetting.TextResultsFont.ToString()))
+            {
+                font = (Font)fontConverter.ConvertFromString(AppData.GlobalAppData.Settings[AppData.FontSetting.TextResultsFont.ToString()]);
+            }
+            else
+            {
+                font = Properties.Settings.Default.TextResultsFont;
+            }
             AppData.GlobalAppData.SetFont(AppData.FontSetting.TextResultsFont, font);
-            dataGridView_Settings.Rows.Add("TextResultsFont", string.Format("{0} {1}", font.FontFamily.Name, font.Size));
+            dataGridView_Settings.Rows.Add(AppData.FontSetting.TextResultsFont.ToString(), string.Format("{0} {1}", font.FontFamily.Name, font.Size));
         }
 
         private void SaveCurrentSettingsToDefault()
         {
-            Properties.Settings.Default.QueryScriptFont = AppData.FontFromString(AppData.GlobalAppData.Settings[AppData.QueryScriptFont]);
-            Properties.Settings.Default.ResultTableFont = AppData.FontFromString(AppData.GlobalAppData.Settings[AppData.ResultTableFont]);
-            Properties.Settings.Default.TextResultsFont = AppData.FontFromString(AppData.GlobalAppData.Settings[AppData.TextResultsFont]);
+            if (AppData.GlobalAppData.Settings.ContainsKey(AppData.QueryScriptFont))
+            {
+                Properties.Settings.Default.QueryScriptFont = AppData.FontFromString(AppData.GlobalAppData.Settings[AppData.QueryScriptFont]);
+            }
+            if (AppData.GlobalAppData.Settings.ContainsKey(AppData.ResultTableFont))
+            {
+                Properties.Settings.Default.ResultTableFont = AppData.FontFromString(AppData.GlobalAppData.Settings[AppData.ResultTableFont]);
+            }
+            if (AppData.GlobalAppData.Settings.ContainsKey(AppData.TextResultsFont))
+            {
+                Properties.Settings.Default.TextResultsFont = AppData.FontFromString(AppData.GlobalAppData.Settings[AppData.TextResultsFont]);
+            }
             Properties.Settings.Default.Save();
         }
         private void LoadAppDataFromGui()

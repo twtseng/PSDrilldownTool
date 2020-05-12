@@ -222,7 +222,11 @@ namespace PSDrilldownTool.Util
                 while (_pipeline.Output.Peek() != System.Management.Automation.Internal.AutomationNull.Value)
                 {
                     var r = _pipeline.Output.Read();
-                    if (r.BaseObject is System.Data.DataRow)
+                    if (r == null)
+                    {
+                        // no-op
+                    }
+                    else if (r.BaseObject is System.Data.DataRow)
                     {
                         DataRow row = (DataRow)r.BaseObject;
                         if (_resultDataTable == null)
