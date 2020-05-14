@@ -309,7 +309,11 @@ namespace PSDrilldownTool.Util
                 _taskStatus = Status.RUNNING;
                 foreach (var r in _pipeline.Invoke())
                 {
-                    if (r.BaseObject is System.Data.DataRow)
+                    if (r == null)
+                    {
+                        // no-op
+                    }
+                    else if (r.BaseObject is System.Data.DataRow)
                     {
                         DataRow row = (DataRow)r.BaseObject;
                         if (_resultDataTable == null)
