@@ -258,14 +258,8 @@ namespace PSDrilldownTool.Util
                 }
                 if (_pipeline.HadErrors)
                 {
-                    // If the task had errors but no error output was received, then it was probably syntax error
-                    // Rerun as sync task to capture error text
-                    if (_resultStringBuilder.Length == 0)
-                    {
-                        _runspace.Close();
-                        _runspace.Dispose();
-                        RunPsTaskSync();
-                    }
+                    _resultStringBuilder.AppendLine(_pipeline.PipelineStateInfo.Reason.ToString());
+                    _taskStatus = Status.FAILED;
                 }
             }
             catch (Exception ex)
