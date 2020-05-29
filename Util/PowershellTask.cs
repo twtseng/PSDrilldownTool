@@ -251,12 +251,10 @@ namespace PSDrilldownTool.Util
                             ImportRowFromPSCustomObject(r);
                         }
                     }
-                    else
-                    {
-                        _resultStringBuilder.AppendLine(r.ToString());
-                    }
+                    // Always output the object to string
+                    _resultStringBuilder.AppendLine(r.ToString());
                 }
-                if (_pipeline.HadErrors)
+                if (_pipeline.HadErrors && _pipeline.PipelineStateInfo.Reason != null)
                 {
                     _resultStringBuilder.AppendLine(_pipeline.PipelineStateInfo.Reason.ToString());
                     _taskStatus = Status.FAILED;
