@@ -7,6 +7,7 @@ using System.Management.Automation.Runspaces;
 using System.Management.Automation;
 using System.Collections;
 using System.Data;
+using System.Windows.Forms;
 
 namespace PSDrilldownTool.Util
 {
@@ -191,9 +192,28 @@ namespace PSDrilldownTool.Util
                 CreatePsPipeline();
                 _taskStatus = Status.RUNNING;
                 _startTime = DateTime.Now;
-                _pipeline.Output.DataReady += DataReady;
-                _pipeline.Error.DataReady += DataReady;
+                _pipeline.Output.DataReady += OutputDataReady;
+                _pipeline.Error.DataReady += ErrorDataReady;
                 _pipeline.InvokeAsync();
+                _pipeline.Input.Close();
+                while(_pipeline.PipelineStateInfo.State == PipelineState.Running)
+                {
+                    Application.DoEvents();
+                }
+                if (_pipeline.HadErrors)
+                {
+                    _taskStatus = Status.FAILED;
+                }
+                if (_taskStatus == Status.RUNNING)
+                {
+                    _taskStatus = Status.COMPLETED;
+                }
+                _taskCompleted = true;
+                _endTime = DateTime.Now;
+                string logMessage = string.Format("SCRIPT {0}. Time:[{1:MM/dd/yy HH:mm:ss}] Duration:[{2}]", TaskStatus.ToString(), DateTime.Now, this.Duration.ToString(@"hh\:mm\:ss"));
+                _resultStringBuilder.Append(logMessage);
+                _runspace.Close();
+                _runspace.Dispose();
             }
             catch (Exception ex)
             {
@@ -203,24 +223,12 @@ namespace PSDrilldownTool.Util
                 _resultStringBuilder.Append(logMessage);
             }
         }
-        private void DataReady(object sender, EventArgs e)
+        private void OutputDataReady(object sender, EventArgs e)
         {
-            CheckIsRunningAndReceiveAsyncResults();
-        }
+            PipelineReader<PSObject> reader = sender as PipelineReader<PSObject>;
 
-        /// <summary>
-        /// Receives output from async powershell execution
-        /// </summary> 
-        public bool CheckIsRunningAndReceiveAsyncResults()
-        {
-            if (_taskCompleted)
+            while (reader.Count > 0)
             {
-                return false;
-            }
-            try
-            {
-                while (_pipeline.Output.Peek() != System.Management.Automation.Internal.AutomationNull.Value)
-                {
                     var r = _pipeline.Output.Read();
                     if (r == null)
                     {
@@ -252,41 +260,22 @@ namespace PSDrilldownTool.Util
                         }
                     }
                     // Always output the object to string
+                else
+                {
                     _resultStringBuilder.AppendLine(r.ToString());
                 }
-                if (_pipeline.HadErrors && _pipeline.PipelineStateInfo.Reason != null)
+            }
+            }
+
+        private void ErrorDataReady(object sender, EventArgs e)
+            {
+            PipelineReader<object> reader = sender as PipelineReader<object>;
+            if(reader != null)
+            {
+                while(reader.Count > 0)
                 {
-                    _resultStringBuilder.AppendLine(_pipeline.PipelineStateInfo.Reason.ToString());
-                    _taskStatus = Status.FAILED;
+                    _resultStringBuilder.AppendLine(reader.Read().ToString());
                 }
-            }
-            catch (Exception ex)
-            {
-                _taskCompleted = true;
-                _endTime = DateTime.Now;
-                _taskStatus = Status.FAILED;
-                string logMessage = string.Format(@"SCRIPT FAILED. Time:[{0:MM/dd/yy HH:mm:ss}] Duration:[{1}] Error:{2}", DateTime.Now, this.Duration.ToString(@"hh\:mm\:ss"), ex.ToString());
-                _resultStringBuilder.Append(logMessage);
-                return false;
-            }
-            if (_pipeline.PipelineStateInfo.State == PipelineState.Running)
-            {
-                _taskCompleted = false;
-                return true;
-            }
-            else
-            {
-                if (_taskStatus == Status.RUNNING)
-                {
-                    _taskStatus = Status.COMPLETED;
-                }
-                _taskCompleted = true;
-                _endTime = DateTime.Now;
-                string logMessage = string.Format("SCRIPT {0}. Time:[{1:MM/dd/yy HH:mm:ss}] Duration:[{2}]", TaskStatus.ToString(), DateTime.Now, this.Duration.ToString(@"hh\:mm\:ss"));
-                _resultStringBuilder.Append(logMessage);
-                _runspace.Close();
-                _runspace.Dispose();
-                return false;
             }
         }
         /// <summary>
