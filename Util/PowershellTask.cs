@@ -78,7 +78,10 @@ namespace PSDrilldownTool.Util
             _resultDataTable = new DataTable();
             foreach(var prop in psObject.Properties)
             {
-                _resultDataTable.Columns.Add(prop.Name, Type.GetType(prop.TypeNameOfValue));
+                if (Type.GetType(prop.TypeNameOfValue) != null)
+                {
+                    _resultDataTable.Columns.Add(prop.Name, Type.GetType(prop.TypeNameOfValue));
+                }
             }
             _dataTableType = DataTableType.PSCustomObject;
         }
