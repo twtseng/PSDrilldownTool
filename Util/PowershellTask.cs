@@ -199,24 +199,24 @@ namespace PSDrilldownTool.Util
                 _pipeline.Error.DataReady += ErrorDataReady;
                 _pipeline.InvokeAsync();
                 _pipeline.Input.Close();
-                while(_pipeline.PipelineStateInfo.State == PipelineState.Running)
-                {
-                    Application.DoEvents();
-                }
-                if (_pipeline.HadErrors)
-                {
-                    _taskStatus = Status.FAILED;
-                }
-                if (_taskStatus == Status.RUNNING)
-                {
-                    _taskStatus = Status.COMPLETED;
-                }
-                _taskCompleted = true;
-                _endTime = DateTime.Now;
-                string logMessage = string.Format("SCRIPT {0}. Time:[{1:MM/dd/yy HH:mm:ss}] Duration:[{2}]", TaskStatus.ToString(), DateTime.Now, this.Duration.ToString(@"hh\:mm\:ss"));
-                _resultStringBuilder.Append(logMessage);
-                _runspace.Close();
-                _runspace.Dispose();
+                //while(_pipeline.PipelineStateInfo.State == PipelineState.Running)
+                //{
+                //    Application.DoEvents();
+                //}
+                //if (_pipeline.HadErrors)
+                //{
+                //    _taskStatus = Status.FAILED;
+                //}
+                //if (_taskStatus == Status.RUNNING)
+                //{
+                //    _taskStatus = Status.COMPLETED;
+                //}
+                //_taskCompleted = true;
+                //_endTime = DateTime.Now;
+                //string logMessage = string.Format("SCRIPT {0}. Time:[{1:MM/dd/yy HH:mm:ss}] Duration:[{2}]", TaskStatus.ToString(), DateTime.Now, this.Duration.ToString(@"hh\:mm\:ss"));
+                //_resultStringBuilder.Append(logMessage);
+                //_runspace.Close();
+                //_runspace.Dispose();
             }
             catch (Exception ex)
             {
@@ -228,10 +228,11 @@ namespace PSDrilldownTool.Util
         }
         private void OutputDataReady(object sender, EventArgs e)
         {
-            PipelineReader<PSObject> reader = sender as PipelineReader<PSObject>;
-
-            while (reader.Count > 0)
+            try
             {
+                PipelineReader<PSObject> reader = sender as PipelineReader<PSObject>;
+                while (reader.Count > 0)
+                {
                     var r = _pipeline.Output.Read();
                     if (r == null)
                     {
@@ -263,22 +264,62 @@ namespace PSDrilldownTool.Util
                         }
                     }
                     // Always output the object to string
-                else
-                {
-                    _resultStringBuilder.AppendLine(r.ToString());
+                    else
+                    {
+                        _resultStringBuilder.AppendLine(r.ToString());
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                _taskCompleted = true;
+                _endTime = DateTime.Now;
+                _taskStatus = Status.FAILED;
+                string logMessage = string.Format(@"SCRIPT FAILED. Time:[{0:MM/dd/yy HH:mm:ss}] Duration:[{1}] Error:{2}", DateTime.Now, this.Duration.ToString(@"hh\:mm\:ss"), ex.ToString());
+                _resultStringBuilder.Append(logMessage);
+                return;
             }
+            if (_pipeline.PipelineStateInfo.State == PipelineState.Running)
+            {
+                _taskCompleted = false;
+                return;
+            }
+            else
+            {
+                if (_taskStatus == Status.RUNNING)
+                {
+                    _taskStatus = Status.COMPLETED;
+                }
+                _taskCompleted = true;
+                _endTime = DateTime.Now;
+                string logMessage = string.Format("SCRIPT {0}. Time:[{1:MM/dd/yy HH:mm:ss}] Duration:[{2}]", TaskStatus.ToString(), DateTime.Now, this.Duration.ToString(@"hh\:mm\:ss"));
+                _resultStringBuilder.Append(logMessage);
+                _runspace.Close();
+                _runspace.Dispose();
+                return ;
+            }
+        }
 
         private void ErrorDataReady(object sender, EventArgs e)
-            {
+        {
             PipelineReader<object> reader = sender as PipelineReader<object>;
             if(reader != null)
             {
                 while(reader.Count > 0)
                 {
                     _resultStringBuilder.AppendLine(reader.Read().ToString());
+                    
                 }
+            }
+            if (_pipeline.HadErrors)
+            {
+                if (_pipeline.PipelineStateInfo.Reason != null)
+                {
+                    {
+                        _resultStringBuilder.AppendLine(_pipeline.PipelineStateInfo.Reason.ToString());
+                    }
+                }
+                _taskStatus = Status.FAILED;
             }
         }
         /// <summary>

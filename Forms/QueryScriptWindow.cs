@@ -272,7 +272,7 @@ namespace PSDrilldownTool.Forms
         private void dataGridView_TableResults_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // Update dependent script text and run (if RunOnParentRowSelect specified)
-            foreach (QueryScript queryScript in AppData.GlobalAppData.GetDependentQueryScripts(_queryScript, allDecendants: false))
+            foreach (QueryScript queryScript in AppData.GlobalAppData.GetDependentQueryScripts(_queryScript, allDescendants: false))
             {
                 queryScript.QueryScriptWindow.UpdateTranslatedQuery();
                 if (queryScript.RunOnParentRowSelect)

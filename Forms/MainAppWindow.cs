@@ -158,7 +158,7 @@ namespace PSDrilldownTool.Forms
             {
                 parentTreeNode.Nodes.Add(treeNode);
             }
-            foreach (QueryScript dependentScript in AppData.GlobalAppData.GetDependentQueryScripts(queryScript))
+            foreach (QueryScript dependentScript in AppData.GlobalAppData.GetDependentQueryScripts(queryScript, allDescendants: false))
             {
                 AddDependencyTreeNode(dependentScript, treeNode);
             }
@@ -568,7 +568,7 @@ namespace PSDrilldownTool.Forms
         {
             if (this.CurrentlySelectedQueryScript != null)
             {
-                var dependentScripts = AppData.GlobalAppData.GetDependentQueryScripts(this.CurrentlySelectedQueryScript, allDecendants: false);
+                var dependentScripts = AppData.GlobalAppData.GetDependentQueryScripts(this.CurrentlySelectedQueryScript, allDescendants: false);
                 LayoutQueryScriptWindows(selectedScript: this.CurrentlySelectedQueryScript, dock: DockStyle.Top, relatedScripts: dependentScripts);
             }
         }
@@ -576,7 +576,7 @@ namespace PSDrilldownTool.Forms
         {
             if (this.CurrentlySelectedQueryScript != null)
             {
-                var dependentScripts = AppData.GlobalAppData.GetDependentQueryScripts(this.CurrentlySelectedQueryScript, allDecendants: false);
+                var dependentScripts = AppData.GlobalAppData.GetDependentQueryScripts(this.CurrentlySelectedQueryScript, allDescendants: false);
                 LayoutQueryScriptWindows(selectedScript: this.CurrentlySelectedQueryScript, dock: DockStyle.Left, relatedScripts: dependentScripts);
             }
         }

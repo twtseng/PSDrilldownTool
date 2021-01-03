@@ -124,7 +124,7 @@ namespace PSDrilldownTool.Models
             return System.Guid.NewGuid().ToString();
         }
 
-        public List<QueryScript> GetDependentQueryScripts(QueryScript script, bool allDecendants=true)
+        public List<QueryScript> GetDependentQueryScripts(QueryScript script, bool allDescendants=true)
         {
             List<QueryScript> dependentQueryScripts = new List<QueryScript>();
             foreach (var queryScript in QueryScripts)
@@ -132,7 +132,7 @@ namespace PSDrilldownTool.Models
                 if (script != queryScript && queryScript.ScriptText != null && queryScript.ScriptText.Contains(Util.ScriptUtil.ScriptNameToken(script.Name)))
                 {
                     dependentQueryScripts.Add(queryScript);
-                    if (allDecendants)
+                    if (allDescendants)
                     {
                         foreach (QueryScript dependentScript in GetDependentQueryScripts(queryScript))
                         {
