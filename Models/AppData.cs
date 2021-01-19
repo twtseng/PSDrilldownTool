@@ -70,6 +70,11 @@ namespace PSDrilldownTool.Models
             Models.QueryScript queryScript = new Models.QueryScript(name: name, mainAppWindow: mainAppWindow);
             QueryScripts.Add(queryScript);
             queryScript.QueryScriptWindow.Show();
+            // Set position based on script count
+            int scriptIndex = AppData.GlobalAppData.QueryScripts.Count - 1;
+            int positionIndex = scriptIndex % 20;
+            int position = positionIndex * 30;
+            queryScript.QueryScriptWindow.Location = new Point(position, position);
             queryScript.QueryScriptWindow.Focus();
         }
         public void AddQueryScript(Forms.MainAppWindow mainAppWindow, Models.QueryScript scriptToClone)
@@ -82,6 +87,9 @@ namespace PSDrilldownTool.Models
             Models.QueryScript queryScript = new Models.QueryScript(mainAppWindow: mainAppWindow, queryScriptToClone: scriptToClone);
             QueryScripts.Add(queryScript);
             queryScript.QueryScriptWindow.Show();
+            int index = AppData.GlobalAppData.QueryScripts.Count - 1;
+            index = index % 20;
+            queryScript.QueryScriptWindow.Location = new Point(index * 30, index * 30);
             queryScript.QueryScriptWindow.Focus();
         }
         public void RenameQueryScript(string oldName, string newName)

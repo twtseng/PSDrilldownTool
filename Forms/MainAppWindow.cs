@@ -199,12 +199,15 @@ namespace PSDrilldownTool.Forms
         {
             dataGridView_Variables.Rows.Clear();
             dataGridView_LibScripts.Rows.Clear();
-            dataGridView_QueryScripts.Rows.Clear();
-            treeView_DependencyTree.Nodes.Clear();
-            foreach(QueryScript queryScript in AppData.GlobalAppData.QueryScripts)
+            List<QueryScript> scriptsToRemove = AppData.GlobalAppData.QueryScripts.ToList();
+            foreach (QueryScript queryScript in scriptsToRemove)
             {
                 AppData.GlobalAppData.RemoveQueryScript(queryScript.Name);
+                Application.DoEvents();
             }
+            dataGridView_QueryScripts.Rows.Clear();
+            treeView_DependencyTree.Nodes.Clear();
+
         }
         private void LoadGuiFromAppData()
         {
@@ -606,7 +609,7 @@ namespace PSDrilldownTool.Forms
             int height = (int)(rect.Height * .7);
             for (int i=0; i < AppData.GlobalAppData.QueryScripts.Count; ++i)
             {
-                AppData.GlobalAppData.QueryScripts[i].QueryScriptWindow.SetWindowLocation(i*50, i*50, width, height);
+                AppData.GlobalAppData.QueryScripts[i].QueryScriptWindow.SetWindowLocation(i*30, i*30, width, height);
                 AppData.GlobalAppData.QueryScripts[i].QueryScriptWindow.Focus();
             }
         }
